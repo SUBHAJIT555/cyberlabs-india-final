@@ -1,0 +1,134 @@
+import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+import { FlowStepCard } from "./ui/FlowStepCard";
+
+const flowSteps = [
+  { label: "Structured training", sub: "Theory & methodology" },
+  { label: "Hands-on labs", sub: "Practical execution" },
+  { label: "Formal assessment", sub: "Evaluation & grading" },
+  { label: "Official credential", sub: "CYBERLABS USA certificate" },
+];
+
+const LevelUp = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+      },
+    },
+  };
+
+  const textMaskVariants: Variants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.8,
+        delay: 0.3,
+      },
+    },
+  };
+
+  return (
+    <div className="w-full py-12 md:py-16 px-4 sm:px-6 md:px-12 lg:px-16 xl:px-20">
+      <div className="mx-auto">
+        {/* Headline */}
+        <div>
+          <motion.div
+            ref={ref}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            variants={containerVariants}
+            className="mb-8 md:mb-10"
+          >
+            <motion.h2
+              variants={itemVariants}
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display font-semibold text-text-primary tracking-tighter leading-tight"
+            >
+              Certification & Professional{" "}
+              <motion.span variants={textMaskVariants} className="text-primary font-inter-display">
+                {" "} Grading
+              </motion.span>
+            </motion.h2>
+          </motion.div>
+
+          {/* Subheading */}
+          <motion.h3
+            variants={itemVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            className="text-xl md:text-2xl lg:text-3xl text-text-primary font-inter-display font-semibold mb-6 md:mb-8"
+          >
+            Official Credentials Issued by CYBERLABS USA
+          </motion.h3>
+
+          {/* Body copy with left accent bar */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            className="relative pl-4 md:pl-6 border-l-2 border-primary/30 mb-10 md:mb-12"
+          >
+            <motion.div variants={itemVariants} className="space-y-6 text-lg md:text-xl lg:text-2xl text-text-primary font-inter-display font-medium leading-relaxed">
+              <p>
+                Upon successful completion of the Cyber Defense Program, learners are awarded an{" "}
+                <span className="font-bold text-primary">official internal certificate issued by CYBERLABS USA</span>.
+              </p>
+              <p>
+                These certificates are issued under{" "}
+                <span className="text-primary font-semibold">CYBERLABS USA's global training and evaluation framework</span>{" "}
+                and represent a{" "}
+                <span className="font-bold">rigorous standard of practical cybersecurity capability</span>, with strong emphasis on investigation, operational thinking, and real-world execution.
+              </p>
+              <p>
+                The certification validates that the learner has successfully completed structured training, extensive hands-on labs, and formal assessments aligned with{" "}
+                <span className="text-primary font-semibold">CYBERLABS USA methodologies.</span>
+              </p>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* Path to credential – 4 steps */}
+        <motion.div
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          variants={containerVariants}
+          className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
+        >
+          {flowSteps.map((step, index) => (
+            <motion.div key={step.label} variants={itemVariants}>
+              <FlowStepCard
+                stepNumber={index + 1}
+                label={step.label}
+                sub={step.sub}
+                className="h-full"
+              />
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+
+export default LevelUp;
