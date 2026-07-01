@@ -1,232 +1,161 @@
+"use client";
+
 import { assetSrc } from "@/lib/utils";
-import { motion, useInView } from "framer-motion";
-import type { Variants } from "framer-motion";
 import { useRef } from "react";
-import { AnimatedHeading } from "./ui/animated-heading";
-import { Card, CardContent } from "./ui/card";
 import professionalTranscript from "@/assets/img/ProgramPageImage/performacetranscribe.svg";
+import { TimelineContent } from "@/components/ui/timeline-animation";
+import ShinyText from "@/components/ui/ShinyText";
+import {
+  LandingSectionShell,
+  LandingBento,
+  LandingBentoRow,
+  LandingBentoCell,
+  landingRevealVariants,
+  landingSectionHeadingClass,
+  landingSectionSubheadingClass,
+} from "@/components/ui/landing-section";
 
-const perspectiveGreyGridStyle = {
-  WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, #000 30%, #000 100%)",
-  backgroundImage:
-    "linear-gradient(#d4d4d8 1px, transparent 1px), linear-gradient(90deg, #d4d4d8 1px, transparent 1px)",
-  backgroundSize: "40px 25px",
-  bottom: 0,
-  height: "60%",
-  left: "50%",
-  maskImage: "linear-gradient(to bottom, transparent 0%, #000 30%, #000 100%)",
-  opacity: 0.45,
-  pointerEvents: "none" as const,
-  position: "absolute" as const,
-  transform: "translateX(-50%) perspective(300px) rotateX(45deg)",
-  width: "150%",
-};
-
-
+const tableRows = [
+  { category: "Lab Simulations & Technical Exercises", weight: "40%", grade: "A+ (92%)", classification: "Distinction" },
+  { category: "Module Deliverables (Maps, Reports, Analysis)", weight: "30%", grade: "A (88%)", classification: "Merit" },
+  { category: "Integrated Practical Assessment", weight: "30%", grade: "A+ (95%)", classification: "Distinction" },
+  { category: "Overall Final Grade", weight: "100%", grade: "A (91%)", classification: "First Class with Distinction", isBold: true },
+];
 
 const PerformanceTranscript = () => {
-  const containerRef = useRef(null);
-  const isInView = useInView(containerRef, { once: false, margin: "-100px" });
-  const headingRef = useRef<HTMLDivElement>(null);
-  const headingInView = useInView(headingRef, { once: false, margin: "-100px" });
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.15,
-      },
-    },
-  };
-
-  const cardVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut",
-      },
-    },
-  };
+  const timelineRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section
-      ref={containerRef}
-      className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-16 md:py-24"
-    >
-      <div ref={headingRef} className="w-full mb-8 md:mb-12">
-        <AnimatedHeading
-          inView={headingInView}
-          lines={[
-            { text: "Professional Performance Transcript (India Program)", className: "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display font-semibold text-text-primary tracking-tighter leading-tight" },
-          ]}
-        />
-      </div>
-
-      {/* Bento grid layout */}
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-        className="grid gap-6 sm:grid-cols-5"
-      >
-        {/* Card 1: Professional Performance Transcript (India Program) */}
-        <Card className="group relative overflow-hidden border-none rounded-lg bg-white sm:col-span-3">
-          <div className="absolute inset-0 z-0 pointer-events-none">
-            <div style={perspectiveGreyGridStyle} />
-          </div>
-          <CardContent className="relative z-10 p-6 md:p-8 space-y-5 md:space-y-10">
-            <motion.div variants={cardVariants} className="space-y-4 md:space-y-12">
-              <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-inter-display font-medium text-text-primary leading-relaxed">
-                To meet the expectations of Indian enterprises, corporates, and institutional employers,
-                CYBERLABS INDIA provides an additional{" "}
-                <span className="font-semibold text-text-primary">
-                  Professional Performance Transcript
-                </span>{" "}
-                alongside the primary certificate.
-              </p>
-              <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-inter-display font-medium text-text-primary leading-relaxed">
-                This transcript offers a granular, skills-based evaluation of learner performance across
-                technical execution, investigative capability, and analytical decision-making—allowing
-                employers to clearly assess real-world readiness beyond course completion.
-              </p>
-              <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-inter-display font-medium text-text-primary leading-relaxed">
-                The transcript{" "}
-                <span className="font-semibold text-text-primary">
-                  complements
-                </span>{" "}
-                the CYBERLABS USA certificate and does not replace or modify it. Together, they give a
-                complete view of both formal completion and operational performance.
-              </p>
-            </motion.div>
-          </CardContent>
-        </Card>
-   
-
-        {/* Card 2: Industry Recognition & Professional Alignment */}
-        <Card className="group relative overflow-hidden border-none bg-white sm:col-span-2 flex flex-col min-h-0">
-          <div className="absolute inset-0 z-0 pointer-events-none"  />
-          <CardContent className="relative z-10 flex-1 flex flex-col min-h-0 p-3 md:p-4">
-            <div className="relative flex-1 min-h-0 overflow-hidden flex items-center justify-center">
-              <img
-                src={assetSrc(professionalTranscript)}
-                alt="Industry Recognition"
-                className="max-h-full max-w-full w-auto h-auto object-contain"
-              />
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* <Card className="group overflow-hidden border-neutral-300 border-dashed bg-white sm:col-span-2 relative"
-          style={{ background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white", }}
+    <LandingSectionShell>
+      <div ref={timelineRef}>
+        <TimelineContent
+          as="h2"
+          animationNum={0}
+          timelineRef={timelineRef}
+          customVariants={landingRevealVariants}
         >
-       
-          <div
-            className="absolute inset-0 opacity-[0.03] pointer-events-none"
-            style={{
-              backgroundImage:
-                "linear-gradient(to right, rgba(0,0,0,0.2) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.2) 1px, transparent 1px)",
-              backgroundSize: "18px 18px",
-            }}
+          <ShinyText
+            text="Professional Performance Transcript (India Program)"
+            className={landingSectionHeadingClass}
+            color="#3f3f46"
+            shineColor="#18181b"
+            speed={3}
+            spread={120}
           />
-          <CardContent className="p-3 md:p-4 h-full">
-            <div className="relative">
-              <img className="object-cover absolute inset-0" src={assetSrc(professionalTranscript)} alt="Industry Recognition" />
-            </div>
-          </CardContent>
-        </Card> */}
+        </TimelineContent>
 
-        {/* Card 3: Graded Performance Framework table */}
-        <Card className="group relative overflow-hidden border-none  bg-white sm:col-span-5">
-          <div className="absolute inset-0 z-0 pointer-events-none"  />
-          <CardContent className="relative z-10 p-6 md:p-8 space-y-4 md:space-y-6">
-            <motion.div variants={cardVariants} className="space-y-3 md:space-y-4">
-              <div>
-                <motion.p
-                  className="text-lg sm:text-xl md:text-2xl font-montserrat font-semibold text-text-primary leading-tight tracking-tight"
-                  initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
-                  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  viewport={{ once: false, amount: 0.2 }}
-                  transition={{ duration: 1, ease: "easeOut" }}
-                >
-                  Illustration of the Graded Performance Framework (India Segment)
-                </motion.p>
-              </div>
+        <LandingBento className="mt-8 border-y border-zinc-200">
+          <LandingBentoRow columns={2}>
+            <LandingBentoCell className="px-0 md:px-0 md:pr-8">
+              <TimelineContent
+                as="div"
+                animationNum={1}
+                timelineRef={timelineRef}
+                customVariants={landingRevealVariants}
+                className="space-y-4 text-sm leading-relaxed text-zinc-700 md:text-base lg:text-lg"
+              >
+                <p>
+                  To meet the expectations of Indian enterprises, corporates, and institutional employers,
+                  CYBERLABS INDIA provides an additional{" "}
+                  <span className="font-semibold text-zinc-900">
+                    Professional Performance Transcript
+                  </span>{" "}
+                  alongside the primary certificate.
+                </p>
+                <p>
+                  This transcript offers a granular, skills-based evaluation of learner performance across
+                  technical execution, investigative capability, and analytical decision-making—allowing
+                  employers to clearly assess real-world readiness beyond course completion.
+                </p>
+                <p>
+                  The transcript{" "}
+                  <span className="font-semibold text-zinc-900">complements</span>{" "}
+                  the CYBERLABS USA certificate and does not replace or modify it. Together, they give a
+                  complete view of both formal completion and operational performance.
+                </p>
+              </TimelineContent>
+            </LandingBentoCell>
 
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse border border-neutral-300 bg-white text-left">
-                  <motion.thead
-                    initial={{ opacity: 0, y: 12 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false, amount: 0.3 }}
-                    transition={{ duration: 0.4 }}
-                    className="bg-white"
-                    style={{
-                      background:
-                        "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                    }}
-                  >
+            <LandingBentoCell className="flex items-center justify-center px-0 md:px-0 md:pl-8">
+              <TimelineContent
+                as="div"
+                animationNum={2}
+                timelineRef={timelineRef}
+                customVariants={landingRevealVariants}
+              >
+                <img
+                  src={assetSrc(professionalTranscript)}
+                  alt="Industry Recognition"
+                  className="mx-auto h-auto w-full max-w-[280px] object-contain sm:max-w-[320px]"
+                />
+              </TimelineContent>
+            </LandingBentoCell>
+          </LandingBentoRow>
+
+          <LandingBentoCell className="border-t border-zinc-200 px-0 md:px-0">
+            <TimelineContent
+              as="div"
+              animationNum={3}
+              timelineRef={timelineRef}
+              customVariants={landingRevealVariants}
+              className="space-y-4"
+            >
+              <p className={`${landingSectionSubheadingClass} text-zinc-900`}>
+                Illustration of the Graded Performance Framework (India Segment)
+              </p>
+
+              <div className="overflow-x-auto border border-zinc-200">
+                <table className="w-full border-collapse bg-white text-left text-sm md:text-base">
+                  <thead className="border-b border-zinc-200 bg-zinc-50">
                     <tr>
-                      <th className="border border-neutral-300  px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary">
+                      <th className="border-r border-zinc-200 px-4 py-3 font-semibold text-zinc-900">
                         Assessment Category
                       </th>
-                      <th className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-center text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary">
+                      <th className="border-r border-zinc-200 px-4 py-3 text-center font-semibold text-zinc-900">
                         Weightage
                       </th>
-                      <th className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-center text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary">
+                      <th className="border-r border-zinc-200 px-4 py-3 text-center font-semibold text-zinc-900">
                         Grade / Score
                       </th>
-                      <th className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary">
+                      <th className="px-4 py-3 font-semibold text-zinc-900">
                         Classification
                       </th>
                     </tr>
-                  </motion.thead>
+                  </thead>
                   <tbody>
-                    {[
-                      { category: "Lab Simulations & Technical Exercises", weight: "40%", grade: "A+ (92%)", classification: "Distinction" },
-                      { category: "Module Deliverables (Maps, Reports, Analysis)", weight: "30%", grade: "A (88%)", classification: "Merit" },
-                      { category: "Integrated Practical Assessment", weight: "30%", grade: "A+ (95%)", classification: "Distinction" },
-                      { category: "Overall Final Grade", weight: "100%", grade: "A (91%)", classification: "First Class with Distinction", isBold: true },
-                    ].map((row, index) => (
-                      <motion.tr
-                        key={index}
-                        initial={{ opacity: 0, x: -24 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: false, amount: 0.2 }}
-                        transition={{ duration: 0.4, delay: index * 0.08 }}
-                        className={row.isBold ? "font-bold" : ""}
+                    {tableRows.map((row) => (
+                      <tr
+                        key={row.category}
+                        className={`border-b border-zinc-200 last:border-b-0 ${row.isBold ? "bg-zinc-50 font-semibold" : ""}`}
                       >
-                        <td className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary">
+                        <td className="border-r border-zinc-200 px-4 py-3 text-zinc-700">
                           {row.category}
                         </td>
-                        <td className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-center text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary">
+                        <td className="border-r border-zinc-200 px-4 py-3 text-center text-zinc-700">
                           {row.weight}
                         </td>
-                        <td className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-center text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary">
+                        <td className="border-r border-zinc-200 px-4 py-3 text-center text-zinc-700">
                           {row.grade}
                         </td>
-                        <td className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary">
+                        <td className="px-4 py-3 text-zinc-700">
                           {row.classification}
                         </td>
-                      </motion.tr>
+                      </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
 
-              <p className="text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-relaxed italic">
-                <span className="font-semibold text-text-primary">Note: </span>
+              <p className="text-sm italic leading-relaxed text-zinc-600 md:text-base">
+                <span className="font-semibold text-zinc-900 not-italic">Note: </span>
                 Assessment structure and weightage may vary by program, based on curriculum depth and
                 role alignment.
               </p>
-            </motion.div>
-          </CardContent>
-        </Card>
-      </motion.div>
-    </section>
+            </TimelineContent>
+          </LandingBentoCell>
+        </LandingBento>
+      </div>
+    </LandingSectionShell>
   );
 };
 

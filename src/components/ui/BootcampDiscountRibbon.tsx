@@ -22,7 +22,7 @@ const BootcampDiscountRibbon = ({
             className={`pointer-events-none absolute right-0 top-0 z-20 h-[88px] w-[88px] overflow-hidden ${className}`}
             aria-hidden
         >
-            <div className="absolute right-[-30px] top-[14px] w-[126px] rotate-45 bg-emerald-600 py-1.5 text-center border-b border-neutral-200 border-dashed border-t ">
+            <div className="absolute right-[-30px] top-[14px] w-[126px] rotate-45 bg-blue-600 py-1.5 text-center border-b border-neutral-200 border border-t ">
                 <span className="block text-[11px] font-montserrat font-medium uppercase tracking-wider text-white whitespace-nowrap">
                     {discountPercent}% Off
                 </span>

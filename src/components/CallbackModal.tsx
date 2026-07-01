@@ -21,6 +21,7 @@ import { FormErrorPopup } from "@/components/ui/FormErrorPopup";
 import { useFormSubmitFeedback } from "@/hooks/useFormSubmitFeedback";
 import { FORM_FEEDBACK_COPY } from "@/constants/formFeedbackCopy";
 import { formatIndianMobileE164 } from "@/lib/formValidation";
+import { useLenis } from "@/hooks/useLenis";
 
 interface CallbackModalProps {
   isOpen: boolean;
@@ -64,6 +65,7 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
   const hasContext = Boolean(course || bootcamp);
   const [isMobile, setIsMobile] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const lenis = useLenis();
   const {
     showSuccessPopup,
     setShowSuccessPopup,
@@ -111,6 +113,26 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
       resetFeedback();
     }
   }, [isOpen, course?.title, bootcamp?.title, reset, resetFeedback]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalBodyTouchAction = document.body.style.touchAction;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+
+    document.body.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
+    document.documentElement.style.overflow = "hidden";
+    if (lenis) lenis.stop();
+
+    return () => {
+      document.body.style.overflow = originalBodyOverflow;
+      document.body.style.touchAction = originalBodyTouchAction;
+      document.documentElement.style.overflow = originalHtmlOverflow;
+      if (lenis) lenis.start();
+    };
+  }, [isOpen, lenis]);
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
@@ -188,7 +210,7 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
               }}
             >
               <motion.div
-                className="bg-white border border-neutral-200 ring ring-neutral-200 ring-offset-4 md:ring-offset-8 rounded-xl w-full max-w-md relative overflow-hidden"
+                className="relative flex h-[78vh] w-full max-w-xl flex-col overflow-hidden rounded-lg border border-neutral-200 bg-white sm:h-[80vh]"
                 initial={{ scale: 0.9, y: 20 }}
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.9, y: 20 }}
@@ -198,11 +220,8 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
                 }}
                 onClick={(e) => e.stopPropagation()}
                 style={{
-                  maxHeight: "90vh",
-                  overflowY: "auto",
-                  margin: isMobile ? "1rem" : "2rem",
-                  maxWidth: isMobile ? "calc(100vw - 2rem)" : "28rem",
-                  width: isMobile ? "auto" : "28rem",
+                  margin: isMobile ? "0.5rem" : "1.25rem",
+                  maxWidth: isMobile ? "calc(100vw - 1rem)" : "36rem",
                 }}
               >
                 <div
@@ -232,7 +251,9 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
                 {/* Form */}
                 <form
                   onSubmit={rhfHandleSubmit(onSubmit)}
-                  className="relative z-10 px-4 sm:px-6 pb-4 sm:pb-6 space-y-4"
+                  data-lenis-prevent
+                  data-lenis-prevent-wheel
+                  className="relative z-10 min-h-0 flex-1 overflow-y-auto px-4 pb-6 space-y-4 sm:px-6 sm:pb-8"
                 >
                   {hasContext && course && (
                     <div className="rounded-lg border border-neutral-200 bg-white/95 p-3 sm:p-4">
@@ -417,7 +438,7 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
                   <ShinyButton
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full rounded-lg! font-inter-display! text-base sm:text-lg font-medium shadow-lg! active:scale-95! disabled:cursor-not-allowed disabled:opacity-50"
+                    className="mb-1 mt-2 w-full rounded-lg! font-inter-display! text-base sm:text-lg font-medium shadow-lg! active:scale-95! disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {isSubmitting ? "Submitting..." : "Submit"}
                   </ShinyButton>

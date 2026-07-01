@@ -5,7 +5,7 @@ import { FiArrowUpRight } from "react-icons/fi";
 import { useNavigate } from "@/lib/react-router";
 import type { Bootcamp } from "@/interface/bootcamp";
 import { crosshatchBgStyle } from "@/constants/bootcampStyles";
-import { ShinyButton } from "@/components/ui/shiny-button";
+import { CandyButton } from "@/components/ui/candy-button";
 import GradientText from "@/components/ui/GradientText";
 import BootcampPriceBlock from "@/components/ui/BootcampPriceBlock";
 import BootcampDiscountRibbon from "@/components/ui/BootcampDiscountRibbon";
@@ -85,7 +85,7 @@ const ElitBootcampCard = ({ bootcamp, index, onEnroll }: ElitBootcampCardProps) 
                 ease: [0.22, 1, 0.36, 1],
                 delay: index * 0.06,
             }}
-            className="group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white ring ring-neutral-200 ring-offset-4 md:ring-offset-8 transition-all duration-300 hover:border-primary/25 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+            className="group relative flex h-full cursor-pointer flex-col overflow-hidden  border border-neutral-200 bg-white  transition-all duration-300 hover:border-primary/25 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
         >
             <div className="relative h-46 sm:h-50 w-full shrink-0 overflow-hidden bg-neutral-100">
                 <img
@@ -102,7 +102,7 @@ const ElitBootcampCard = ({ bootcamp, index, onEnroll }: ElitBootcampCardProps) 
                         showBorder
                         colors={["#0a0a0f", "#0f172a", "#1e3a8a", "#2563eb", "#0ea5e9"]}
                         animationSpeed={8}
-                        className="font-inter-display text-[10px] sm:text-[11px] font-semibold! uppercase tracking-[0.12em]"
+                        className="rounded-md! font-inter-display text-[10px] sm:text-[11px] font-semibold! uppercase tracking-[0.12em]"
                     >
                         Elite Boot Camp
                     </GradientText>
@@ -155,28 +155,25 @@ const ElitBootcampCard = ({ bootcamp, index, onEnroll }: ElitBootcampCardProps) 
                     </p>
 
                     <div className="mt-auto pt-4 border-t border-neutral-200/80 flex flex-row gap-2">
-                        <ShinyButton
+                        <CandyButton
                             type="button"
-                            size="compact"
                             onClick={goToEnroll}
-                            className="flex-1 min-w-0 font-montserrat! font-semibold text-xs sm:text-sm rounded-lg! shadow-lg! active:scale-95!"
+                            className="flex-1 min-w-0 rounded-lg! border-zinc-800 bg-[radial-gradient(95%_60%_at_50%_75%,#18181b_0%,#27272a_100%)] px-4 py-2.5 font-montserrat! text-xs font-semibold sm:text-sm"
                         >
                             Enroll Now
-                        </ShinyButton>
+                        </CandyButton>
 
-                        <ShinyButton
+                        <CandyButton
                             type="button"
-                            variant="light"
-                            size="compact"
                             onClick={(e) => {
                                 e.stopPropagation();
                                 goToDetails();
                             }}
-                            className="flex flex-1 min-w-0 items-center justify-center gap-1.5 font-montserrat! font-medium text-xs sm:text-sm group/details rounded-lg! shadow-lg! active:scale-95!"
+                            className="group/details flex flex-1 min-w-0 items-center justify-center gap-1.5 rounded-lg! border-zinc-400 bg-[radial-gradient(95%_60%_at_50%_75%,#52525b_0%,#71717a_100%)] px-4 py-2.5 font-inter-display! text-xs font-medium sm:text-sm"
                         >
                             <span className="truncate">View Details</span>
                             <FiArrowUpRight className="h-3.5 w-3.5 shrink-0 transition-transform duration-300 group-hover/details:rotate-45" />
-                        </ShinyButton>
+                        </CandyButton>
                     </div>
                 </div>
             </div>

@@ -44,7 +44,7 @@ export function FlowStepCard({
 
       <div className="relative z-10 flex flex-1 flex-col">
         {stepNumber != null && (
-          <span className="inline-flex h-12 w-12 items-center justify-center rounded-lg border border-neutral-200 bg-neutral-500 text-white font-inter-display font-bold text-base transition duration-300 group-hover:border-neutral-300">
+          <span className="relative inline-flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg border border-[#4b5563] bg-[radial-gradient(95%_60%_at_50%_75%,#111827_0%,#374151_100%)] text-white font-inter-display font-bold text-base transition duration-300 group-hover:brightness-110 after:absolute after:right-[10%] after:top-px after:h-px after:w-[60%] after:bg-linear-to-r after:from-transparent after:via-white/40 after:to-transparent">
             {stepNumber}
           </span>
         )}
