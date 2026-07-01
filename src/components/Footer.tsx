@@ -168,6 +168,9 @@ const Footer = () => {
                             </ul>
                         </FooterColumn>
 
+
+                        
+
                         <FooterColumn title="Legals & Policies">
                             <ul className="space-y-2.5">
                                 {legalLinks.map((item) => (
