@@ -8,7 +8,12 @@ import {
   landingSectionHeadingClass,
 } from "@/components/ui/landing-section";
 
-const TermsHero = () => {
+type LegalPageHeroProps = {
+  title: string;
+  subtitle: string;
+};
+
+const LegalPageHero = ({ title, subtitle }: LegalPageHeroProps) => {
   const timelineRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -36,7 +41,7 @@ const TermsHero = () => {
           customVariants={landingRevealVariants}
         >
           <ShinyText
-            text="Terms & Conditions"
+            text={title}
             className={landingSectionHeadingClass}
             color="#3f3f46"
             shineColor="#18181b"
@@ -52,11 +57,11 @@ const TermsHero = () => {
           customVariants={landingRevealVariants}
           className="mx-auto mt-6 max-w-3xl text-base font-medium leading-snug text-zinc-700 sm:mt-8 sm:text-lg md:text-xl"
         >
-          Understanding our terms of service and platform policies
+          {subtitle}
         </TimelineContent>
       </div>
     </section>
   );
 };
 
-export default TermsHero;
+export default LegalPageHero;

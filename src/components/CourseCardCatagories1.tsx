@@ -1,14 +1,9 @@
 "use client";
 
 import { assetSrc } from "@/lib/utils";
-import { useState, useEffect, useRef } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import CallbackModal from "./CallbackModal";
+import { useState, useRef } from "react";
 import EnrollmentModal from "./EnrollmentModal";
 import FlagshipProgramCard from "./FlagshipProgramCard";
-import { ShinyButton } from "@/components/ui/shiny-button";
-import Portal from "@/components/ui/Portal";
-import { useFloatingBottomBar } from "@/contexts/FloatingBottomBarContext";
 import { flagshipProgramCards } from "@/constants/flagshipProgramData";
 import { useCourses } from "@/hooks/useCourses";
 import flagshipImage from "@/assets/img/ProgramPageImage/flagshipProgram.svg";
@@ -32,11 +27,8 @@ const HIGHLIGHTS = [
 ] as const;
 
 const CourseCardCategories1 = () => {
-  const [showFloatingButton, setShowFloatingButton] = useState(false);
-  const [isCallbackModalOpen, setIsCallbackModalOpen] = useState(false);
   const [isEnrollmentModalOpen, setIsEnrollmentModalOpen] = useState(false);
   const [enrollmentSlug, setEnrollmentSlug] = useState("");
-  const { setIsActive: setFloatingBottomBarActive } = useFloatingBottomBar();
   const coursesSectionRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
   const { getCourses } = useCourses();
@@ -49,45 +41,6 @@ const CourseCardCategories1 = () => {
     setEnrollmentSlug(slug);
     setIsEnrollmentModalOpen(true);
   };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const flagshipSection = coursesSectionRef.current;
-      const bootcampSection = document.getElementById("elite-bootcamps");
-      if (!flagshipSection || !bootcampSection) return;
-
-      // Show CTA while user is browsing either Elite Boot Camps or Flagship Programs.
-      const bootcampRect = bootcampSection.getBoundingClientRect();
-      const flagshipRect = flagshipSection.getBoundingClientRect();
-      const sectionTop = bootcampRect.top + window.scrollY;
-      const sectionBottom = flagshipRect.bottom + window.scrollY;
-
-      if (
-        currentScrollY >= sectionTop - 120 &&
-        currentScrollY <= sectionBottom - 120 &&
-        currentScrollY > 100
-      ) {
-        setShowFloatingButton(true);
-      } else {
-        setShowFloatingButton(false);
-      }
-    };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
-    };
-  }, []);
-
-  useEffect(() => {
-    setFloatingBottomBarActive(showFloatingButton);
-    return () => setFloatingBottomBarActive(false);
-  }, [showFloatingButton, setFloatingBottomBarActive]);
 
   return (
     <LandingSectionShell id="flagship-programs" className="overflow-visible">
@@ -213,34 +166,6 @@ const CourseCardCategories1 = () => {
           </div>
         </div>
       </div>
-
-      <Portal>
-        <AnimatePresence>
-          {showFloatingButton && (
-            <motion.div
-              initial={{ y: 100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 100, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed bottom-4 left-1/2 z-9999 -translate-x-1/2 sm:bottom-6"
-            >
-              <ShinyButton
-                type="button"
-                size="compact"
-                onClick={() => setIsCallbackModalOpen(true)}
-                className="rounded-lg! font-montserrat! text-xs font-medium whitespace-nowrap shadow-lg! active:scale-95! sm:text-sm px-10! py-3!"
-              >
-                Request Callback
-              </ShinyButton>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </Portal>
-
-      <CallbackModal
-        isOpen={isCallbackModalOpen}
-        onClose={() => setIsCallbackModalOpen(false)}
-      />
 
       <EnrollmentModal
         isOpen={isEnrollmentModalOpen}

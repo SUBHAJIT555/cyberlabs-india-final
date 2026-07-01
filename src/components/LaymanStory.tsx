@@ -1,4 +1,4 @@
-import { assetSrc } from "@/lib/utils";
+import { assetSrc, stripLeadingNumber } from "@/lib/utils";
 import { useRef } from "react";
 import { useParams } from "@/lib/react-router";
 import { motion, useInView } from "framer-motion";
@@ -10,9 +10,10 @@ import laymansStoryImage from "@/assets/img/ProgramPageImage/LaymansStory.svg";
 
 // Helper function to highlight the last word(s) in the heading
 const getHighlightedHeading = (heading: string) => {
-    const words = heading.split(" ");
+    const text = stripLeadingNumber(heading);
+    const words = text.split(" ");
     if (words.length <= 1) {
-        return <span className="text-text-primary">{heading}</span>;
+        return <span className="text-text-primary">{text}</span>;
     }
     // Highlight the last word
     const lastWord = words[words.length - 1];

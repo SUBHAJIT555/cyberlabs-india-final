@@ -34,6 +34,8 @@ export interface ShuffleProps {
   respectReducedMotion?: boolean;
   triggerOnHover?: boolean;
   hoverTarget?: "self" | "parent-group";
+  /** Run immediately on mount instead of waiting for scroll (e.g. inside drawers). */
+  playOnMount?: boolean;
 }
 
 export default function Shuffle({
@@ -61,6 +63,7 @@ export default function Shuffle({
   respectReducedMotion = true,
   triggerOnHover = true,
   hoverTarget = "self",
+  playOnMount = false,
 }: ShuffleProps) {
   const ref = useRef<HTMLElement>(null);
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -377,19 +380,33 @@ export default function Shuffle({
         hoverCleanupRef.current = () => target.removeEventListener("mouseenter", handler);
       };
 
-      const create = () => {
+      const create = (options?: { skipPlay?: boolean }) => {
         build();
         if (scrambleCharset) randomizeScrambles();
+        if (options?.skipPlay) {
+          setReady(true);
+          armHover();
+          return;
+        }
         play();
         armHover();
         setReady(true);
       };
 
+      if (playOnMount) {
+        create({ skipPlay: true });
+        return () => {
+          removeHover();
+          teardown();
+          setReady(false);
+        };
+      }
+
       const st = ScrollTrigger.create({
         trigger: el,
         start,
         once: triggerOnce,
-        onEnter: create,
+        onEnter: () => create(),
       });
 
       return () => {
@@ -420,6 +437,7 @@ export default function Shuffle({
         respectReducedMotion,
         triggerOnHover,
         hoverTarget,
+        playOnMount,
         onShuffleComplete,
       ],
       scope: ref,
@@ -436,8 +454,8 @@ export default function Shuffle({
     [textAlign, style],
   );
   const classes = useMemo(
-    () => cn(baseTw, ready ? "visible" : "invisible", className),
-    [baseTw, ready, className],
+    () => cn(baseTw, playOnMount || ready ? "visible" : "invisible", className),
+    [baseTw, playOnMount, ready, className],
   );
   const Tag = (tag || "p") as keyof React.JSX.IntrinsicElements;
 

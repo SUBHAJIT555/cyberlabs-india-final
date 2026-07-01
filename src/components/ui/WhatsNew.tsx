@@ -1,7 +1,7 @@
 import { useCourses } from "@/hooks/useCourses";
 import type { Card, Feature } from "@/interface/program";
 import { useParams } from "@/lib/react-router";
-import { parseBoldText, assetSrc } from "@/lib/utils";
+import { parseBoldText, assetSrc, stripLeadingNumber } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef } from "react";
@@ -153,7 +153,7 @@ const WhatsNew = () => {
       {/* Heading */}
       <div className="md:px-6 lg:px-8 mb-8 sm:mb-10 lg:mb-12">
         <h3 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-montserrat font-bold tracking-tight text-text-primary leading-tight">
-          {data?.heading.title}
+          {data?.heading.title ? stripLeadingNumber(data.heading.title) : null}
         </h3>
       </div>
 

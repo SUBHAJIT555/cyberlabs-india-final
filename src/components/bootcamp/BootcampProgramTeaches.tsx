@@ -1,205 +1,262 @@
+"use client";
+
+import type { ReactNode, RefObject } from "react";
 import { useRef } from "react";
-import { motion, useInView, type Variants } from "framer-motion";
+import { cn } from "@/lib/utils";
 import { usePageDetail } from "@/hooks/useProgramDetail";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { AnimatedHeading } from "@/components/ui/animated-heading";
-import { AnimatedList } from "@/components/ui/animated-list";
-import type { AnimatedListItem } from "@/components/ui/animated-list";
+import { TimelineContent } from "@/components/ui/timeline-animation";
+import ShinyText from "@/components/ui/ShinyText";
+import GradientText from "@/components/ui/GradientText";
+import {
+  LandingSectionShell,
+  landingRevealVariants,
+  landingSectionHeadingClass,
+  LANDING_GRADIENT_COLORS,
+} from "@/components/ui/landing-section";
 
-const VerticalStripesBg = ({
-    lineColor,
-    opacity = 0.22,
-}: {
-    lineColor: string;
-    opacity?: number;
-}) => (
-    <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden>
+const revealVariants = {
+  visible: (i: number) => ({
+    y: 0,
+    opacity: 1,
+    filter: "blur(0px)",
+    transition: {
+      delay: i * 0.1,
+      duration: 0.45,
+    },
+  }),
+  hidden: {
+    filter: "blur(10px)",
+    y: 16,
+    opacity: 0,
+  },
+};
+
+function CardGridBackground({ variant = "light" }: { variant?: "light" | "dark" }) {
+  const lineColor = variant === "dark" ? "#52525b" : "#e5e5e5";
+
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0 z-0"
+      style={{
+        backgroundImage: `repeating-linear-gradient(45deg, ${lineColor} 0, ${lineColor} 1px, transparent 0, transparent 50%), repeating-linear-gradient(-45deg, ${lineColor} 0, ${lineColor} 1px, transparent 0, transparent 50%)`,
+        backgroundSize: "6px 6px",
+        opacity: variant === "dark" ? 0.35 : 0.4,
+      }}
+    />
+  );
+}
+
+type TopicCardProps = {
+  eyebrow: string;
+  title: string;
+  intro?: ReactNode;
+  items: string[];
+  footer?: string;
+  featured?: boolean;
+  animationNum: number;
+  timelineRef: RefObject<HTMLDivElement | null>;
+};
+
+function TopicCard({
+  eyebrow,
+  title,
+  intro,
+  items,
+  footer,
+  featured = false,
+  animationNum,
+  timelineRef,
+}: TopicCardProps) {
+  return (
+    <TimelineContent
+      as="article"
+      animationNum={animationNum}
+      timelineRef={timelineRef}
+      customVariants={revealVariants}
+      className={cn(
+        "group relative flex h-full flex-col overflow-hidden border border-dashed p-7 transition-shadow duration-300 md:p-8",
+        featured
+          ? "border-zinc-700 bg-zinc-900 text-white shadow-xl shadow-zinc-900/15"
+          : "border-neutral-200 bg-neutral-50 shadow-sm hover:shadow-md",
+      )}
+    >
+      <CardGridBackground variant={featured ? "dark" : "light"} />
+
+      <div className="relative z-10">
+        <span
+          className={cn(
+            "inline-flex items-center gap-2 rounded-lg border px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em]",
+            featured
+              ? "border-zinc-700 bg-zinc-800/80"
+              : "border-dotted border-zinc-200 bg-zinc-50",
+          )}
+        >
+          <span
+            className={cn(
+              "h-1.5 w-1.5 rounded-full",
+              featured ? "bg-blue-400" : "bg-blue-500",
+            )}
+          />
+          <GradientText
+            className="text-xs font-semibold uppercase tracking-[0.14em]"
+            colors={
+              featured
+                ? ["#a1a1aa", "#60a5fa", "#d4d4d8", "#3b82f6", "#a1a1aa"]
+                : [...LANDING_GRADIENT_COLORS]
+            }
+            animationSpeed={4}
+            direction="horizontal"
+            showBorder={false}
+            pauseOnHover={false}
+          >
+            {eyebrow}
+          </GradientText>
+        </span>
+
+        <h2 className="mt-5 text-pretty">
+          <ShinyText
+            text={title}
+            className="text-xl font-semibold leading-tight tracking-tight sm:text-2xl md:text-3xl"
+            color={featured ? "#e4e4e7" : "#3f3f46"}
+            shineColor={featured ? "#ffffff" : "#18181b"}
+            speed={3}
+            spread={120}
+          />
+        </h2>
+
+        {intro ? (
+          <div
+            className={cn(
+              "mt-4 text-sm leading-relaxed md:text-base",
+              featured ? "text-zinc-400" : "text-zinc-600",
+            )}
+          >
+            {intro}
+          </div>
+        ) : null}
+      </div>
+
+      <div
+        className={cn(
+          "relative z-10 my-6 h-px w-full",
+          featured ? "bg-zinc-800" : "bg-zinc-200",
+        )}
+      />
+
+      <ul className="relative z-10 flex-1 space-y-3">
+        {items.map((item) => (
+          <li key={item} className="flex items-start gap-3">
+            <span
+              className={cn(
+                "mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-xs",
+                featured
+                  ? "bg-emerald-500/15 text-emerald-400"
+                  : "bg-emerald-50 text-emerald-600",
+              )}
+            >
+              ✔
+            </span>
+            <span
+              className={cn(
+                "text-sm leading-relaxed md:text-base",
+                featured ? "text-zinc-300" : "text-zinc-700",
+              )}
+            >
+              {item}
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      {footer ? (
         <div
-            className="absolute inset-0"
-            style={{
-                WebkitMaskImage: "linear-gradient(to top, #000 0%, transparent 80%)",
-                maskImage: "linear-gradient(to top, #000 0%, transparent 80%)",
-                backgroundImage: `linear-gradient(90deg, ${lineColor} 1px, transparent 1px)`,
-                backgroundSize: "4px 100%",
-                opacity,
-            }}
-        />
-    </div>
-);
+          className={cn(
+            "relative z-10 mt-8 rounded-2xl border px-4 py-3.5 text-center text-sm font-medium leading-relaxed md:text-base",
+            featured
+              ? "border-zinc-700 bg-zinc-800/80 text-zinc-200"
+              : "border-dashed border-zinc-200 bg-zinc-50 text-zinc-800",
+          )}
+        >
+          {footer}
+        </div>
+      ) : null}
+    </TimelineContent>
+  );
+}
+
 const BootcampProgramTeaches = () => {
-    const programTeaches = usePageDetail()?.programTeaches;
+  const programTeaches = usePageDetail()?.programTeaches;
+  const timelineRef = useRef<HTMLDivElement>(null);
 
-    const containerRef = useRef(null);
-    const headingRef = useRef<HTMLDivElement>(null);
-    const isInView = useInView(containerRef, { once: false, margin: "-100px" });
-    const headingInView = useInView(headingRef, { once: false, margin: "-100px" });
+  if (!programTeaches) return null;
 
-    if (!programTeaches) return null;
+  const {
+    whatYouLearn,
+    whatYouLearnNote,
+    readinessIntro,
+    readinessSubheading,
+    readinessPoints,
+    closingStatement,
+  } = programTeaches;
 
-    const {
-        whatYouLearn,
-        whatYouLearnNote,
-        readinessIntro,
-        readinessSubheading,
-        readinessPoints,
-        closingStatement,
-    } = programTeaches;
+  const readinessIntroContent =
+    readinessIntro || readinessSubheading ? (
+      <>
+        {readinessIntro && <p>{readinessIntro}</p>}
+        {readinessSubheading && (
+          <p
+            className={cn(
+              readinessIntro && "mt-3",
+              "font-semibold text-zinc-200",
+            )}
+          >
+            {readinessSubheading}
+          </p>
+        )}
+      </>
+    ) : undefined;
 
-    const containerVariants: Variants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: { staggerChildren: 0.15, delayChildren: 0.1 },
-        },
-    };
+  return (
+    <LandingSectionShell>
+      <div ref={timelineRef}>
+        <TimelineContent
+          as="h2"
+          animationNum={0}
+          timelineRef={timelineRef}
+          customVariants={landingRevealVariants}
+        >
+          <h2 className={landingSectionHeadingClass}>
+            <span className="text-zinc-800">What the Program Teaches You &</span>
+            <br />
+            <span className="text-blue-600">Your Career Readiness</span>
+          </h2>
+        </TimelineContent>
 
-    const itemVariants: Variants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.6, ease: "easeOut" },
-        },
-    };
+        <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
+          <TopicCard
+            eyebrow="Skills"
+            title="What You Learn"
+            items={whatYouLearn}
+            footer={whatYouLearnNote}
+            animationNum={1}
+            timelineRef={timelineRef}
+          />
 
-    return (
-        <section ref={containerRef} className="w-full text-text-primary py-6 md:py-10">
-            <div className="mx-auto px-4 sm:px-6 md:px-8 lg:px-16 xl:px-25">
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="space-y-8 md:space-y-12"
-                >
-                    <div ref={headingRef} className="mb-2">
-                        <AnimatedHeading
-                            inView={headingInView}
-                            lines={[
-                                {
-                                    text: "What the Program Teaches You &",
-                                    className:
-                                        "text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-text-primary font-inter-display font-semibold tracking-tight leading-tight",
-                                    as: "h2",
-                                },
-                                {
-                                    text: "Your Career Readiness",
-                                    className:
-                                        "text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-primary font-inter-display font-semibold tracking-tight leading-tight",
-                                    as: "h2",
-                                    startDelay: 0.15,
-                                },
-                            ]}
-                        />
-                    </div>
-
-                    <motion.div
-                        variants={containerVariants}
-                        initial="hidden"
-                        animate={isInView ? "visible" : "hidden"}
-                        className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 py-6 md:py-10"
-                    >
-                        <motion.div variants={itemVariants}>
-                            <Card className="relative h-full border border-neutral-200 bg-white shadow-sm overflow-hidden">
-                                <VerticalStripesBg lineColor="#d4d4d8" opacity={0.22} />
-                                <CardHeader className="relative z-10 p-6 md:p-8">
-                                    <h3 className="text-xl sm:text-2xl md:text-3xl font-inter-display font-semibold tracking-tight text-text-primary mb-4">
-                                        What You Learn
-                                    </h3>
-                                    <AnimatedList
-                                        items={whatYouLearn.map(
-                                            (item): AnimatedListItem => ({
-                                                text: item,
-                                                icon: (
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        width="24"
-                                                        height="24"
-                                                        viewBox="0 0 24 24"
-                                                        fill="none"
-                                                        stroke="currentColor"
-                                                        strokeWidth="2"
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        className="w-5 h-5 sm:w-6 sm:h-6 text-primary"
-                                                        aria-hidden
-                                                    >
-                                                        <path d="M9 12l2 2l4 -4" />
-                                                    </svg>
-                                                ),
-                                            }),
-                                        )}
-                                        viewportOnce={false}
-                                        boldText={false}
-                                        containerClassName="space-y-3 sm:space-y-4"
-                                        itemClassName="flex items-start gap-2 sm:gap-3 pb-3 sm:pb-4 border-b border-neutral-200 last:border-b-0 last:pb-0"
-                                        contentClassName="text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-relaxed"
-                                        iconClassName="mt-0.5 shrink-0 text-blue-600"
-                                    />
-                                    {whatYouLearnNote && (
-                                        <p className="mt-4 text-sm sm:text-base md:text-lg font-inter-display font-semibold text-text-primary leading-relaxed">
-                                            {whatYouLearnNote}
-                                        </p>
-                                    )}
-                                </CardHeader>
-                            </Card>
-                        </motion.div>
-
-                        <motion.div variants={itemVariants}>
-                            <Card className="relative h-full border border-neutral-600 bg-text-primary shadow-sm overflow-hidden">
-                                <VerticalStripesBg lineColor="rgba(255, 255, 255, 0.25)" opacity={0.28} />
-                                <CardHeader className="relative z-10 p-6 md:p-8">
-                                    <h3 className="text-xl sm:text-2xl md:text-3xl font-inter-display font-semibold tracking-tight text-white mb-4">
-                                        Your Readiness After Completion
-                                    </h3>
-                                    {readinessIntro && (
-                                        <p className="text-sm sm:text-base md:text-lg font-inter-display font-medium text-neutral-100 leading-relaxed mb-4">
-                                            {readinessIntro}
-                                        </p>
-                                    )}
-                                    {readinessSubheading && (
-                                        <p className="text-base sm:text-lg md:text-xl font-inter-display font-semibold text-white mb-4">
-                                            {readinessSubheading}
-                                        </p>
-                                    )}
-                                    <AnimatedList
-                                        items={readinessPoints.map(
-                                            (point, index): AnimatedListItem => ({
-                                                text: point,
-                                                icon: (
-                                                    <span className="text-white font-semibold text-sm sm:text-base tabular-nums">
-                                                        {index + 1}.
-                                                    </span>
-                                                ),
-                                            }),
-                                        )}
-                                        viewportOnce={false}
-                                        boldText={false}
-                                        containerClassName="space-y-3 sm:space-y-4"
-                                        itemClassName="flex items-start gap-2 sm:gap-3 pb-3 sm:pb-4 border-b border-neutral-600 last:border-b-0 last:pb-0"
-                                        contentClassName="text-sm sm:text-base md:text-lg font-inter-display font-medium text-neutral-100 leading-relaxed"
-                                        iconClassName="shrink-0 pt-0.5 text-blue-600"
-                                    />
-                                </CardHeader>
-                                <CardContent className="relative z-10 p-6 md:p-8 pt-0">
-                                    <motion.p
-                                        className="text-sm sm:text-base md:text-lg font-inter-display font-semibold text-white leading-relaxed pt-4 border-t border-neutral-600 border-dashed"
-                                        initial={{ opacity: 0, y: 10 }}
-                                        animate={
-                                            isInView
-                                                ? { opacity: 1, y: 0 }
-                                                : { opacity: 0, y: 10 }
-                                        }
-                                        transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
-                                    >
-                                        {closingStatement}
-                                    </motion.p>
-                                </CardContent>
-                            </Card>
-                        </motion.div>                    </motion.div>
-                </motion.div>
-            </div>
-        </section>
-    );
+          <TopicCard
+            eyebrow="Readiness"
+            title="Your Readiness After Completion"
+            intro={readinessIntroContent}
+            items={readinessPoints}
+            footer={closingStatement}
+            featured
+            animationNum={2}
+            timelineRef={timelineRef}
+          />
+        </div>
+      </div>
+    </LandingSectionShell>
+  );
 };
 
 export default BootcampProgramTeaches;

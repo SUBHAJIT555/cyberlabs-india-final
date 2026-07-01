@@ -5,7 +5,7 @@ import { motion, useInView, useAnimation } from "framer-motion";
 import { useCourses } from "@/hooks/useCourses";
 import { useParams } from "@/lib/react-router";
 import ProgramDeepDive from "../ProgramDeepDive";
-import { parseBoldText } from "@/lib/utils";
+import { parseBoldText, stripLeadingNumber } from "@/lib/utils";
 import { AnimatedHeading } from "./animated-heading";
 import { AnimatedList } from "./animated-list";
 import type { AnimatedListItem } from "./animated-list";
@@ -36,7 +36,9 @@ const Syllabus = () => {
 
   const programDeepDive = getCourseProgramDeepDiveBySlug(slug as string);
 
-  const title = programDeepDive?.title || "Module-Based Mastery (End-to-End)";
+  const title = stripLeadingNumber(
+    programDeepDive?.title || "Module-Based Mastery (End-to-End)",
+  );
 
   useEffect(() => {
     if (headerInView) {

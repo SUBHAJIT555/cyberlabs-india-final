@@ -13,6 +13,11 @@ export function assetSrc(source: string | StaticImageData): string {
   return typeof source === "string" ? source : source.src;
 }
 
+/** Removes leading section numbers like "3. " from headings */
+export function stripLeadingNumber(text: string) {
+  return text.replace(/^\d+\.\s*/, "");
+}
+
 /** Parses text with **bold** markers and returns React nodes (string + <strong>) */
 export function parseBoldText(text: string): React.ReactNode {
   const parts: React.ReactNode[] = [];

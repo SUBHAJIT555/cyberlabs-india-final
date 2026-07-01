@@ -33,6 +33,43 @@ import { useBootcamps } from "@/hooks/useBootcamps";
 import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 import CallbackModal from "./CallbackModal";
 import { CONTACT } from "@/constants/contactInfo";
+import { ExternalLeaveConfirmModal } from "@/components/ui/ExternalLeaveConfirmModal";
+import Shuffle from "@/components/ui/Shuffle";
+import { CandyButton } from "@/components/ui/candy-button";
+
+const WEBINAR_URL = "https://webinar.cyberlabs-india.com/";
+const WEBINAR_LEAVE_MESSAGE =
+    "You are about to visit our dedicated webinar registration page, where you can sign up for free cybersecurity career guidance sessions.";
+
+const socialCandyClass = "h-10 w-10 px-0! py-0!";
+
+const drawerSocialLinks = [
+    {
+        href: "https://www.instagram.com/cyberlabsindia",
+        label: "Instagram",
+        icon: FaInstagram,
+    },
+    {
+        href: "https://www.facebook.com/profile.php?id=61587196465882",
+        label: "Facebook",
+        icon: FaFacebookF,
+    },
+    {
+        href: "https://www.youtube.com/@cyberlabsindiabycyveritas-y7h",
+        label: "YouTube",
+        icon: YouTubeIcon,
+    },
+    {
+        href: "https://www.linkedin.com/company/cyberlabs-india/",
+        label: "LinkedIn",
+        icon: FaLinkedinIn,
+    },
+    {
+        href: "https://wa.me/971504602632",
+        label: "WhatsApp",
+        icon: FaWhatsapp,
+    },
+] as const;
 
 const drawerItemVariants = {
     hidden: { opacity: 0, y: -8 },
@@ -59,7 +96,7 @@ function NavArrowIcon() {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="translate-x-[-3px] opacity-0 transition duration-200 group-hover:translate-x-0 group-hover:opacity-100"
+            className="h-3.5 w-3.5 shrink-0 -translate-x-1 text-blue-600 opacity-0 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0 group-hover:opacity-100"
             aria-hidden="true"
         >
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -70,6 +107,54 @@ function NavArrowIcon() {
     );
 }
 
+function DrawerActiveDot() {
+    return (
+        <span className="relative flex h-1.5 w-1.5 shrink-0" aria-hidden="true">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-zinc-500 opacity-60" />
+            <span className="relative inline-flex h-1.5 w-1.5 animate-pulse rounded-full bg-zinc-700" />
+        </span>
+    );
+}
+
+type DrawerNavItemData = { name: string; path: string };
+
+function DrawerNavItem({
+    item,
+    index,
+    active,
+    onNavigate,
+}: {
+    item: DrawerNavItemData;
+    index: number;
+    active: boolean;
+    onNavigate: () => void;
+}) {
+    return (
+        <motion.div
+            key={item.name}
+            custom={index}
+            initial="hidden"
+            animate="visible"
+            variants={drawerItemVariants}
+        >
+            <Link to={item.path} onClick={onNavigate} className="block w-full">
+                <div
+                    className={cn(
+                        "group flex w-full items-center gap-2.5 rounded-md px-2 py-2 text-sm transition md:text-base",
+                        active ? "font-semibold text-zinc-900" : "font-medium text-zinc-700",
+                    )}
+                >
+                    {active ? <DrawerActiveDot /> : null}
+                    <span className="inline-flex min-w-0 max-w-full items-center gap-1">
+                        <span className="truncate">{item.name}</span>
+                        <NavArrowIcon />
+                    </span>
+                </div>
+            </Link>
+        </motion.div>
+    );
+}
+
 const Navbar: React.FC = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -77,6 +162,7 @@ const Navbar: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [activeCommandUrl, setActiveCommandUrl] = useState<string | null>(null);
     const [isCallbackModalOpen, setIsCallbackModalOpen] = useState(false);
+    const [isWebinarLeaveConfirmOpen, setIsWebinarLeaveConfirmOpen] = useState(false);
 
     const commandInputRef = useRef<HTMLInputElement | null>(null);
     const commandScrollRef = useRef<HTMLDivElement | null>(null);
@@ -109,7 +195,12 @@ const Navbar: React.FC = () => {
         { name: "Refund & Cancellation", path: "/refund-and-cancellation" },
     ];
 
-    // Handle scroll styling (backdrop blur when scrolled)
+    const handleWebinarContinue = () => {
+        setIsWebinarLeaveConfirmOpen(false);
+        setIsSidebarOpen(false);
+        window.open(WEBINAR_URL, "_blank", "noopener,noreferrer");
+    };
+
     useEffect(() => {
         if (!lenis) return;
 
@@ -278,20 +369,20 @@ const Navbar: React.FC = () => {
                         <div className="flex items-center gap-2.5 sm:gap-3">
                             <div className="hidden lg:block">
                                 <InputGroup
-                                    className="w-full max-w-xs cursor-pointer rounded-xl border border-dashed border-zinc-200 bg-zinc-50/60 ring-0 ring-offset-0 focus-within:border-zinc-400 focus-within:bg-white focus-within:ring-2 focus-within:ring-zinc-200/80"
+                                    className="w-full max-w-sm cursor-pointer rounded-xl border border-zinc-300 bg-white shadow-sm ring-0 ring-offset-0 transition-[border-color,box-shadow,background-color] hover:border-zinc-400 hover:shadow-md focus-within:border-blue-600/50 focus-within:bg-white focus-within:ring-2 focus-within:ring-blue-600/15"
                                     onClick={() => setIsCommandOpen(true)}
                                 >
                                     <InputGroupAddon>
-                                        <SearchIcon className="w-4 h-4 text-zinc-500" />
+                                        <SearchIcon className="w-4 h-4 text-zinc-600" />
                                     </InputGroupAddon>
                                     <InputGroupInput
                                         placeholder="Search..."
                                         readOnly
-                                        className="text-zinc-900 placeholder:text-zinc-400"
+                                        className="text-zinc-900 placeholder:text-zinc-500"
                                     />
                                     <InputGroupAddon align="inline-end">
-                                        <Kbd>⌘</Kbd>
-                                        <Kbd>K</Kbd>
+                                        <Kbd className="border-zinc-300 bg-zinc-50 text-zinc-600">⌘</Kbd>
+                                        <Kbd className="border-zinc-300 bg-zinc-50 text-zinc-600">K</Kbd>
                                     </InputGroupAddon>
                                 </InputGroup>
                             </div>
@@ -386,105 +477,106 @@ const Navbar: React.FC = () => {
                                     </DrawerHeader>
 
                                     <DrawerBody className="px-4 py-6 bg-transparent">
-                                        <nav className="w-full">
-                                            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-800">
-                                                Menu
-                                            </p>
-                                            <div className="mt-2 border-t border-dashed border-zinc-200 pt-3">
-                                                <div className="flex flex-col gap-1">
-                                                    {navigationItems.map((item, index) => {
-                                                        const active = isActive(item.path);
-                                                        return (
-                                                            <motion.div
+                                        <nav className="w-full space-y-6">
+                                            <div>
+                                                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-800">
+                                                    Menu
+                                                </p>
+                                                <div className="mt-2 border-t border-dashed border-zinc-200 pt-3">
+                                                    <div className="flex flex-col gap-1">
+                                                        {navigationItems.map((item, index) => (
+                                                            <DrawerNavItem
                                                                 key={item.name}
-                                                                custom={index}
-                                                                initial="hidden"
-                                                                animate="visible"
-                                                                variants={drawerItemVariants}
-                                                            >
-                                                                <Link
-                                                                    to={item.path}
-                                                                    onClick={() => setIsSidebarOpen(false)}
-                                                                    className="block w-full"
-                                                                >
-                                                                    <div
-                                                                        className={cn(
-                                                                            "group flex w-full items-center justify-between rounded-md px-2 py-2 text-sm font-medium transition md:text-base",
-                                                                            active
-                                                                                ? "bg-white text-zinc-900 shadow-sm ring-1 ring-zinc-200"
-                                                                                : "text-zinc-700 hover:bg-white/70 hover:text-zinc-900",
-                                                                        )}
-                                                                    >
-                                                                        <span className="truncate">{item.name}</span>
-                                                                        <NavArrowIcon />
-                                                                    </div>
-                                                                </Link>
-                                                            </motion.div>
-                                                        );
-                                                    })}
+                                                                item={item}
+                                                                index={index}
+                                                                active={isActive(item.path)}
+                                                                onNavigate={() => setIsSidebarOpen(false)}
+                                                            />
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-800">
+                                                    Legal
+                                                </p>
+                                                <div className="mt-2 border-t border-dashed border-zinc-200 pt-3">
+                                                    <div className="flex flex-col gap-1">
+                                                        {legalItems.map((item, index) => (
+                                                            <DrawerNavItem
+                                                                key={item.name}
+                                                                item={item}
+                                                                index={index}
+                                                                active={isActive(item.path)}
+                                                                onNavigate={() => setIsSidebarOpen(false)}
+                                                            />
+                                                        ))}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </nav>
                                     </DrawerBody>
 
                                     <DrawerFooter className="flex flex-col gap-4 border-t border-zinc-200 border-dashed bg-transparent">
+                                        <button
+                                            type="button"
+                                            onClick={() => setIsWebinarLeaveConfirmOpen(true)}
+                                            className="group flex w-full items-center justify-center gap-1.5 px-3 py-2.5 text-center transition hover:border-zinc-300 md:text-base cursor-pointer"
+                                        >
+                                            <Shuffle
+                                                text="Free Cybersecurity Webinars"
+                                                tag="span"
+                                                textAlign="center"
+                                                className="text-sm font-bold text-zinc-800 md:text-base"
+                                                playOnMount={true}
+                                                triggerOnHover={true}
+                                                hoverTarget="parent-group"
+                                                triggerOnce={true}
+                                                shuffleDirection="right"
+                                                duration={0.28}
+                                                stagger={0.02}
+                                            />
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                className="icon icon-tabler icons-tabler-outline icon-tabler-external-link h-4 w-4 shrink-0 text-zinc-500 transition group-hover:text-zinc-800"
+                                                aria-hidden
+                                            >
+                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
+                                                <path d="M11 13l9 -9" />
+                                                <path d="M15 4h5v5" />
+                                            </svg>
+                                        </button>
+
                                         {/* Social Links */}
-                                        <div className="flex items-center justify-center gap-4">
-                                            <motion.a
-                                                href="https://www.instagram.com/cyberlabsindia"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-dashed border-zinc-200 bg-white text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900"
-                                                whileHover={{ scale: 1.1 }}
-                                                whileTap={{ scale: 0.9 }}
-                                                aria-label="Instagram"
-                                            >
-                                                <FaInstagram className="w-5 h-5" />
-                                            </motion.a>
-                                            <motion.a
-                                                href="https://www.facebook.com/profile.php?id=61587196465882"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-dashed border-zinc-200 bg-white text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900"
-                                                whileHover={{ scale: 1.1 }}
-                                                whileTap={{ scale: 0.9 }}
-                                                aria-label="Facebook"
-                                            >
-                                                <FaFacebookF className="w-5 h-5" />
-                                            </motion.a>
-                                            <motion.a
-                                                href="https://www.youtube.com/@cyberlabsindiabycyveritas-y7h"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-dashed border-zinc-200 bg-white text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900"
-                                                whileHover={{ scale: 1.1 }}
-                                                whileTap={{ scale: 0.9 }}
-                                                aria-label="YouTube"
-                                            >
-                                                <YouTubeIcon className="w-5 h-5" />
-                                            </motion.a>
-                                            <motion.a
-                                                href="https://www.linkedin.com/company/cyberlabs-india/"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-dashed border-zinc-200 bg-white text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900"
-                                                whileHover={{ scale: 1.1 }}
-                                                whileTap={{ scale: 0.9 }}
-                                                aria-label="LinkedIn"
-                                            >
-                                                <FaLinkedinIn className="w-5 h-5" />
-                                            </motion.a>
-                                            <motion.a
-                                                href="https://wa.me/971504602632"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-dashed border-zinc-200 bg-white text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-900"
-                                                whileHover={{ scale: 1.1 }}
-                                                whileTap={{ scale: 0.9 }}
-                                                aria-label="WhatsApp"
-                                            >
-                                                <FaWhatsapp className="w-5 h-5" />
-                                            </motion.a>
+                                        <div className="flex items-center justify-center gap-3 sm:gap-4">
+                                            {drawerSocialLinks.map(({ href, label, icon: Icon }) => (
+                                                <motion.div
+                                                    key={label}
+                                                    whileHover={{ scale: 1.08 }}
+                                                    whileTap={{ scale: 0.92 }}
+                                                >
+                                                    <CandyButton
+                                                        href={href}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        aria-label={label}
+                                                        variant="white"
+                                                        className={socialCandyClass}
+                                                    >
+                                                        <Icon className="h-5 w-5" />
+                                                    </CandyButton>
+                                                </motion.div>
+                                            ))}
                                         </div>
 
                                         {/* Copyright */}
@@ -1157,6 +1249,16 @@ const Navbar: React.FC = () => {
             <CallbackModal
                 isOpen={isCallbackModalOpen}
                 onClose={() => setIsCallbackModalOpen(false)}
+            />
+
+            <ExternalLeaveConfirmModal
+                open={isWebinarLeaveConfirmOpen}
+                onClose={() => setIsWebinarLeaveConfirmOpen(false)}
+                onConfirm={handleWebinarContinue}
+                message={WEBINAR_LEAVE_MESSAGE}
+                destination="webinar.cyberlabs-india.com"
+                confirmLabel="Continue to Webinars"
+                cancelLabel="Stay on CYBERLABS"
             />
         </>
     );

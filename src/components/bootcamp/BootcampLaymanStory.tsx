@@ -1,97 +1,99 @@
-import { assetSrc } from "@/lib/utils";
+"use client";
+
+import { assetSrc, stripLeadingNumber } from "@/lib/utils";
 import { useRef } from "react";
-import { motion, useInView, type Variants } from "framer-motion";
 import { usePageDetail } from "@/hooks/useProgramDetail";
 import laymansStoryImage from "@/assets/img/ProgramPageImage/LaymansStory.svg";
-
-const getHighlightedHeading = (heading: string) => {
-    const words = heading.split(" ");
-    if (words.length <= 1) {
-        return <span className="text-text-primary">{heading}</span>;
-    }
-    const lastWord = words[words.length - 1];
-    const restOfHeading = words.slice(0, words.length - 1).join(" ");
-
-    return (
-        <>
-            <span className="text-text-primary">{restOfHeading}</span>{" "}
-            <span className="text-primary">{lastWord}</span>
-        </>
-    );
-};
+import { TimelineContent } from "@/components/ui/timeline-animation";
+import ShinyText from "@/components/ui/ShinyText";
+import {
+  LandingSectionShell,
+  LandingBento,
+  LandingBentoRow,
+  LandingBentoCell,
+  landingRevealVariants,
+  landingSectionHeadingClass,
+} from "@/components/ui/landing-section";
 
 const BootcampLaymanStory = () => {
-    const layman = usePageDetail()?.laymanExplanation;
+  const layman = usePageDetail()?.laymanExplanation;
+  const timelineRef = useRef<HTMLDivElement>(null);
 
-    const containerRef = useRef(null);
-    const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+  if (!layman) return null;
 
-    const itemVariants: Variants = {
-        hidden: { opacity: 0, y: 30 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.8, ease: "easeOut" },
-        },
-    };
+  const heading = stripLeadingNumber(layman.heading);
+  const words = heading.split(" ");
+  const lastWord = words.length > 1 ? words[words.length - 1] : "";
+  const restOfHeading = words.length > 1 ? words.slice(0, words.length - 1).join(" ") : heading;
 
-    if (!layman) return null;
+  return (
+    <LandingSectionShell>
+      <div ref={timelineRef}>
+        <LandingBento className="border-y border-zinc-200">
+          <LandingBentoRow columns={2}>
+            <LandingBentoCell className="order-2 px-0 md:order-1 md:px-0 md:pr-8">
+              <TimelineContent
+                as="h3"
+                animationNum={0}
+                timelineRef={timelineRef}
+                customVariants={landingRevealVariants}
+              >
+                {words.length <= 1 ? (
+                  <ShinyText
+                    text={heading}
+                    className={landingSectionHeadingClass}
+                    color="#3f3f46"
+                    shineColor="#18181b"
+                    speed={3}
+                    spread={120}
+                  />
+                ) : (
+                  <h3 className={landingSectionHeadingClass}>
+                    <span className="text-zinc-800">{restOfHeading}</span>{" "}
+                    <span className="text-blue-600">{lastWord}</span>
+                  </h3>
+                )}
+              </TimelineContent>
 
-    return (
-        <motion.section
-            ref={containerRef}
-            className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 py-4 sm:py-8 md:py-10 overflow-hidden"
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-        >
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
-                <motion.div variants={itemVariants} className="relative z-10 order-2 lg:order-1">
-                    <div className="relative">
-                        <motion.h3
-                            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display font-bold tracking-tight leading-tight mb-4 sm:mb-6 md:mb-8 text-left"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-                        >
-                            {getHighlightedHeading(layman.heading)}
-                        </motion.h3>
-                        <div className="border-t border-neutral-300 my-4" />
+              <div className="my-4 border-t border-zinc-200" />
 
-                        <div className="space-y-5 sm:space-y-6 md:space-y-7">
-                            {layman.lines.map((line, index) => (
-                                <motion.p
-                                    key={index}
-                                    className="text-base sm:text-lg md:text-xl font-inter-display font-medium text-text-primary leading-relaxed"
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={
-                                        isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }
-                                    }
-                                    transition={{
-                                        duration: 0.6,
-                                        delay: 0.3 + index * 0.08,
-                                        ease: "easeOut",
-                                    }}
-                                >
-                                    {line}
-                                </motion.p>
-                            ))}
-                        </div>
-                    </div>
-                </motion.div>
+              <TimelineContent
+                as="div"
+                animationNum={1}
+                timelineRef={timelineRef}
+                customVariants={landingRevealVariants}
+                className="space-y-5 sm:space-y-6 md:space-y-7"
+              >
+                {layman.lines.map((line, index) => (
+                  <p
+                    key={index}
+                    className="text-sm font-medium leading-relaxed text-zinc-700 md:text-base lg:text-lg"
+                  >
+                    {line}
+                  </p>
+                ))}
+              </TimelineContent>
+            </LandingBentoCell>
 
-                <motion.div
-                    variants={itemVariants}
-                    className="relative z-10 order-1 lg:order-2 flex items-center justify-center"
-                >
-                    <img
-                        src={assetSrc(laymansStoryImage)}
-                        alt="Layman's explanation illustration"
-                        className="w-full max-w-[420px] sm:max-w-[480px] md:max-w-[520px] lg:max-w-[560px] h-auto"
-                    />
-                </motion.div>
-            </div>
-        </motion.section>
-    );
+            <LandingBentoCell className="order-1 flex items-center justify-center px-0 md:order-2 md:px-0 md:pl-8">
+              <TimelineContent
+                as="div"
+                animationNum={2}
+                timelineRef={timelineRef}
+                customVariants={landingRevealVariants}
+              >
+                <img
+                  src={assetSrc(laymansStoryImage)}
+                  alt="Layman's explanation illustration"
+                  className="mx-auto h-auto w-full max-w-[420px] sm:max-w-[480px] md:max-w-[520px] lg:max-w-[560px]"
+                />
+              </TimelineContent>
+            </LandingBentoCell>
+          </LandingBentoRow>
+        </LandingBento>
+      </div>
+    </LandingSectionShell>
+  );
 };
 
 export default BootcampLaymanStory;

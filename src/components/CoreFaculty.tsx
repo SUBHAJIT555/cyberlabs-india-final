@@ -5,6 +5,7 @@ import Portal from "@/components/ui/Portal";
 import { IoClose } from "react-icons/io5";
 import { useLenis } from "../hooks/useLenis";
 import { TimelineContent } from "@/components/ui/timeline-animation";
+import { CandyButton } from "@/components/ui/candy-button";
 import ShinyText from "@/components/ui/ShinyText";
 import {
   LandingSectionShell,
@@ -59,7 +60,7 @@ const TeamMemberCard = ({
             onClick={() => onCardClick(member)}
             whileHover={{ y: -6 }}
             transition={{ type: "spring", stiffness: 320, damping: 26 }}
-            className="group relative flex h-full w-full cursor-pointer flex-col overflow-hidden rounded-xl border border-zinc-200/90 bg-white shadow-md shadow-zinc-900/5 transition-shadow duration-300 hover:border-zinc-300 hover:shadow-xl hover:shadow-zinc-900/10 sm:rounded-2xl"
+            className="group relative flex h-full w-full cursor-pointer flex-col overflow-hidden rounded-none border border-zinc-200/90 bg-white shadow-md shadow-zinc-900/5 transition-shadow duration-300 hover:border-zinc-300 hover:shadow-xl hover:shadow-zinc-900/10"
         >
             <div
                 aria-hidden
@@ -75,7 +76,7 @@ const TeamMemberCard = ({
                 <img
                     src={assetSrc(member.src)}
                     alt={member.alt}
-                    className="h-full w-full object-cover object-[center_15%] grayscale-0 transition-all duration-500 group-hover:scale-[1.03] md:grayscale md:group-hover:grayscale-0 sm:object-top"
+                    className="h-full w-full object-cover object-[center_15%] transition-all duration-500 group-hover:scale-[1.03] sm:object-top"
                 />
                 <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-zinc-900/30 via-transparent to-transparent" />
             </div>
@@ -89,7 +90,7 @@ const TeamMemberCard = ({
                     />
                 </div>
 
-                <div className="flex-1 pt-12 pr-24 transition-[padding] duration-500 ease-out sm:pt-14 sm:pr-28 md:pr-6 md:group-hover:pr-28">
+                <div className="flex-1 pt-12 pr-24 sm:pt-14 sm:pr-28">
                     <div className="flex items-center gap-1.5">
                         <h3 className="truncate text-base font-bold tracking-tight text-zinc-900 sm:text-lg">
                             {member.name}
@@ -101,10 +102,19 @@ const TeamMemberCard = ({
                     </p>
                 </div>
 
-                <span className="absolute bottom-5 right-5 inline-flex translate-y-0 items-center gap-1.5 rounded-full bg-zinc-900 px-4 py-2 text-xs font-medium text-white opacity-100 transition-all duration-500 ease-out group-hover:bg-zinc-800 md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 sm:bottom-6 sm:right-6 sm:text-sm">
-                    View
-                    {CircleArrowUpRightIcon}
-                </span>
+                <CandyButton
+                    type="button"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onCardClick(member);
+                    }}
+                    className="absolute bottom-5 right-5 rounded-lg! border-zinc-800 bg-[radial-gradient(95%_60%_at_50%_75%,#18181b_0%,#27272a_100%)] px-4 py-2 font-montserrat! text-xs font-semibold shadow-none! sm:bottom-6 sm:right-6 sm:px-5 sm:text-sm"
+                >
+                    <span className="inline-flex items-center gap-1.5">
+                        View
+                        {CircleArrowUpRightIcon}
+                    </span>
+                </CandyButton>
             </div>
         </motion.article>
     );
@@ -267,33 +277,7 @@ const CoreFaculty = () => {
                     ))}
                 </div>
 
-                {/* <Parallax
-                    bgImage={groupImage}
-                    strength={400}
-                    className="mt-8 md:mt-12 border border-neutral-300 border-dashed overflow-hidden"
-                    style={{
-                        minHeight: "280px",
-                        height: "75vh",
-                    }}
-                    bgImageAlt="Leadership & Core Faculty"
-                    bgImageStyle={{ objectFit: "cover", objectPosition: "center" }}
-                >
-                    <div
-                        className="relative w-full h-[280px] sm:h-[360px] md:h-[75vh] min-h-[280px] flex flex-col items-end justify-end px-4 sm:px-6 md:px-8 md:pb-8 pb-4"
-                        style={{ minHeight: "280px" }}
-                    >
-                        <h2
-                            className="text-lg md:text-2xl font-inter-display font-semibold text-text-primary px-4 border border-neutral-300 border-dashed rounded leading-tight tracking-tight mb-0 w-fit flex items-center gap-2 z-10"
-                            style={{
-                                background:
-                                    "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                            }}
-                        >
-                            <AnimatedThumbsUpIcon isInView={isInView} />
-                            Leadership & Core Faculty
-                        </h2>
-                    </div>
-                </Parallax> */}
+               
             </div>
 
             {/* Team Member Modal */}
@@ -323,7 +307,7 @@ const CoreFaculty = () => {
                                     transition={{ duration: 0.3 }}
                                 >
                                     <motion.div
-                                        className="relative flex h-[90vh] w-full max-w-6xl flex-col overflow-hidden rounded-xl border border-dashed border-zinc-200 bg-white shadow-xl shadow-zinc-900/10 sm:rounded-2xl"
+                                        className="relative flex h-[90vh] w-full max-w-6xl flex-col overflow-hidden border border-dashed border-zinc-200 bg-white shadow-xl shadow-zinc-900/10"
                                         initial={{ scale: 0.96, y: 24 }}
                                         animate={{ scale: 1, y: 0 }}
                                         exit={{ scale: 0.96, y: 24 }}
@@ -342,12 +326,13 @@ const CoreFaculty = () => {
                                         <div className="relative z-10 flex h-full min-h-0 flex-col">
                                             <div className="shrink-0 border-b border-dashed border-zinc-200 bg-white/80 backdrop-blur-sm">
                                                 <div className="flex items-center justify-between gap-4 px-5 py-4 sm:px-8 sm:py-5">
-                                                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500 sm:text-sm">
+                                                    <p className="text-base font-semibold uppercase tracking-[0.14em] text-blue-600 sm:text-lg">
                                                         {selectedMember.name}
                                                     </p>
+                                               
                                                     <motion.button
                                                         type="button"
-                                                        className="shrink-0 rounded-lg p-2 text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900"
+                                                        className="shrink-0 rounded-lg p-2 text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 cursor-pointer"
                                                         onClick={handleCloseModal}
                                                         whileHover={{ scale: 1.05 }}
                                                         whileTap={{ scale: 0.95 }}
@@ -363,7 +348,7 @@ const CoreFaculty = () => {
                                                     <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 md:grid-cols-12 md:gap-10 lg:gap-12">
                                                         <div className="md:col-span-4">
                                                             <div className="md:sticky md:top-6">
-                                                                <div className="overflow-hidden rounded-xl border border-dashed border-zinc-200 bg-white shadow-sm">
+                                                                <div className="overflow-hidden  border border-dashed border-zinc-200 bg-white shadow-sm">
                                                                     <img
                                                                         src={assetSrc(selectedMember.src)}
                                                                         alt={selectedMember.alt}
@@ -371,7 +356,7 @@ const CoreFaculty = () => {
                                                                     />
                                                                 </div>
 
-                                                                <div className="mt-5 rounded-xl border border-dashed border-zinc-200 bg-white/90 p-4 shadow-sm">
+                                                                <div className="mt-5 border border-dashed border-zinc-200 bg-white/90 p-4 ">
                                                                     <div className="flex items-center gap-1.5">
                                                                         <h3 className="text-base font-bold tracking-tight text-zinc-900 sm:text-lg">
                                                                             {selectedMember.name}
@@ -386,7 +371,7 @@ const CoreFaculty = () => {
                                                         </div>
 
                                                         <div className="md:col-span-8">
-                                                            <div className="rounded-xl border border-dashed border-zinc-200 bg-white/90 p-5 shadow-sm sm:p-6 md:p-8">
+                                                            <div className=" border border-dashed border-zinc-200 bg-white/90 p-5 sm:p-6 md:p-8">
                                                                 {(() => {
                                                                     const description = selectedMember.description;
                                                                     const lines = description.split('\n').filter(line => line.trim() !== '');

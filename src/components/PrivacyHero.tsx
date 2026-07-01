@@ -1,14 +1,10 @@
-import Hero from "./ui/Hero";
-import privacyPolicyHeroImage from "../assets/img/HeroImage/PrivacyPolicyHero.webp";
+import LegalPageHero from "@/components/legal/LegalPageHero";
 
 const PrivacyHero = () => {
   return (
-    <Hero
-      headline="Privacy Policy"
-      subtext="Understanding how we collect, use, and protect your personal information"
-      backgroundImage={privacyPolicyHeroImage}
-      showDivider={false}
-      height="md"
+    <LegalPageHero
+      title="Privacy Policy"
+      subtitle="Understanding how we collect, use, and protect your personal information"
     />
   );
 };

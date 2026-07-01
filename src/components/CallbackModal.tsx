@@ -8,7 +8,7 @@ import { useCourses } from "@/hooks/useCourses";
 import { useBootcamps } from "@/hooks/useBootcamps";
 import type { Course } from "@/interface/program";
 import { crosshatchBgStyle } from "@/constants/bootcampStyles";
-import { ShinyButton } from "@/components/ui/shiny-button";
+import { CandyButton } from "@/components/ui/candy-button";
 import BootcampPriceBlock from "@/components/ui/BootcampPriceBlock";
 import {
   DateTimePickerField,
@@ -435,13 +435,13 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
                     </div>
                   )}
 
-                  <ShinyButton
+                  <CandyButton
                     type="submit"
                     disabled={isSubmitting}
-                    className="mb-1 mt-2 w-full rounded-lg! font-inter-display! text-base sm:text-lg font-medium shadow-lg! active:scale-95! disabled:cursor-not-allowed disabled:opacity-50"
+                    className="mb-1 mt-2 w-full rounded-lg! border-zinc-800 bg-[radial-gradient(95%_60%_at_50%_75%,#18181b_0%,#27272a_100%)] px-8 py-3 font-inter-display! text-base font-semibold shadow-none! sm:text-lg disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {isSubmitting ? "Submitting..." : "Submit"}
-                  </ShinyButton>
+                  </CandyButton>
                 </form>
               </motion.div>
             </motion.div>

@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useCourses } from "@/hooks/useCourses";
 import { useBootcamps } from "@/hooks/useBootcamps";
 import { Course } from "@/interface/program";
-import { ShinyButton } from "@/components/ui/shiny-button";
+import { CandyButton } from "@/components/ui/candy-button";
 import { LandingSectionShell } from "@/components/ui/landing-section";
 import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 import {
@@ -318,13 +318,13 @@ const RequestCallbackForm = () => {
                                     </div>
 
                                     <div className="pt-2">
-                                        <ShinyButton
+                                        <CandyButton
                                             type="submit"
                                             disabled={isSubmitting}
-                                            className="w-full rounded-lg! text-base font-medium shadow-sm! active:scale-95! disabled:cursor-not-allowed disabled:opacity-50"
+                                            className="w-full rounded-lg! border-zinc-800 bg-[radial-gradient(95%_60%_at_50%_75%,#18181b_0%,#27272a_100%)] px-8 py-3 font-inter-display! text-base font-semibold shadow-none! disabled:cursor-not-allowed disabled:opacity-50"
                                         >
                                             {isSubmitting ? "Submitting..." : "Submit Request"}
-                                        </ShinyButton>
+                                        </CandyButton>
                                     </div>
                         </form>
                     </div>

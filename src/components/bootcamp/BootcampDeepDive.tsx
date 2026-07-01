@@ -1,184 +1,150 @@
-import { useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+"use client";
+
+import { useRef } from "react";
 import { usePageDetail } from "@/hooks/useProgramDetail";
-import { AnimatedHeading } from "@/components/ui/animated-heading";
-import { AnimatedList } from "@/components/ui/animated-list";
-import type { AnimatedListItem } from "@/components/ui/animated-list";
+import { TimelineContent } from "@/components/ui/timeline-animation";
+import ShinyText from "@/components/ui/ShinyText";
+import { FaqAccordion } from "@/components/ui/faq-accordion";
+import {
+  LandingSectionShell,
+  LandingBento,
+  LandingBentoCell,
+  landingRevealVariants,
+  landingSectionHeadingClass,
+  landingSectionSubheadingClass,
+} from "@/components/ui/landing-section";
 import { crosshatchBgStyle } from "@/constants/bootcampStyles";
+import { stripLeadingNumber } from "@/lib/utils";
+
 const BootcampDeepDive = () => {
-    const detail = usePageDetail();
-    const deepDive = detail?.deepDive;
+  const detail = usePageDetail();
+  const deepDive = detail?.deepDive;
+  const timelineRef = useRef<HTMLDivElement>(null);
 
-    const headerRef = useRef<HTMLDivElement>(null);
-    const introRef = useRef(null);
-    const headerInView = useInView(headerRef, { once: false, margin: "-100px" });
-    const introInView = useInView(introRef, { once: true, margin: "-100px" });
-    const [openIndex, setOpenIndex] = useState(0);
+  if (!deepDive) return null;
 
-    if (!deepDive) return null;
+  const accordionItems = deepDive.sections.map((section) => ({
+    question: section.title,
+    answer: (
+      <div className="space-y-4 sm:space-y-6">
+        {section.paragraphs?.map((paragraph, paraIdx) => (
+          <p
+            key={paraIdx}
+            className="text-sm leading-relaxed whitespace-pre-line text-zinc-700 md:text-base lg:text-lg"
+          >
+            {paragraph}
+          </p>
+        ))}
+        {section.points && section.points.length > 0 && (
+          <ul className="list-none space-y-2 sm:space-y-3 md:space-y-4">
+            {section.points.map((point, pointIdx) => (
+              <li key={pointIdx} className="flex items-start gap-2 sm:gap-3">
+                <span className="mt-1 shrink-0 text-xs text-blue-600 sm:text-sm">•</span>
+                <span className="text-sm leading-relaxed text-zinc-700 md:text-base lg:text-lg">
+                  {point}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+        {section.closingParagraphs?.map((paragraph, paraIdx) => (
+          <p
+            key={`closing-${paraIdx}`}
+            className="text-sm leading-relaxed whitespace-pre-line text-zinc-700 md:text-base lg:text-lg"
+          >
+            {paragraph}
+          </p>
+        ))}
+      </div>
+    ),
+  }));
 
-    const toggleAccordion = (index: number) => {
-        setOpenIndex((prev) => (prev === index ? -1 : index));
-    };
-
-    return (
-        <div
-            className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-26 py-8 sm:py-12 md:py-16"
-            id="bootcamp-deep-dive"
+  return (
+    <LandingSectionShell id="bootcamp-deep-dive">
+      <div ref={timelineRef}>
+        <TimelineContent
+          as="h3"
+          animationNum={0}
+          timelineRef={timelineRef}
+          customVariants={landingRevealVariants}
         >
-            <div ref={headerRef} className="mb-8">
-                <AnimatedHeading
-                    inView={headerInView}
-                    lines={[
-                        {
-                            text: deepDive.title,
-                            className:
-                                "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display font-medium text-text-primary leading-tight mb-8 sm:leading-none tracking-tight",
-                            as: "h3",
-                        },
-                    ]}
-                />
+          <ShinyText
+            text={stripLeadingNumber(deepDive.title)}
+            className={landingSectionHeadingClass}
+            color="#3f3f46"
+            shineColor="#18181b"
+            speed={3}
+            spread={120}
+          />
+        </TimelineContent>
 
-                <motion.div
-                    ref={introRef}
-                    className="relative border border-neutral-200 rounded-lg w-full overflow-hidden bg-white shadow-sm"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={introInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                >
-                    <div className="absolute inset-0 z-0 pointer-events-none" style={crosshatchBgStyle} />
-                    <div className="relative z-10 p-3 sm:p-4 md:p-4 lg:p-5">
-                        <h4 className="flex items-center gap-2 text-lg sm:text-xl md:text-2xl lg:text-3xl text-text-primary font-inter-display font-bold tracking-tight leading-tight mb-6 sm:mb-8 md:mb-10">
-                            <div className="bg-background shadow-sm rounded-md p-2">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="20"
-                                    height="20"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    className="text-primary shrink-0"
-                                    aria-hidden
-                                >
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                    <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
-                                    <path d="M12 7v5l3 3" />
-                                </svg>
-                            </div>
-                            {deepDive.subtitle}
-                        </h4>
-
-                        <div className="space-y-4 sm:space-y-5 md:space-y-6">
-                            {deepDive.introParagraphs.map((paragraph, index) => (
-                                <p
-                                    key={index}
-                                    className="text-base sm:text-lg md:text-xl font-inter-display text-text-primary font-medium leading-relaxed"
-                                >
-                                    {paragraph}
-                                </p>
-                            ))}
-                        </div>
-                    </div>
-                </motion.div>
-            </div>
-
-            <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: false, margin: "-100px" }}
-                transition={{ duration: 0.6 }}
-                className="flex flex-col divide-y divide-neutral-300 mb-8 sm:mb-10"
+        <LandingBento className="mt-8 border-y border-zinc-200">
+          <LandingBentoCell className="px-0 md:px-0">
+            <TimelineContent
+              as="div"
+              animationNum={1}
+              timelineRef={timelineRef}
+              customVariants={landingRevealVariants}
+              className="relative overflow-hidden  bg-white"
             >
-                {deepDive.sections.map((section, index) => (
-                    <motion.div
-                        key={section.title}
-                        initial={{ opacity: 0, x: -30 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: false, margin: "-80px" }}
-                        transition={{ duration: 0.5, delay: index * 0.05 }}
-                        className="py-3 sm:py-4 group"
+              <div className="pointer-events-none absolute inset-0 z-0" style={crosshatchBgStyle} />
+              <div className="relative z-10 p-4 sm:p-5 md:p-6">
+                <h4 className={`mb-6 flex items-center gap-2 sm:mb-8 ${landingSectionSubheadingClass} text-zinc-900`}>
+                  <div className="rounded-md border border-zinc-200 bg-white p-2 shadow-sm">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="shrink-0 text-blue-600"
+                      aria-hidden
                     >
-                        <button
-                            type="button"
-                            onClick={() => toggleAccordion(index)}
-                            className="w-full flex justify-between items-center text-left focus:outline-none group cursor-pointer"
-                        >
-                            <h4 className="text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl font-montserrat font-medium text-text-primary leading-tight tracking-tighter pr-4">
-                                {section.title}
-                            </h4>
-                            <div className="text-gray-400 flex items-center gap-1 sm:gap-2 font-inter-display shrink-0">
-                                <span className="text-xs sm:text-sm md:text-base lg:text-lg hidden sm:inline">
-                                    {openIndex === index ? "Collapse" : "Expand"}
-                                </span>
-                                {openIndex === index ? (
-                                    <FiChevronUp className="text-lg sm:text-xl" />
-                                ) : (
-                                    <FiChevronDown className="text-lg sm:text-xl" />
-                                )}
-                            </div>
-                        </button>
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+                      <path d="M12 7v5l3 3" />
+                    </svg>
+                  </div>
+                  {deepDive.subtitle}
+                </h4>
 
-                        <motion.div
-                            initial={false}
-                            animate={{
-                                height: openIndex === index ? "auto" : 0,
-                                opacity: openIndex === index ? 1 : 0,
-                            }}
-                            transition={{
-                                duration: 0.5,
-                                ease: [0.25, 0.46, 0.45, 0.94],
-                                opacity: { duration: 0.3 },
-                            }}
-                            className="overflow-hidden"
-                        >
-                            <div className="pr-2 text-text-primary font-medium space-y-4 sm:space-y-6 font-inter-display mt-3 sm:mt-4">
-                                {section.paragraphs?.map((paragraph, paraIdx) => (
-                                    <p
-                                        key={paraIdx}
-                                        className="text-sm sm:text-base md:text-lg lg:text-xl font-inter-display font-medium text-text-primary leading-relaxed whitespace-pre-line"
-                                    >
-                                        {paragraph}
-                                    </p>
-                                ))}
-                                {section.points && section.points.length > 0 && (
-                                    <AnimatedList
-                                        items={section.points.map(
-                                            (point): AnimatedListItem => ({
-                                                text: point,
-                                                icon: (
-                                                    <span className="text-primary text-xs sm:text-sm mt-1 sm:mt-2 shrink-0">
-                                                        •
-                                                    </span>
-                                                ),
-                                            }),
-                                        )}
-                                        viewportOnce={false}
-                                        boldText={false}
-                                        containerClassName="list-none space-y-2 sm:space-y-3 md:space-y-4"
-                                        itemClassName="flex items-start gap-2 sm:gap-3"
-                                        contentClassName="text-sm sm:text-base md:text-lg lg:text-xl font-inter-display font-medium text-text-primary"
-                                        iconClassName="shrink-0 pt-0.5 text-blue-600"
-                                    />
-                                )}
-                                {section.closingParagraphs?.map((paragraph, paraIdx) => (
-                                    <p
-                                        key={`closing-${paraIdx}`}
-                                        className="text-sm sm:text-base md:text-lg lg:text-xl font-inter-display font-medium text-text-primary leading-relaxed whitespace-pre-line"
-                                    >
-                                        {paragraph}
-                                    </p>
-                                ))}
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                ))}
-            </motion.div>
-        </div>
-    );
+                <div className="space-y-4 sm:space-y-5 md:space-y-6">
+                  {deepDive.introParagraphs.map((paragraph, index) => (
+                    <p
+                      key={index}
+                      className="text-sm font-medium leading-relaxed text-zinc-700 md:text-base lg:text-lg"
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            </TimelineContent>
+          </LandingBentoCell>
+
+          <LandingBentoCell className="border-t border-zinc-200 px-0 md:px-0">
+            <TimelineContent
+              as="div"
+              animationNum={2}
+              timelineRef={timelineRef}
+              customVariants={landingRevealVariants}
+            >
+              <FaqAccordion
+                items={accordionItems}
+                defaultOpenIndex={0}
+                className="max-w-none"
+                answerClassName="text-zinc-700"
+              />
+            </TimelineContent>
+          </LandingBentoCell>
+        </LandingBento>
+      </div>
+    </LandingSectionShell>
+  );
 };
 
 export default BootcampDeepDive;
