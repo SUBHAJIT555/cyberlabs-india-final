@@ -3,6 +3,7 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { IoClose } from "react-icons/io5";
 import { cn } from "@/lib/utils";
 import { crosshatchBgStyle } from "@/constants/bootcampStyles";
+import { CandyButton } from "@/components/ui/candy-button";
 
 const DrawerRoot = DialogPrimitive.Root;
 DrawerRoot.displayName = "Drawer";
@@ -101,12 +102,14 @@ function DrawerHeader({
       {children}
       {showCloseButton && (
         <DrawerClose asChild>
-          <button
-            className="cursor-pointer p-2 text-zinc-700 transition-colors hover:text-zinc-900"
+          <CandyButton
+            type="button"
+            variant="white"
             aria-label="Close menu"
+            className="h-9 w-9 shrink-0 rounded-lg! px-0! py-0! shadow-none!"
           >
-            <IoClose className="w-6 h-6" />
-          </button>
+            <IoClose className="h-5 w-5" aria-hidden />
+          </CandyButton>
         </DrawerClose>
       )}
     </div>

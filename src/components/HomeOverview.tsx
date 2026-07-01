@@ -9,6 +9,7 @@ import {
   LandingBentoRow,
   LandingBentoCell,
   landingRevealVariants,
+  homeSectionSpacingClass,
 } from "@/components/ui/landing-section";
 import overviewImage from "@/assets/img/Home/homepageopening.svg";
 
@@ -31,7 +32,7 @@ const HomeOverview = () => {
   const timelineRef = useRef<HTMLDivElement>(null);
 
   return (
-    <LandingSectionShell>
+    <LandingSectionShell className={homeSectionSpacingClass}>
       <div ref={timelineRef}>
         <LandingBento>
           <LandingBentoRow>

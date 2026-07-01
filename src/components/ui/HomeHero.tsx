@@ -210,7 +210,7 @@ const HomeHero = () => {
   return (
     <section
       ref={timelineRef}
-      className="relative overflow-hidden bg-white px-4 pb-12 pt-20 sm:px-5 sm:pb-16 sm:pt-24 md:pb-24 md:pt-32"
+      className="relative overflow-hidden bg-white px-4 pb-8 pt-20 sm:px-5 sm:pb-10 sm:pt-24 md:pb-14 md:pt-28"
     >
       <div className="absolute inset-0 z-0" aria-hidden>
         <div

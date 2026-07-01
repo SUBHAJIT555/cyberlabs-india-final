@@ -18,6 +18,12 @@ export const programsMetadata = createPageMetadata(
   { path: "/cyber-defense-programs" },
 );
 
+export const cyberlabsWebinarsMetadata = createPageMetadata(
+  "Cyberlabs Free Webinars",
+  "Join free live cybersecurity webinars from CYBERLABS INDIA — industry insight, career guidance, and hands-on awareness sessions led by experienced operators.",
+  { path: "/cyberlabs-webinars" },
+);
+
 export const leadershipAndFacultyMetadata = createPageMetadata(
   "Leadership and Faculty",
   "Meet the operators, architects, and practitioners who lead CYBERLABS INDIA programs — builders of real cyber capability, not academic instructors.",
@@ -82,4 +88,10 @@ export const refundPolicyMetadata = createPageMetadata(
   "Refund & Cancellation Policy",
   "Review CYBERLABS INDIA's refund and cancellation policy for courses, bootcamps, subscriptions, and secure payment transactions.",
   { path: "/refund-and-cancellation" },
+);
+
+export const sitemapMetadata = createPageMetadata(
+  "Sitemap",
+  "Browse the complete CYBERLABS INDIA sitemap — all pages, flagship programs, elite bootcamps, admissions, legal policies, and contact links.",
+  { path: "/sitemap" },
 );

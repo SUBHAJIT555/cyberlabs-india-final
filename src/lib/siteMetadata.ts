@@ -8,6 +8,10 @@ const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
   "https://cyberlabsindia.com";
 
+export function getSiteUrl(): string {
+  return SITE_URL;
+}
+
 export function truncateDescription(text: string, maxLength = 160): string {
   const cleaned = text.replace(/\*\*/g, "").replace(/\s+/g, " ").trim();
   if (cleaned.length <= maxLength) {

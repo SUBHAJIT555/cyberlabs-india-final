@@ -76,6 +76,8 @@ export function SectionEyebrow({ children }: { children: ReactNode }) {
 }
 
 export const landingSectionClass = "relative overflow-hidden bg-white px-4 py-16 md:py-24";
+/** Tighter vertical rhythm for the home page stack */
+export const homeSectionSpacingClass = "py-10 md:py-14";
 export const landingInnerClass = "relative z-10 mx-auto w-full max-w-7xl";
 
 export function LandingSectionShell({

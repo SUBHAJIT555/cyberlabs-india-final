@@ -330,16 +330,15 @@ const CoreFaculty = () => {
                                                         {selectedMember.name}
                                                     </p>
                                                
-                                                    <motion.button
+                                                    <CandyButton
                                                         type="button"
-                                                        className="shrink-0 rounded-lg p-2 text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 cursor-pointer"
+                                                        variant="white"
                                                         onClick={handleCloseModal}
-                                                        whileHover={{ scale: 1.05 }}
-                                                        whileTap={{ scale: 0.95 }}
                                                         aria-label="Close modal"
+                                                        className="h-9 w-9 shrink-0 rounded-lg! px-0! py-0! shadow-none!"
                                                     >
-                                                        <IoClose className="size-6 sm:size-7" />
-                                                    </motion.button>
+                                                        <IoClose className="h-5 w-5" aria-hidden />
+                                                    </CandyButton>
                                                 </div>
                                             </div>
 

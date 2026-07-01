@@ -37,21 +37,22 @@ const BootcampLaymanStory = () => {
                 animationNum={0}
                 timelineRef={timelineRef}
                 customVariants={landingRevealVariants}
+                className={landingSectionHeadingClass}
               >
                 {words.length <= 1 ? (
                   <ShinyText
                     text={heading}
-                    className={landingSectionHeadingClass}
+                    className="inline"
                     color="#3f3f46"
                     shineColor="#18181b"
                     speed={3}
                     spread={120}
                   />
                 ) : (
-                  <h3 className={landingSectionHeadingClass}>
+                  <>
                     <span className="text-zinc-800">{restOfHeading}</span>{" "}
                     <span className="text-blue-600">{lastWord}</span>
-                  </h3>
+                  </>
                 )}
               </TimelineContent>
 

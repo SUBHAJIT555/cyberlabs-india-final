@@ -10,6 +10,7 @@ import {
   LandingBentoCell,
   LandingTagPill,
   landingRevealVariants,
+  homeSectionSpacingClass,
 } from "@/components/ui/landing-section";
 
 const professionalTags = [
@@ -23,7 +24,7 @@ const AboutUsa = () => {
   const timelineRef = useRef<HTMLDivElement>(null);
 
   return (
-    <LandingSectionShell>
+    <LandingSectionShell className={homeSectionSpacingClass}>
       <div ref={timelineRef}>
        
 

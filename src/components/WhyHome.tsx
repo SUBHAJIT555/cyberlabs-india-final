@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import ShinyText from "@/components/ui/ShinyText";
 import GradientText from "@/components/ui/GradientText";
-import { LandingSectionShell, landingListRowHoverClass, landingListTextHoverClass } from "@/components/ui/landing-section";
+import { LandingSectionShell, landingListRowHoverClass, landingListTextHoverClass, homeSectionSpacingClass } from "@/components/ui/landing-section";
 
 type ListItem = { text: string; icon: ReactNode };
 
@@ -283,7 +283,7 @@ const WhyHome = () => {
   const timelineRef = useRef<HTMLDivElement>(null);
 
   return (
-    <LandingSectionShell>
+    <LandingSectionShell className={homeSectionSpacingClass}>
       <div ref={timelineRef}>
         <TimelineContent
           as="h3"

@@ -1,8 +1,7 @@
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
-import { CreditCard, Factory, Hospital, Shield, Lock, Database } from "lucide-react";
-import RadialOrbitalTimeline from "@/components/ui/radial-orbital-timeline";
 import { TimelineContent } from "@/components/ui/timeline-animation";
+import { TypingKeyboard } from "@/components/ui/typing-keyboard";
 import ShinyText from "@/components/ui/ShinyText";
 import type { AnimatedListItem } from "./ui/animated-list";
 import {
@@ -13,6 +12,7 @@ import {
   landingRevealVariants,
   landingListRowHoverClass,
   landingListTextHoverClass,
+  homeSectionSpacingClass,
 } from "@/components/ui/landing-section";
 
 const GlobalThreat = () => {
@@ -78,82 +78,15 @@ const GlobalThreat = () => {
     },
   ];
 
-  const timelineData = [
-    {
-      id: 1,
-      title: "Ransomware Attacks",
-      date: "2023-2024",
-      content: "Criminals encrypt critical systems and demand payment, paralyzing hospitals, schools, and businesses. Learn to defend against encryption-based attacks and incident response protocols.",
-      category: "Malware",
-      icon: Lock,
-      relatedIds: [2, 4],
-      status: "in-progress" as const,
-      energy: 95,
-    },
-    {
-      id: 2,
-      title: "Social Engineering",
-      date: "2024",
-      content: "Attackers manipulate human psychology through phishing, pretexting, and baiting to bypass technical defenses. Master the art of recognizing and preventing human-based attack vectors.",
-      category: "Human Factor",
-      icon: Shield,
-      relatedIds: [1, 3, 5],
-      status: "in-progress" as const,
-      energy: 88,
-    },
-    {
-      id: 3,
-      title: "Data Breaches",
-      date: "2023-2024",
-      content: "Massive leaks of personal and corporate data expose millions. Understand database security, encryption, access controls, and compliance frameworks like GDPR and HIPAA.",
-      category: "Data Security",
-      icon: Database,
-      relatedIds: [2, 4, 6],
-      status: "in-progress" as const,
-      energy: 85,
-    },
-    {
-      id: 4,
-      title: "Critical Infrastructure",
-      date: "2024",
-      content: "Nation-state actors target power grids, water systems, and transportation networks. Study SCADA security, industrial control systems, and critical infrastructure protection strategies.",
-      category: "Infrastructure",
-      icon: Hospital,
-      relatedIds: [1, 3, 5],
-      status: "in-progress" as const,
-      energy: 90,
-    },
-    {
-      id: 5,
-      title: "Financial Fraud",
-      date: "2024",
-      content: "Sophisticated fraud schemes drain accounts through identity theft, payment fraud, and cryptocurrency scams. Learn fraud detection, transaction monitoring, and financial cybersecurity.",
-      category: "Financial",
-      icon: CreditCard,
-      relatedIds: [2, 3, 6],
-      status: "in-progress" as const,
-      energy: 82,
-    },
-    {
-      id: 6,
-      title: "Supply Chain Attacks",
-      date: "2023-2024",
-      content: "Attackers compromise software vendors and third-party services to infiltrate multiple organizations. Understand vendor risk management, software supply chain security, and zero-trust architectures.",
-      category: "Business",
-      icon: Factory,
-      relatedIds: [3, 4, 5],
-      status: "in-progress" as const,
-      energy: 78,
-    },
-  ];
+  const threatKeyboardText =
+    "Ransomware. Social engineering. Data breaches. Financial fraud. Supply chain attacks. Critical infrastructure.       ";
 
   return (
-    <LandingSectionShell>
+    <LandingSectionShell className={homeSectionSpacingClass}>
       <div ref={timelineRef}>
         <LandingBento>
-          <LandingBentoRow>
+          <LandingBentoRow className="md:items-start">
             <LandingBentoCell>
-              
 
               <TimelineContent
                 as="h2"
@@ -229,10 +162,24 @@ const GlobalThreat = () => {
               </TimelineContent>
             </LandingBentoCell>
 
-            <LandingBentoCell className="flex min-h-[500px] items-center md:min-h-[600px]">
-              <div className="relative h-full min-h-[500px] w-full md:min-h-[600px]">
-                <RadialOrbitalTimeline timelineData={timelineData} />
-              </div>
+            <LandingBentoCell className="mt-6 flex items-end justify-center overflow-x-hidden overflow-y-visible md:mt-0 md:items-center md:overflow-visible md:py-8">
+              <TimelineContent
+                as="div"
+                animationNum={6}
+                timelineRef={timelineRef}
+                customVariants={landingRevealVariants}
+                className="mx-auto flex h-[310px] w-full max-w-[min(100%,360px)] items-end justify-center overflow-x-hidden overflow-y-visible pb-1 sm:h-[350px] sm:max-w-[min(100%,420px)] md:h-[500px] md:max-w-[580px] md:items-center md:overflow-visible md:pb-0 lg:h-[520px]"
+              >
+                <TypingKeyboard
+                  autoTypeText={threatKeyboardText}
+                  typingSpeed={[45, 125]}
+                  scale={0.82}
+                  mobileScale={0.5}
+                  accentColor="#C072E0"
+                  secondaryAccent="#9B4FC4"
+                  className="h-full w-full"
+                />
+              </TimelineContent>
             </LandingBentoCell>
           </LandingBentoRow>
         </LandingBento>

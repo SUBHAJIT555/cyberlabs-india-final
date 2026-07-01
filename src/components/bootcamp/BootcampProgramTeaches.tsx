@@ -225,12 +225,11 @@ const BootcampProgramTeaches = () => {
           animationNum={0}
           timelineRef={timelineRef}
           customVariants={landingRevealVariants}
+          className={landingSectionHeadingClass}
         >
-          <h2 className={landingSectionHeadingClass}>
-            <span className="text-zinc-800">What the Program Teaches You &</span>
-            <br />
-            <span className="text-blue-600">Your Career Readiness</span>
-          </h2>
+          <span className="text-zinc-800">What the Program Teaches You &</span>
+          <br />
+          <span className="text-blue-600">Your Career Readiness</span>
         </TimelineContent>
 
         <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">

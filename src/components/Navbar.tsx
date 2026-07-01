@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Link, useLocation, useNavigate } from "@/lib/react-router";
-import { IoSearch } from "react-icons/io5";
-import { SearchIcon } from "lucide-react";
 import {
     FaFacebookF,
     FaInstagram,
@@ -22,24 +20,13 @@ import {
     Body as DrawerBody,
     Footer as DrawerFooter,
 } from "./ui/drawer";
-import {
-    InputGroup,
-    InputGroupAddon,
-    InputGroupInput,
-} from "@/components/ui/input-group";
 import { Kbd } from "@/components/ui/kbd";
 import { useCourses } from "@/hooks/useCourses";
 import { useBootcamps } from "@/hooks/useBootcamps";
 import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 import CallbackModal from "./CallbackModal";
 import { CONTACT } from "@/constants/contactInfo";
-import { ExternalLeaveConfirmModal } from "@/components/ui/ExternalLeaveConfirmModal";
-import Shuffle from "@/components/ui/Shuffle";
 import { CandyButton } from "@/components/ui/candy-button";
-
-const WEBINAR_URL = "https://webinar.cyberlabs-india.com/";
-const WEBINAR_LEAVE_MESSAGE =
-    "You are about to visit our dedicated webinar registration page, where you can sign up for free cybersecurity career guidance sessions.";
 
 const socialCandyClass = "h-10 w-10 px-0! py-0!";
 
@@ -84,6 +71,27 @@ const drawerItemVariants = {
     }),
 };
 
+function BoltIcon({ className }: { className?: string }) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={cn("icon icon-tabler icons-tabler-outline icon-tabler-bolt", className)}
+            aria-hidden="true"
+        >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11" />
+        </svg>
+    );
+}
+
 function NavArrowIcon() {
     return (
         <svg
@@ -96,7 +104,7 @@ function NavArrowIcon() {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="h-3.5 w-3.5 shrink-0 -translate-x-1 text-blue-600 opacity-0 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0 group-hover:opacity-100"
+            className="h-4 w-4 shrink-0 -translate-x-1 text-blue-600 opacity-0 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0 group-hover:opacity-100"
             aria-hidden="true"
         >
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -162,7 +170,6 @@ const Navbar: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [activeCommandUrl, setActiveCommandUrl] = useState<string | null>(null);
     const [isCallbackModalOpen, setIsCallbackModalOpen] = useState(false);
-    const [isWebinarLeaveConfirmOpen, setIsWebinarLeaveConfirmOpen] = useState(false);
 
     const commandInputRef = useRef<HTMLInputElement | null>(null);
     const commandScrollRef = useRef<HTMLDivElement | null>(null);
@@ -180,6 +187,7 @@ const Navbar: React.FC = () => {
         { name: "About CYBERLABS", path: "/about-cyberlabs" },
         { name: "Leadership and Faculty", path: "/leadership-and-faculty" },
         { name: "Cyber Defense Programs", path: "/cyber-defense-programs" },
+        { name: "CYBERLABS Free Webinars", path: "/cyberlabs-webinars" },
         { name: "Learning Environment", path: "/learning-environment" },
         { name: "Who Should Apply", path: "/who-should-apply" },
         { name: "Certification and Evaluation Framework", path: "/certification-and-evaluation-framework" },
@@ -194,12 +202,6 @@ const Navbar: React.FC = () => {
         { name: "Cookie Policy", path: "/cookie-policy" },
         { name: "Refund & Cancellation", path: "/refund-and-cancellation" },
     ];
-
-    const handleWebinarContinue = () => {
-        setIsWebinarLeaveConfirmOpen(false);
-        setIsSidebarOpen(false);
-        window.open(WEBINAR_URL, "_blank", "noopener,noreferrer");
-    };
 
     useEffect(() => {
         if (!lenis) return;
@@ -368,23 +370,20 @@ const Navbar: React.FC = () => {
 
                         <div className="flex items-center gap-2.5 sm:gap-3">
                             <div className="hidden lg:block">
-                                <InputGroup
-                                    className="w-full max-w-sm cursor-pointer rounded-xl border border-zinc-300 bg-white shadow-sm ring-0 ring-offset-0 transition-[border-color,box-shadow,background-color] hover:border-zinc-400 hover:shadow-md focus-within:border-blue-600/50 focus-within:bg-white focus-within:ring-2 focus-within:ring-blue-600/15"
+                                <motion.button
+                                    type="button"
+                                    className="inline-flex w-full max-w-sm cursor-pointer items-center gap-2 rounded-xl border border-zinc-300 bg-white px-3 py-[0.58rem] text-[0.84rem] leading-none shadow-sm ring-0 ring-offset-0 transition-[border-color,box-shadow,background-color] hover:border-zinc-400 hover:shadow-md focus-visible:border-blue-600/50 focus-visible:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600/15"
+                                    whileTap={{ scale: 0.98 }}
+                                    aria-label="Quick Access"
                                     onClick={() => setIsCommandOpen(true)}
                                 >
-                                    <InputGroupAddon>
-                                        <SearchIcon className="w-4 h-4 text-zinc-600" />
-                                    </InputGroupAddon>
-                                    <InputGroupInput
-                                        placeholder="Search..."
-                                        readOnly
-                                        className="text-zinc-900 placeholder:text-zinc-500"
-                                    />
-                                    <InputGroupAddon align="inline-end">
-                                        <Kbd className="border-zinc-300 bg-zinc-50 text-zinc-600">⌘</Kbd>
-                                        <Kbd className="border-zinc-300 bg-zinc-50 text-zinc-600">K</Kbd>
-                                    </InputGroupAddon>
-                                </InputGroup>
+                                    <BoltIcon className="h-3.5 w-3.5 shrink-0 text-zinc-600" />
+                                    <span className="flex-1 text-left text-zinc-500">Quick Access</span>
+                                    <span className="inline-flex items-center gap-0.5">
+                                        <Kbd className="h-[18px] border-zinc-300 bg-zinc-50 px-1 text-[9px] text-zinc-600">⌘</Kbd>
+                                        <Kbd className="h-[18px] border-zinc-300 bg-zinc-50 px-1 text-[9px] text-zinc-600">K</Kbd>
+                                    </span>
+                                </motion.button>
                             </div>
 
                             <motion.button
@@ -393,7 +392,7 @@ const Navbar: React.FC = () => {
                                 aria-label="Search"
                                 onClick={() => setIsCommandOpen(true)}
                             >
-                                <IoSearch className="w-5 h-5" />
+                                <BoltIcon className="h-5 w-5" />
                             </motion.button>
 
                             <div className="hidden lg:block">
@@ -436,7 +435,7 @@ const Navbar: React.FC = () => {
                             <DrawerRoot open={isSidebarOpen} onOpenChange={setIsSidebarOpen}>
                                 <DrawerTrigger asChild>
                                     <motion.button
-                                        className="inline-flex h-9 w-9 items-center justify-center text-zinc-800 transition hover:text-zinc-900"
+                                        className="inline-flex h-9 w-9 items-center justify-center text-zinc-800 transition hover:text-zinc-900 cursor-pointer"
                                         whileTap={{ scale: 0.95 }}
                                         aria-label="Open Menu"
                                         aria-expanded={isSidebarOpen}
@@ -519,44 +518,6 @@ const Navbar: React.FC = () => {
                                     </DrawerBody>
 
                                     <DrawerFooter className="flex flex-col gap-4 border-t border-zinc-200 border-dashed bg-transparent">
-                                        <button
-                                            type="button"
-                                            onClick={() => setIsWebinarLeaveConfirmOpen(true)}
-                                            className="group flex w-full items-center justify-center gap-1.5 px-3 py-2.5 text-center transition hover:border-zinc-300 md:text-base cursor-pointer"
-                                        >
-                                            <Shuffle
-                                                text="Free Cybersecurity Webinars"
-                                                tag="span"
-                                                textAlign="center"
-                                                className="text-sm font-bold text-zinc-800 md:text-base"
-                                                playOnMount={true}
-                                                triggerOnHover={true}
-                                                hoverTarget="parent-group"
-                                                triggerOnce={true}
-                                                shuffleDirection="right"
-                                                duration={0.28}
-                                                stagger={0.02}
-                                            />
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                width="24"
-                                                height="24"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeWidth="2"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                className="icon icon-tabler icons-tabler-outline icon-tabler-external-link h-4 w-4 shrink-0 text-zinc-500 transition group-hover:text-zinc-800"
-                                                aria-hidden
-                                            >
-                                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                                                <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
-                                                <path d="M11 13l9 -9" />
-                                                <path d="M15 4h5v5" />
-                                            </svg>
-                                        </button>
-
                                         {/* Social Links */}
                                         <div className="flex items-center justify-center gap-3 sm:gap-4">
                                             {drawerSocialLinks.map(({ href, label, icon: Icon }) => (
@@ -631,8 +592,9 @@ const Navbar: React.FC = () => {
                                     <span className="text-base font-semibold text-zinc-900">
                                         CYBERLABS INDIA
                                     </span>
-                                    <button
+                                    <CandyButton
                                         type="button"
+                                        variant="white"
                                         onClick={(e) => {
                                             e.preventDefault();
                                             e.stopPropagation();
@@ -646,8 +608,8 @@ const Navbar: React.FC = () => {
                                             setSearchQuery("");
                                         }}
                                         aria-label="Close menu"
-                                        className="flex h-8 w-8 touch-manipulation items-center justify-center rounded-full text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-900 active:bg-zinc-200 sm:h-6 sm:w-6"
-                                        style={{ touchAction: 'manipulation' }}
+                                        className="h-9 w-9 shrink-0 touch-manipulation rounded-lg! px-0! py-0! shadow-none! sm:h-9 sm:w-9"
+                                        style={{ touchAction: "manipulation" }}
                                     >
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -657,12 +619,13 @@ const Navbar: React.FC = () => {
                                             strokeWidth="2"
                                             strokeLinecap="round"
                                             strokeLinejoin="round"
-                                            className="w-5 h-5 sm:w-3.5 sm:h-3.5"
+                                            className="h-5 w-5"
+                                            aria-hidden
                                         >
                                             <line x1="18" y1="6" x2="6" y2="18" />
                                             <line x1="6" y1="6" x2="18" y2="18" />
                                         </svg>
-                                    </button>
+                                    </CandyButton>
                                 </div>
                             </div>
 
@@ -796,6 +759,26 @@ const Navbar: React.FC = () => {
                                                                     strokeWidth="2"
                                                                     strokeLinecap="round"
                                                                     strokeLinejoin="round"
+                                                                    className="icon icon-tabler icons-tabler-outline icon-tabler-user-screen"
+                                                                    aria-hidden="true"
+                                                                >
+                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                    <path d="M19.03 17.818a3 3 0 0 0 1.97 -2.818v-8a3 3 0 0 0 -3 -3h-12a3 3 0 0 0 -3 3v8c0 1.317 .85 2.436 2.03 2.84" />
+                                                                    <path d="M10 14a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+                                                                    <path d="M8 21a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2" />
+                                                                </svg>
+                                                            )}
+                                                            {index === 5 && (
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    width="18"
+                                                                    height="18"
+                                                                    viewBox="0 0 24 24"
+                                                                    fill="none"
+                                                                    stroke="currentColor"
+                                                                    strokeWidth="2"
+                                                                    strokeLinecap="round"
+                                                                    strokeLinejoin="round"
                                                                     className="icon icon-tabler icons-tabler-outline icon-tabler-device-desktop-bolt"
                                                                 >
                                                                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -805,7 +788,7 @@ const Navbar: React.FC = () => {
                                                                     <path d="M19 16l-2 3h4l-2 3" />
                                                                 </svg>
                                                             )}
-                                                            {index === 5 && (
+                                                            {index === 6 && (
                                                                 <svg
                                                                     xmlns="http://www.w3.org/2000/svg"
                                                                     width="18"
@@ -825,7 +808,7 @@ const Navbar: React.FC = () => {
                                                                     <path d="M9 12h2" />
                                                                 </svg>
                                                             )}
-                                                            {index === 6 && (
+                                                            {index === 7 && (
                                                                 <svg
                                                                     xmlns="http://www.w3.org/2000/svg"
                                                                     width="18"
@@ -843,7 +826,7 @@ const Navbar: React.FC = () => {
                                                                     <path d="M9 12l2 2l4 -4" />
                                                                 </svg>
                                                             )}
-                                                            {index === 7 && (
+                                                            {index === 8 && (
                                                                 <svg
                                                                     xmlns="http://www.w3.org/2000/svg"
                                                                     width="18"
@@ -862,7 +845,7 @@ const Navbar: React.FC = () => {
                                                                     <path d="M15 5v4h4" />
                                                                 </svg>
                                                             )}
-                                                            {index === 8 && (
+                                                            {index === 9 && (
                                                                 <svg
                                                                     xmlns="http://www.w3.org/2000/svg"
                                                                     width="18"
@@ -882,7 +865,7 @@ const Navbar: React.FC = () => {
                                                                     <path d="M21 21.5v-4.5h-4.5" />
                                                                 </svg>
                                                             )}
-                                                            {index === 9 && (
+                                                            {index === 10 && (
                                                                 <svg
                                                                     xmlns="http://www.w3.org/2000/svg"
                                                                     width="18"
@@ -1249,16 +1232,6 @@ const Navbar: React.FC = () => {
             <CallbackModal
                 isOpen={isCallbackModalOpen}
                 onClose={() => setIsCallbackModalOpen(false)}
-            />
-
-            <ExternalLeaveConfirmModal
-                open={isWebinarLeaveConfirmOpen}
-                onClose={() => setIsWebinarLeaveConfirmOpen(false)}
-                onConfirm={handleWebinarContinue}
-                message={WEBINAR_LEAVE_MESSAGE}
-                destination="webinar.cyberlabs-india.com"
-                confirmLabel="Continue to Webinars"
-                cancelLabel="Stay on CYBERLABS"
             />
         </>
     );

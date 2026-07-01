@@ -15,6 +15,7 @@ import {
   landingRevealVariants,
   landingListRowHoverClass,
   landingListTextHoverClass,
+  homeSectionSpacingClass,
 } from "@/components/ui/landing-section";
 
 const CallToAction = () => {
@@ -23,7 +24,7 @@ const CallToAction = () => {
   const [isCallbackModalOpen, setIsCallbackModalOpen] = useState(false);
 
   return (
-    <LandingSectionShell className="py-10 md:py-16">
+    <LandingSectionShell className={homeSectionSpacingClass}>
       <div ref={timelineRef}>
         <LandingBento>
           <LandingBentoRow>

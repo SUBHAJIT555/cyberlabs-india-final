@@ -76,12 +76,9 @@ const ProgramDetailHero = ({ onEnroll }: ProgramDetailHeroProps) => {
                   animationNum={1}
                   timelineRef={timelineRef}
                   customVariants={landingRevealVariants}
+                  className={`font-inter-display font-bold tracking-tight text-zinc-900 ${landingSectionHeadingClass}`}
                 >
-                  <h1
-                    className={`font-inter-display font-bold tracking-tight text-zinc-900 ${landingSectionHeadingClass}`}
-                  >
-                    {course.title}
-                  </h1>
+                  {course.title}
                 </TimelineContent>
 
                 {tagLine && (

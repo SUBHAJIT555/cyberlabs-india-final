@@ -11,6 +11,7 @@ import {
 import footerlogo from "../assets/img/logo/Cyberlabs-logo-03.svg";
 import { cn, assetSrc } from "@/lib/utils";
 import ShinyText from "@/components/ui/ShinyText";
+import { CandyButton } from "@/components/ui/candy-button";
 import { FormSuccessPopup } from "@/components/ui/FormSuccessPopup";
 import { FormErrorPopup } from "@/components/ui/FormErrorPopup";
 import { useFormSubmitFeedback } from "@/hooks/useFormSubmitFeedback";
@@ -18,30 +19,6 @@ import { CONTACT } from "@/constants/contactInfo";
 import { FORM_FEEDBACK_COPY } from "@/constants/formFeedbackCopy";
 import { emailValidationRules } from "@/lib/formValidation";
 import { YouTubeIcon } from "@/components/ui/YouTubeIcon";
-
-const usefulLinks = [
-    { label: "CYBERLABS Home", to: "/" },
-    { label: "About CYBERLABS", to: "/about-cyberlabs" },
-    { label: "Leadership and Faculty", to: "/leadership-and-faculty" },
-    { label: "Cyber Defense Programs", to: "/cyber-defense-programs" },
-    { label: "Learning Environment", to: "/learning-environment" },
-    {
-        label: "Certification & Evaluation Framework",
-        to: "/certification-and-evaluation-framework",
-    },
-    { label: "Who Should Apply", to: "/who-should-apply" },
-    { label: "Request Call Back", to: "/request-callback" },
-    { label: "Contact CYBERLABS", to: "/contact-cyberlabs" },
-    { label: "FAQs", to: "/frequently-asked-questions" },
-];
-
-const legalLinks = [
-    { label: "Terms & Condition", to: "/terms-and-conditions" },
-    { label: "Privacy Policy", to: "/privacy-policy" },
-    { label: "Cookie Policy", to: "/cookie-policy" },
-    { label: "Refund & Cancellation Policy", to: "/refund-and-cancellation" },
-    { label: "Support", to: `mailto:${CONTACT.educationEmail}`, external: true },
-];
 
 const socialLinks = [
     {
@@ -65,6 +42,31 @@ const socialLinks = [
         icon: FaLinkedinIn,
     },
     { label: "WhatsApp", href: "https://wa.me/971504602632", icon: FaWhatsapp },
+];
+
+const socialCandyClass = "h-10 w-10 rounded-lg! px-0! py-0! shadow-none!";
+
+const usefulLinks = [
+    { label: "CYBERLABS Home", to: "/" },
+    { label: "About CYBERLABS", to: "/about-cyberlabs" },
+    { label: "Leadership and Faculty", to: "/leadership-and-faculty" },
+    { label: "Cyber Defense Programs", to: "/cyber-defense-programs" },
+    { label: "CYBERLABS Free Webinars", to: "/cyberlabs-webinars" },
+    { label: "Learning Environment", to: "/learning-environment" },
+    {
+        label: "Certification & Evaluation Framework",
+        to: "/certification-and-evaluation-framework",
+    },
+    { label: "Who Should Apply", to: "/who-should-apply" },
+    { label: "FAQs", to: "/frequently-asked-questions" },
+];
+
+const legalLinks = [
+    { label: "Terms & Condition", to: "/terms-and-conditions" },
+    { label: "Privacy Policy", to: "/privacy-policy" },
+    { label: "Cookie Policy", to: "/cookie-policy" },
+    { label: "Refund & Cancellation Policy", to: "/refund-and-cancellation" },
+    { label: "Support", to: `mailto:${CONTACT.educationEmail}`, external: true },
 ];
 
 const inputClassName =
@@ -135,6 +137,24 @@ const Footer = () => {
                             </span>{" "}
                             Training Real Cyber Defenders for a Real World.
                         </p>
+
+                        <FooterColumn title="Socials" className="mt-10 md:mt-12">
+                            <div className="flex flex-wrap gap-2.5">
+                                {socialLinks.map((item) => (
+                                    <CandyButton
+                                        key={item.label}
+                                        href={item.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label={item.label}
+                                        variant="white"
+                                        className={socialCandyClass}
+                                    >
+                                        <item.icon className="h-4 w-4 shrink-0" aria-hidden />
+                                    </CandyButton>
+                                ))}
+                            </div>
+                        </FooterColumn>
                     </div>
 
                     <div className="grid gap-8 sm:grid-cols-2 md:col-span-7 md:grid-cols-3 lg:col-span-8">
@@ -148,7 +168,7 @@ const Footer = () => {
                             </ul>
                         </FooterColumn>
 
-                        <FooterColumn title="Legals">
+                        <FooterColumn title="Legals & Policies">
                             <ul className="space-y-2.5">
                                 {legalLinks.map((item) => (
                                     <li key={item.label}>
@@ -164,16 +184,19 @@ const Footer = () => {
                             </ul>
                         </FooterColumn>
 
-                        <FooterColumn title="Socials">
+                        <FooterColumn title="Get in Touch">
                             <ul className="space-y-2.5">
-                                {socialLinks.map((item) => (
-                                    <li key={item.label}>
-                                        <FooterLink href={item.href} external>
-                                            <item.icon className="h-4 w-4 shrink-0" aria-hidden />
-                                            <span>{item.label}</span>
-                                        </FooterLink>
-                                    </li>
-                                ))}
+                                <li>
+                                    <FooterLink href={`mailto:${CONTACT.educationEmail}`}>
+                                        {CONTACT.educationEmail}
+                                    </FooterLink>
+                                </li>
+                                <li>
+                                    <FooterLink to="/request-callback">Request Call Back</FooterLink>
+                                </li>
+                                <li>
+                                    <FooterLink to="/contact-cyberlabs">Contact CYBERLABS</FooterLink>
+                                </li>
                             </ul>
                         </FooterColumn>
                     </div>
@@ -188,7 +211,13 @@ const Footer = () => {
                         >
                             CYBERLABS INDIA
                         </Link>{" "}
-                        | All rights reserved.
+                        | All rights reserved. |{" "}
+                        <Link
+                            to="/sitemap"
+                            className="font-medium text-zinc-700 underline underline-offset-2 transition hover:text-zinc-900"
+                        >
+                            Sitemap
+                        </Link>
                     </p>
                     <p className="inline-flex items-center justify-center gap-1 md:justify-end">
                         <span>Made with</span>
@@ -196,12 +225,12 @@ const Footer = () => {
                         <span>
                             by{" "}
                             <a
-                                href="https://codecobble.com/"
+                                href="https://subhajit-dhali.vercel.app/"
                                 target="_blank"
                                 rel="noreferrer"
                                 className="font-medium text-zinc-700 underline underline-offset-2 transition hover:text-zinc-900"
                             >
-                                CodeCobble
+                                Subhajit
                             </a>
                         </span>
                     </p>
@@ -278,13 +307,13 @@ function NewsletterSignup({
                             className={cn(inputClassName, "sm:flex-1")}
                             {...register("email", emailValidationRules)}
                         />
-                        <button
+                        <CandyButton
                             type="submit"
                             disabled={isSubmitting}
-                            className="inline-flex shrink-0 items-center justify-center rounded-xl border border-zinc-900 bg-zinc-900 px-5 py-2.5 font-inter-display text-sm font-medium text-white transition hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-70"
+                            className="shrink-0 rounded-lg! border-zinc-800! bg-[radial-gradient(95%_60%_at_50%_75%,#18181b_0%,#27272a_100%)]! px-5! py-2.5! text-sm! text-white shadow-none! active:rotate-0 disabled:cursor-not-allowed disabled:border-zinc-300! disabled:bg-zinc-300! disabled:opacity-100"
                         >
                             {isSubmitting ? "Submitting..." : "Subscribe"}
-                        </button>
+                        </CandyButton>
                     </div>
                     {emailError && (
                         <p className="font-inter-display text-xs text-red-600 md:text-sm">{emailError}</p>
@@ -298,12 +327,14 @@ function NewsletterSignup({
 function FooterColumn({
     title,
     children,
+    className,
 }: {
     title: string;
     children: ReactNode;
+    className?: string;
 }) {
     return (
-        <div>
+        <div className={className}>
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-800 md:text-sm">
                 {title}
             </p>
@@ -375,16 +406,24 @@ function FooterBackground() {
 
 function NewsletterBackground() {
     return (
-        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div aria-hidden className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
             <div
-                className="absolute inset-0 opacity-30"
                 style={{
-                    backgroundImage:
-                        "repeating-conic-gradient(from 0deg at 100% 0%, #d4d4d8 0deg, #d4d4d8 1deg, transparent 1deg, transparent 12deg)",
                     WebkitMaskImage:
-                        "linear-gradient(to left, rgba(0,0,0,0.5) 0%, transparent 55%)",
+                        "linear-gradient(to bottom, transparent 0%, #000 30%, #000 100%)",
+                    backgroundImage:
+                        "linear-gradient(#e4e4e7 1px, transparent 1px), linear-gradient(90deg, #e4e4e7 1px, transparent 1px)",
+                    backgroundSize: "40px 25px",
+                    bottom: "0",
+                    height: "60%",
+                    left: "50%",
                     maskImage:
-                        "linear-gradient(to left, rgba(0,0,0,0.5) 0%, transparent 55%)",
+                        "linear-gradient(to bottom, transparent 0%, #000 30%, #000 100%)",
+                    opacity: 0.35,
+                    pointerEvents: "none",
+                    position: "absolute",
+                    transform: "translateX(-50%) perspective(300px) rotateX(45deg)",
+                    width: "150%",
                 }}
             />
         </div>

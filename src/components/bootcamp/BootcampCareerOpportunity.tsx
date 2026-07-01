@@ -28,18 +28,17 @@ const BootcampCareerOpportunity = () => {
           animationNum={0}
           timelineRef={timelineRef}
           customVariants={landingRevealVariants}
+          className={landingSectionHeadingClass}
         >
-          <h3 className={landingSectionHeadingClass}>
-            <ShinyText
-              text="Career Opportunities & Hiring Landscape"
-              className="inline"
-              color="#3f3f46"
-              shineColor="#18181b"
-              speed={3}
-              spread={120}
-            />{" "}
-            <span className="text-blue-600">(2026+)</span>
-          </h3>
+          <ShinyText
+            text="Career Opportunities & Hiring Landscape"
+            className="inline"
+            color="#3f3f46"
+            shineColor="#18181b"
+            speed={3}
+            spread={120}
+          />{" "}
+          <span className="text-blue-600">(2026+)</span>
         </TimelineContent>
 
         {detail?.careerIntro && (

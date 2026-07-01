@@ -5,13 +5,24 @@ import { cn } from "@/lib/utils";
 
 export type CandyButtonVariant = "default" | "white";
 
-export interface CandyButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  href?: string;
+type CandyButtonSharedProps = {
+  className?: string;
+  children?: React.ReactNode;
+  variant?: CandyButtonVariant;
+};
+
+type CandyButtonAsButton = CandyButtonSharedProps &
+  React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    href?: undefined;
+  };
+
+type CandyButtonAsLink = CandyButtonSharedProps & {
+  href: string;
   target?: string;
   rel?: string;
-  variant?: CandyButtonVariant;
-}
+} & Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "children" | "href" | "type">;
+
+export type CandyButtonProps = CandyButtonAsButton | CandyButtonAsLink;
 
 const candyBaseClass =
   "relative overflow-hidden font-semibold text-base leading-[22px] tracking-[0.02em] " +
@@ -29,30 +40,57 @@ const candyVariantClass: Record<CandyButtonVariant, string> = {
     "text-zinc-600 shadow-sm active:rotate-0 hover:brightness-[1.03]",
 };
 
-export function CandyButton({
-  className,
-  children = "Candy Button",
-  href,
-  target,
-  rel,
-  variant = "default",
-  ...props
-}: CandyButtonProps) {
-  const classes = cn(candyBaseClass, candyVariantClass[variant], className);
+export const CandyButton = React.forwardRef<
+  HTMLButtonElement | HTMLAnchorElement,
+  CandyButtonProps
+>(function CandyButton(props, ref) {
+  if ("href" in props && props.href) {
+    const {
+      className,
+      children = "Candy Button",
+      variant = "default",
+      href,
+      target,
+      rel,
+      ...anchorProps
+    } = props;
 
-  if (href) {
+    const classes = cn(candyBaseClass, candyVariantClass[variant], className);
+
     return (
-      <a href={href} target={target} rel={rel} className={classes} {...props}>
+      <a
+        ref={ref as React.ForwardedRef<HTMLAnchorElement>}
+        href={href}
+        target={target}
+        rel={rel}
+        className={classes}
+        {...anchorProps}
+      >
         {children}
       </a>
     );
   }
 
+  const {
+    className,
+    children = "Candy Button",
+    variant = "default",
+    ...buttonProps
+  } = props as CandyButtonAsButton;
+
+  const classes = cn(candyBaseClass, candyVariantClass[variant], className);
+
   return (
-    <button className={classes} {...props}>
+    <button
+      ref={ref as React.ForwardedRef<HTMLButtonElement>}
+      className={classes}
+      {...buttonProps}
+    >
       {children}
     </button>
   );
-}
+});
+
+CandyButton.displayName = "CandyButton";
 
 export default CandyButton;

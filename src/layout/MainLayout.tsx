@@ -31,7 +31,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   // Handle hash-based scrolling (e.g. /page#section)
   // This MUST run first to take priority over scroll restoration
   // Offset accounts for fixed header height (~80px) + spacing
-  useLenisHashScroll({ offsets: { "contact-form": 50, 'frequently-asked-questions': 100, 'request-callback-form': 80, 'our-programs': 260 } });
+  useLenisHashScroll({ offsets: { "contact-form": 50, 'frequently-asked-questions': 100, 'request-callback-form': 80, 'our-programs': 260, webinars: 80, home: 80, services: 80, why: 80, expertise: 80, career: 80, topics: 80, audience: 80, solutions: 80, contact: 80 } });
 
   // Handle scroll restoration on route change
   // ONLY handles non-hash routes (skips if hash is present)

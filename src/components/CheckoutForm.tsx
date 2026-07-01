@@ -1,12 +1,11 @@
-import { assetSrc } from "@/lib/utils";
-import { useEffect, useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useForm, UseFormRegister } from "react-hook-form";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useSearchParams } from "@/lib/react-router";
 import type { Hero } from "@/interface/program";
-import { ShinyButton } from "@/components/ui/shiny-button";
+import { CandyButton } from "@/components/ui/candy-button";
 import BootcampPriceBlock from "@/components/ui/BootcampPriceBlock";
 import {
   DateTimePickerField,
@@ -50,154 +49,14 @@ const checkoutFormSchema = z.object({
   email: zodEmail(),
   collegeSchool: z.string().min(1, "Please enter your college/school name"),
   graduationYear: z
-    .number()
-    .min(1990, "Graduation year must be 1990 or later")
-    .max(new Date().getFullYear() + 10, "Graduation year cannot be more than 10 years in the future"),
+    .string()
+    .min(1, "Graduation year is required")
+    .regex(/^\d{4}$/, "Enter a 4-digit year")
+    .refine((value) => {
+      const year = Number(value);
+      return year >= 1990 && year <= new Date().getFullYear() + 10;
+    }, `Enter a year between 1990 and ${new Date().getFullYear() + 10}`),
 });
-
-// Year Picker Component
-interface YearPickerProps {
-  label: string;
-  value?: number;
-  onChange: (year: number) => void;
-  error?: string;
-  minYear: number;
-  maxYear: number;
-  register: UseFormRegister<z.infer<typeof checkoutFormSchema>>;
-}
-
-const YearPicker = ({
-  label,
-  value,
-  onChange,
-  error,
-  minYear,
-  maxYear,
-  register,
-}: YearPickerProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
-
-  // Generate years array
-  const years = Array.from({ length: maxYear - minYear + 1 }, (_, i) => minYear + i).reverse();
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node) &&
-        buttonRef.current &&
-        !buttonRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
-
-  // Scroll to selected year when dropdown opens
-  useEffect(() => {
-    if (isOpen && value) {
-      const selectedElement = document.getElementById(`year-${value}`);
-      if (selectedElement) {
-        selectedElement.scrollIntoView({ block: "center", behavior: "smooth" });
-      }
-    }
-  }, [isOpen, value]);
-
-  const handleYearSelect = (year: number) => {
-    onChange(year);
-    setIsOpen(false);
-  };
-
-  return (
-    <div className="relative">
-      <label className="block text-text-primary text-sm font-medium font-montserrat mb-2">
-        {label} <span className="text-red-500">*</span>
-      </label>
-      <div className="relative">
-        {/* Hidden input for form validation */}
-        <input
-          type="hidden"
-          {...register("graduationYear", { valueAsNumber: true })}
-          value={value || ""}
-        />
-
-        {/* Year Picker Button */}
-        <button
-          ref={buttonRef}
-          type="button"
-          onClick={() => setIsOpen(!isOpen)}
-          className={`w-full px-4 py-3 bg-white border rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-montserrat text-left flex items-center justify-between ${error
-            ? "border-red-300 focus:border-red-500"
-            : "border-gray-300 focus:border-primary"
-            } ${!value ? "text-gray-400" : ""}`}
-        >
-          <span>{value ? value : "Select Year"}</span>
-          <svg
-            className={`w-5 h-5 text-gray-400 transition-transform ${isOpen ? "rotate-180" : ""}`}
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </button>
-
-        {/* Dropdown */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              ref={dropdownRef}
-              className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-64 overflow-hidden"
-            >
-              <div className="overflow-y-auto max-h-64 custom-scrollbar">
-                {years.map((year) => (
-                  <button
-                    key={year}
-                    id={`year-${year}`}
-                    type="button"
-                    onClick={() => handleYearSelect(year)}
-                    className={`w-full px-4 py-2.5 text-left hover:bg-primary/10 transition-colors font-montserrat ${value === year
-                      ? "bg-primary/20 text-primary font-semibold"
-                      : "text-text-primary"
-                      }`}
-                  >
-                    {year}
-                  </button>
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-      <p className="mt-1 text-xs text-gray-500 font-montserrat">
-        Select year between {minYear} and {maxYear}
-      </p>
-      {error && (
-        <p className="mt-1 text-sm text-red-500 font-montserrat">{error}</p>
-      )}
-    </div>
-  );
-};
 
 interface CheckoutFormProps {
   courseData: Hero;
@@ -213,6 +72,7 @@ interface CheckoutFormProps {
   courseSlug?: string;
   formType?: string;
   onSuccess?: () => void;
+  embedded?: boolean;
 }
 
 const CheckoutForm = ({
@@ -222,6 +82,7 @@ const CheckoutForm = ({
   courseSlug: propSlug,
   formType = "enrollment-modal",
   onSuccess,
+  embedded = false,
 }: Omit<CheckoutFormProps, 'pricing'>) => {
   const [searchParams] = useSearchParams();
   // Use prop slug if provided (for modal), otherwise fall back to search params (for payment portal page)
@@ -243,27 +104,14 @@ const CheckoutForm = ({
     control,
     handleSubmit,
     formState: { errors },
-    setValue,
-    watch,
   } = useForm<z.infer<typeof checkoutFormSchema>>({
     resolver: zodResolver(checkoutFormSchema),
-    mode: "onChange",
+    mode: "onTouched",
+    reValidateMode: "onChange",
     defaultValues: {
       preferredCallTime: defaultDateTimeLocal(),
     },
   });
-
-  const graduationYear = watch("graduationYear");
-
-  // Convert graduation year string to number for validation
-  useEffect(() => {
-    if (graduationYear && typeof graduationYear === "string") {
-      const yearNum = parseInt(graduationYear, 10);
-      if (!isNaN(yearNum)) {
-        setValue("graduationYear", yearNum, { shouldValidate: true });
-      }
-    }
-  }, [graduationYear, setValue]);
 
   const onSubmit = async (data: z.infer<typeof checkoutFormSchema>) => {
     setIsSubmitting(true);
@@ -300,7 +148,7 @@ const CheckoutForm = ({
           preferredCallTime: data.preferredCallTime,
           address: data.address,
           collegeSchool: data.collegeSchool,
-          graduationYear: data.graduationYear.toString(),
+          graduationYear: data.graduationYear,
           courseSlug: courseSlug || "",
           courseLink,
         },
@@ -324,58 +172,53 @@ const CheckoutForm = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="p-6 sm:p-8 md:p-10"
+      className={embedded ? "p-5 sm:p-6 md:p-8" : "p-6 sm:p-8 md:p-10"}
       data-lenis-prevent
     >
       {/* Header */}
-      <div className="mb-8">
-        <button
-          type="button"
-          onClick={onBack}
-          className="mb-6 hidden items-center gap-2 text-sm font-montserrat font-medium text-gray-600 transition-colors hover:text-text-primary sm:flex sm:text-base"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-          Back to Overview
-        </button>
+      {!embedded && (
+        <div className="mb-8">
+          <button
+            type="button"
+            onClick={onBack}
+            className="mb-6 hidden items-center gap-2 text-sm font-montserrat font-medium text-gray-600 transition-colors hover:text-text-primary sm:flex sm:text-base"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Overview
+          </button>
 
-        <div>
-          <h2 className="text-2xl sm:text-3xl font-montserrat font-semibold tracking-tight text-text-primary mb-2">
-            Program Details
-          </h2>
-          <div className="w-12 h-0.5 bg-primary"></div>
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-montserrat font-semibold tracking-tight text-text-primary mb-2">
+              Program Details
+            </h2>
+            <div className="w-12 h-0.5 bg-primary"></div>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Course Summary */}
-      <div className="mb-8 pb-6 border-b border-gray-200">
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="w-full sm:w-40 md:w-48 h-auto overflow-hidden rounded-lg bg-gray-50 flex items-center justify-center p-3 shrink-0">
-            <img
-              src={assetSrc(courseData.image.src)}
-              alt={courseData.image.alt}
-              className="w-full h-auto object-contain"
-            />
-          </div>
-          <div className="flex-1">
-            <h3 className="text-lg sm:text-xl font-inter-display font-medium text-text-primary mb-2 leading-tight">
-              {courseTitle}
-            </h3>
-            {courseData.subheading && (
-              <p className="text-primary text-base font-inter-display font-medium mb-3">
-                {courseData.subheading}
-              </p>
-            )}
-            {originalPrice > 0 && launchPrice > 0 && (
+      <div className={`mb-8 ${embedded ? "pb-0" : "border-b border-gray-200 pb-6"}`}>
+        <div className="border border-dashed border-zinc-200 bg-white/90 p-4 sm:p-5">
+          <h3 className="text-lg font-semibold leading-snug text-zinc-900 sm:text-xl">
+            {courseTitle}
+          </h3>
+          {courseData.subheading && (
+            <p className="mt-1.5 text-sm font-medium text-blue-600 sm:text-base">
+              {courseData.subheading}
+            </p>
+          )}
+          {originalPrice > 0 && launchPrice > 0 && (
+            <div className="mt-4">
               <BootcampPriceBlock
                 originalPrice={originalPrice}
                 launchPrice={launchPrice}
                 currency={currency}
                 variant="strip"
               />
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -567,23 +410,47 @@ const CheckoutForm = ({
           </div>
 
           {/* Graduation Year */}
-          <YearPicker
-            label="Graduation Year"
-            value={graduationYear}
-            onChange={(year) => setValue("graduationYear", year, { shouldValidate: true })}
-            error={errors.graduationYear?.message}
-            minYear={1990}
-            maxYear={currentYear + 10}
-            register={register}
-          />
+          <div>
+            <label
+              htmlFor="graduationYear"
+              className="block text-text-primary text-sm font-medium font-montserrat mb-2"
+            >
+              Graduation Year <span className="text-red-500">*</span>
+            </label>
+            <input
+              id="graduationYear"
+              type="text"
+              inputMode="numeric"
+              autoComplete="off"
+              maxLength={4}
+              placeholder="e.g. 2024"
+              {...register("graduationYear", {
+                onChange: (event) => {
+                  event.target.value = event.target.value.replace(/\D/g, "").slice(0, 4);
+                },
+              })}
+              className={`w-full px-4 py-3 bg-white border rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-montserrat ${errors.graduationYear
+                ? "border-red-300 focus:border-red-500"
+                : "border-gray-300 focus:border-primary"
+                }`}
+            />
+            <p className="mt-1 text-xs text-gray-500 font-montserrat">
+              Enter a year between 1990 and {currentYear + 10}
+            </p>
+            {errors.graduationYear && (
+              <p className="mt-1 text-sm text-red-500 font-montserrat">
+                {errors.graduationYear.message}
+              </p>
+            )}
+          </div>
 
-          <ShinyButton
+          <CandyButton
             type="submit"
             disabled={isSubmitting}
-            className="mt-6 w-full rounded-lg! font-montserrat! text-base font-medium shadow-lg! active:scale-95! disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-6 w-full rounded-lg! border-zinc-800! bg-[radial-gradient(95%_60%_at_50%_75%,#18181b_0%,#27272a_100%)]! px-6! py-3! text-sm! text-white shadow-none! active:rotate-0 disabled:cursor-not-allowed disabled:border-zinc-300! disabled:bg-zinc-300! disabled:opacity-100 sm:text-base!"
           >
             {isSubmitting ? "Submitting..." : "Submit Details"}
-          </ShinyButton>
+          </CandyButton>
         </form>
       </div>
 

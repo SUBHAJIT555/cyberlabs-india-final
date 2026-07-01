@@ -8,6 +8,8 @@ export interface TypingKeyboardProps
   autoTypeText?: string;
   typingSpeed?: [number, number];
   scale?: number;
+  /** Scale below the `md` breakpoint (defaults to `scale`) */
+  mobileScale?: number;
   accentColor?: string;
   secondaryAccent?: string;
 }
@@ -113,10 +115,12 @@ export function TypingKeyboard({
   autoTypeText = "Live threat hunting. Incident response. Detection engineering. Build real cyber defense capability.       ",
   typingSpeed = [40, 120],
   scale = 0.62,
+  mobileScale,
   accentColor = "#3b82f6",
   secondaryAccent = "#a855f7",
   ...props
 }: TypingKeyboardProps) {
+  const resolvedMobileScale = mobileScale ?? scale;
   const mainRef = useRef<HTMLDivElement>(null);
   const kbRef = useRef<HTMLDivElement>(null);
   const screenRef = useRef<HTMLDivElement>(null);
@@ -183,11 +187,34 @@ export function TypingKeyboard({
           color: rgba(255,255,251,0.7);
           text-transform: uppercase; letter-spacing: 2px;
         }
+        @media (max-width: 767px) {
+          .tk-container {
+            align-items: flex-end;
+            padding-top: 2rem;
+            padding-bottom: 0.25rem;
+          }
+        }
         .tk-main {
           width: 760px; height: 560px;
           position: relative; cursor: pointer;
-          transform: translateY(68px) scale(${scale});
-          transform-origin: center center;
+          transform: translateY(12px) scale(${resolvedMobileScale});
+          transform-origin: center bottom;
+        }
+        @media (min-width: 640px) and (max-width: 767px) {
+          .tk-container {
+            align-items: center;
+            padding-top: 1.25rem;
+            padding-bottom: 0;
+          }
+          .tk-main {
+            transform: translateY(40px) scale(${(resolvedMobileScale + scale) / 2});
+            transform-origin: center center;
+          }
+        }
+        @media (min-width: 768px) {
+          .tk-main {
+            transform-origin: center center;
+          }
         }
         @media (min-width: 768px) {
           .tk-main {
@@ -233,6 +260,17 @@ export function TypingKeyboard({
             0 0 40px color-mix(in srgb, ${accentColor} 40%, transparent),
             0 0 60px color-mix(in srgb, ${accentColor} 30%, transparent);
           animation: tk-screen-flicker 1s ease-in alternate infinite;
+        }
+        @media (max-width: 767px) {
+          .tk-screen {
+            transform: translateZ(100px) translateY(-158px) translateZ(50px) rotateX(270deg);
+            font-size: 12px;
+            padding: 12px;
+            box-shadow:
+              0 0 4px color-mix(in srgb, ${accentColor} 70%, transparent),
+              0 0 10px color-mix(in srgb, ${accentColor} 50%, transparent),
+              0 0 20px color-mix(in srgb, ${accentColor} 35%, transparent);
+          }
         }
         @keyframes tk-screen-flicker {
           0%, 90%, 96% { background-color: ${accentColor}; }

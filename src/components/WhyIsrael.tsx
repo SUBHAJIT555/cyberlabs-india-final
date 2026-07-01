@@ -10,6 +10,7 @@ import {
   LandingBentoCell,
   LandingGoalBanner,
   landingRevealVariants,
+  homeSectionSpacingClass,
 } from "@/components/ui/landing-section";
 
 const cyberDefenseFeatures = [
@@ -59,7 +60,7 @@ const WhyIsrael = () => {
   const timelineRef = useRef<HTMLDivElement>(null);
 
   return (
-    <LandingSectionShell>
+    <LandingSectionShell className={homeSectionSpacingClass}>
       <div ref={timelineRef}>
         <LandingBento>
           <LandingBentoRow>
