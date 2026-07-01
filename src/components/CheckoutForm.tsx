@@ -240,6 +240,7 @@ const CheckoutForm = ({
 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
     setValue,
@@ -480,10 +481,10 @@ const CheckoutForm = ({
           <DateTimePickerField
             label="When should we call you?"
             name="preferredCallTime"
-            register={register}
+            control={control}
             error={errors.preferredCallTime}
             labelClassName="block text-text-primary text-sm font-medium font-montserrat mb-2"
-            inputClassName="bg-white font-montserrat focus:ring-primary/20"
+            inputClassName="bg-white font-montserrat focus:ring-primary/20 cyberlabs-datepicker"
           />
 
           <IndianPhoneField

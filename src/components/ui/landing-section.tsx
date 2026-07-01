@@ -301,7 +301,7 @@ export function LandingGoalBanner({
   return (
     <div
       className={cn(
-        "relative overflow-hidden border border-dashed border-zinc-200 bg-white px-6 py-16 text-center md:py-24",
+        "relative overflow-hidden border border-dashed border-zinc-200 bg-white px-6 py-16 text-center md:py-24 mt-4",
         className,
       )}
     >

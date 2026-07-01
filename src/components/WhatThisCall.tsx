@@ -1,322 +1,341 @@
-import { assetSrc } from "@/lib/utils";
-import { motion, useInView } from "framer-motion";
-import type { Variants } from "framer-motion";
+import type { ReactNode, RefObject } from "react";
+import { assetSrc, cn } from "@/lib/utils";
 import { useRef } from "react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { AnimatedHeading } from "./ui/animated-heading";
-import { AnimatedList } from "./ui/animated-list";
-import type { AnimatedListItem } from "./ui/animated-list";
 import closingSvg from "@/assets/img/Learning-Enviorment/reqcallback.svg";
-import { crosshatchBgStyle } from "@/constants/bootcampStyles";
+import { TimelineContent } from "@/components/ui/timeline-animation";
+import ShinyText from "@/components/ui/ShinyText";
+import GradientText from "@/components/ui/GradientText";
+import {
+  LandingSectionShell,
+  LandingBento,
+  LandingBentoRow,
+  LandingBentoCell,
+  landingRevealVariants,
+  landingSectionHeadingClass,
+  LANDING_GRADIENT_COLORS,
+} from "@/components/ui/landing-section";
+
+const textWideRowClass = "md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]";
+const iconClass = "h-5 w-5 shrink-0 text-blue-600";
+
+const steps = [
+  "Understand which program best fits your current experience",
+  "Assess readiness for advanced, simulation-driven learning",
+  "Clarify learning structure, time commitment, and expectations",
+  "Understand certification, assessments, and career pathways",
+  "Address questions from professionals, parents, or sponsors",
+];
+
+const whoShouldCallListItems = [
+  {
+    text: "Aspiring cybersecurity professionals and career switchers",
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={iconClass}>
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M8 16l2 -6l6 -2l-2 6l-6 2" />
+        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+        <path d="M12 3l0 2" /><path d="M12 19l0 2" /><path d="M3 12l2 0" /><path d="M19 12l2 0" />
+      </svg>
+    ),
+  },
+  {
+    text: "Working IT, engineering, or security professionals",
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={iconClass}>
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M3 5a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1l0 -10" />
+        <path d="M7 20h10" /><path d="M9 16v4" /><path d="M15 16v4" />
+        <path d="M9 12v-4" /><path d="M12 12v-1" /><path d="M15 12v-2" />
+      </svg>
+    ),
+  },
+  {
+    text: "Individuals considering advanced investigation or platform security roles",
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={iconClass}>
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" />
+        <path d="M11 11a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 12l0 2.5" />
+      </svg>
+    ),
+  },
+  {
+    text: "Parents or sponsors evaluating program rigor and outcomes",
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={iconClass}>
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M9.615 20h-2.615a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8" />
+        <path d="M14 19l2 2l4 -4" /><path d="M9 8h4" /><path d="M9 12h2" />
+      </svg>
+    ),
+  },
+  {
+    text: "Enterprises or institutions exploring structured cyber training",
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={iconClass}>
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M3 21l18 0" /><path d="M5 21v-14l8 -4v18" /><path d="M19 21v-10l-6 -4" />
+        <path d="M9 9l0 .01" /><path d="M9 12l0 .01" /><path d="M9 15l0 .01" /><path d="M9 18l0 .01" />
+      </svg>
+    ),
+  },
+];
+
+function MergedBentoBlock({ children }: { children: ReactNode }) {
+  return <div className="max-md:divide-y max-md:divide-zinc-200">{children}</div>;
+}
+
+function SectionImage({ src, alt = "" }: { src: string; alt?: string }) {
+  return (
+    <img
+      src={assetSrc(src)}
+      alt={alt}
+      className="mx-auto h-auto w-full max-w-[180px] sm:max-w-[200px] md:max-w-[220px] lg:max-w-[240px]"
+    />
+  );
+}
+
+function CardGridBackground({ variant = "light" }: { variant?: "light" | "dark" }) {
+  const lineColor = variant === "dark" ? "#52525b" : "#e5e5e5";
+
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0 z-0"
+      style={{
+        backgroundImage: `repeating-linear-gradient(45deg, ${lineColor} 0, ${lineColor} 1px, transparent 0, transparent 50%), repeating-linear-gradient(-45deg, ${lineColor} 0, ${lineColor} 1px, transparent 0, transparent 50%)`,
+        backgroundSize: "6px 6px",
+        opacity: variant === "dark" ? 0.35 : 0.4,
+      }}
+    />
+  );
+}
+
+type TopicCardProps = {
+  eyebrow: string;
+  title: string;
+  intro?: ReactNode;
+  items?: string[];
+  iconItems?: { text: string; icon: ReactNode }[];
+  footer?: string;
+  featured?: boolean;
+  animationNum: number;
+  timelineRef: RefObject<HTMLDivElement | null>;
+};
+
+function TopicCard({
+  eyebrow,
+  title,
+  intro,
+  items,
+  iconItems,
+  footer,
+  featured = false,
+  animationNum,
+  timelineRef,
+}: TopicCardProps) {
+  return (
+    <TimelineContent
+      as="article"
+      animationNum={animationNum}
+      timelineRef={timelineRef}
+      customVariants={landingRevealVariants}
+      className={cn(
+        "group relative flex h-full flex-col overflow-hidden border border-dashed p-7 transition-shadow duration-300 md:p-8",
+        featured
+          ? "border-zinc-700 bg-zinc-900 text-white shadow-xl shadow-zinc-900/15"
+          : "border-zinc-200 bg-zinc-50 shadow-sm hover:shadow-md",
+      )}
+    >
+      <CardGridBackground variant={featured ? "dark" : "light"} />
+
+      <div className="relative z-10">
+        <span
+          className={cn(
+            "inline-flex items-center gap-2 rounded-lg border px-3 py-1 text-xs font-semibold uppercase tracking-[0.14em]",
+            featured
+              ? "border-zinc-700 bg-zinc-800/80"
+              : "border-dotted border-zinc-200 bg-zinc-50",
+          )}
+        >
+          <span className={cn("h-1.5 w-1.5 rounded-full", featured ? "bg-blue-400" : "bg-blue-500")} />
+          <GradientText
+            className="text-xs font-semibold uppercase tracking-[0.14em]"
+            colors={
+              featured
+                ? ["#a1a1aa", "#60a5fa", "#d4d4d8", "#3b82f6", "#a1a1aa"]
+                : [...LANDING_GRADIENT_COLORS]
+            }
+            animationSpeed={4}
+            direction="horizontal"
+            showBorder={false}
+            pauseOnHover={false}
+          >
+            {eyebrow}
+          </GradientText>
+        </span>
+
+        <h2 className="mt-5 text-pretty">
+          <ShinyText
+            text={title}
+            className="text-xl font-semibold leading-tight tracking-tight sm:text-2xl md:text-3xl"
+            color={featured ? "#e4e4e7" : "#3f3f46"}
+            shineColor={featured ? "#ffffff" : "#18181b"}
+            speed={3}
+            spread={120}
+          />
+        </h2>
+
+        {intro ? (
+          <div
+            className={cn(
+              "mt-4 text-sm leading-relaxed md:text-base",
+              featured ? "text-zinc-400" : "text-zinc-600",
+            )}
+          >
+            {intro}
+          </div>
+        ) : null}
+      </div>
+
+      <div className={cn("relative z-10 my-6 h-px w-full", featured ? "bg-zinc-800" : "bg-zinc-200")} />
+
+      <ul className="relative z-10 flex-1 space-y-3">
+        {items?.map((item, index) => (
+          <li key={item} className="flex items-start gap-3">
+            <span
+              className={cn(
+                "shrink-0 font-semibold",
+                featured ? "text-zinc-500" : "text-zinc-400",
+              )}
+            >
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <span
+              className={cn(
+                "text-sm leading-relaxed md:text-base",
+                featured ? "text-zinc-300" : "text-zinc-700",
+              )}
+            >
+              {item}
+            </span>
+          </li>
+        ))}
+        {iconItems?.map((item) => (
+          <li key={item.text} className="flex items-start gap-3">
+            <span className="mt-0.5 flex shrink-0 items-center justify-center [&_svg]:h-5 [&_svg]:w-5">
+              {item.icon}
+            </span>
+            <span
+              className={cn(
+                "text-sm leading-relaxed md:text-base",
+                featured ? "text-zinc-300" : "text-zinc-700",
+              )}
+            >
+              {item.text}
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      {footer ? (
+        <div
+          className={cn(
+            "relative z-10 mt-8 rounded-2xl border px-4 py-3.5 text-center text-sm font-medium leading-relaxed md:text-base",
+            featured
+              ? "border-zinc-700 bg-zinc-800/80 text-zinc-200"
+              : "border-dashed border-zinc-200 bg-zinc-50 text-zinc-800",
+          )}
+        >
+          {footer}
+        </div>
+      ) : null}
+    </TimelineContent>
+  );
+}
 
 const WhatThisCall = () => {
-    const containerRef = useRef(null);
-    const isInView = useInView(containerRef, { once: false, margin: "-100px" });
-    const headingRef = useRef<HTMLDivElement>(null);
-    const card1TitleRef = useRef<HTMLDivElement>(null);
-    const card1TitleInView = useInView(card1TitleRef, { once: false, margin: "-80px" });
-    const card2TitleRef = useRef<HTMLDivElement>(null);
-    const card2TitleInView = useInView(card2TitleRef, { once: false, margin: "-80px" });
+  const timelineRef = useRef<HTMLDivElement>(null);
 
-    const steps = [
-        {
-            number: 1,
-            title: "Understand which program best fits your current experience",
-            description: "We'll discuss your background, goals, and help you identify the program that aligns best with your current experience and career aspirations.",
-        },
-        {
-            number: 2,
-            title: "Assess readiness for advanced, simulation-driven learning",
-            description: "We'll evaluate your technical foundation and determine if you're prepared for our rigorous, hands-on approach to cybersecurity training.",
-        },
-        {
-            number: 3,
-            title: "Clarify learning structure, time commitment, and expectations",
-            description: "We'll explain our curriculum structure, the time investment required, and what you can expect from the learning experience and outcomes.",
-        },
-        {
-            number: 4,
-            title: "Understand certification, assessments, and career pathways",
-            description: "We'll walk you through our certification framework, assessment methods, and how our programs prepare you for real-world cybersecurity roles.",
-        },
-        {
-            number: 5,
-            title: "Address questions from professionals, parents, or sponsors",
-            description: "We'll answer any questions you have about program rigor, outcomes, investment, and how it fits into your or your sponsored student's career path.",
-        },
-    ];
+  const introBody = (
+    <>
+      <TimelineContent as="p" animationNum={1} timelineRef={timelineRef} customVariants={landingRevealVariants} className="mt-4 text-sm font-semibold leading-snug text-zinc-900 sm:text-base md:text-lg lg:text-xl">
+        <span className="block">Choosing the right cybersecurity program is a serious decision.</span>
+      </TimelineContent>
+      <TimelineContent as="p" animationNum={2} timelineRef={timelineRef} customVariants={landingRevealVariants} className="mt-4 text-sm leading-relaxed text-zinc-700 md:text-base lg:text-lg">
+        Our programs are <span className="font-semibold text-blue-600">rigorous, time-intensive, and designed to prepare you for real-world cybersecurity roles.</span> Before you enroll, we want to ensure the program you choose aligns with your background, goals, and career direction.
+      </TimelineContent>
+      <TimelineContent as="p" animationNum={3} timelineRef={timelineRef} customVariants={landingRevealVariants} className="mt-4 text-sm leading-relaxed text-zinc-700 md:text-base">
+        Request a call back to speak with a CYBERLABS admissions advisor and receive a guided, one-to-one consultation.
+      </TimelineContent>
+    </>
+  );
 
-    const whoShouldCall = [
-        {
-            title: "Aspiring cybersecurity professionals and career switchers",
-            description: "Whether you're starting fresh or transitioning from another field, we'll help you understand how our programs can build your cybersecurity foundation and accelerate your career change.",
-            icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 sm:w-5 sm:h-5">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M8 16l2 -6l6 -2l-2 6l-6 2" />
-                    <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-                    <path d="M12 3l0 2" />
-                    <path d="M12 19l0 2" />
-                    <path d="M3 12l2 0" />
-                    <path d="M19 12l2 0" />
-                </svg>
-            ),
-        },
-        {
-            title: "Working IT, engineering, or security professionals",
-            description: "For professionals already in tech, we'll discuss how our advanced programs can deepen your expertise and prepare you for specialized cybersecurity roles.",
-            icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 sm:w-5 sm:h-5">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M3 5a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1l0 -10" />
-                    <path d="M7 20h10" />
-                    <path d="M9 16v4" />
-                    <path d="M15 16v4" />
-                    <path d="M9 12v-4" />
-                    <path d="M12 12v-1" />
-                    <path d="M15 12v-2" />
-                    <path d="M12 12v-1" />
-                </svg>
-            ),
-        },
-        {
-            title: "Individuals considering advanced investigation or platform security roles",
-            description: "If you're interested in digital forensics, incident response, or platform security, we'll explain how our programs align with these specialized career paths.",
-            icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 sm:w-5 sm:h-5">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" />
-                    <path d="M11 11a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
-                    <path d="M12 12l0 2.5" />
-                </svg>
-            ),
-        },
-        {
-            title: "Parents or sponsors evaluating program rigor and outcomes",
-            description: "We'll provide transparent information about program structure, time commitment, certification value, and career outcomes to help you make an informed decision.",
-            icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 sm:w-5 sm:h-5">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M9.615 20h-2.615a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v8" />
-                    <path d="M14 19l2 2l4 -4" />
-                    <path d="M9 8h4" />
-                    <path d="M9 12h2" />
-                </svg>
-            ),
-        },
-        {
-            title: "Enterprises or institutions exploring structured cyber training",
-            description: "For organizations looking to upskill teams, we'll discuss our enterprise training options, curriculum alignment, and how we can support your cybersecurity workforce development.",
-            icon: (
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 sm:w-5 sm:h-5">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M3 21l18 0" />
-                    <path d="M5 21v-14l8 -4v18" />
-                    <path d="M19 21v-10l-6 -4" />
-                    <path d="M9 9l0 .01" />
-                    <path d="M9 12l0 .01" />
-                    <path d="M9 15l0 .01" />
-                    <path d="M9 18l0 .01" />
-                </svg>
-            ),
-        },
-    ];
+  return (
+    <LandingSectionShell>
+      <div ref={timelineRef}>
+        <LandingBento>
+          <MergedBentoBlock>
+            <LandingBentoRow className={textWideRowClass}>
+              <LandingBentoCell className="md:px-0 md:pr-8">
+                <TimelineContent as="h2" animationNum={0} timelineRef={timelineRef} customVariants={landingRevealVariants}>
+                  <ShinyText
+                    text="Speak With a CYBERLABS"
+                    className={cn(landingSectionHeadingClass, "block")}
+                    color="#3f3f46"
+                    shineColor="#18181b"
+                    speed={3}
+                    spread={120}
+                  />
+                  <span className={cn(landingSectionHeadingClass, "mt-1 block text-blue-600")}>Admissions Advisor</span>
+                </TimelineContent>
+                <div className="hidden md:block">{introBody}</div>
+              </LandingBentoCell>
+              <LandingBentoCell className="flex items-center justify-center py-6 md:px-0 md:py-0 md:pl-6 lg:pl-8">
+                <TimelineContent as="div" animationNum={0} timelineRef={timelineRef} customVariants={landingRevealVariants}>
+                  <SectionImage src={closingSvg} />
+                </TimelineContent>
+              </LandingBentoCell>
+            </LandingBentoRow>
+            <div className="px-0 pb-6 md:hidden">{introBody}</div>
+          </MergedBentoBlock>
 
-    const stepsListItems: AnimatedListItem[] = steps.map((step) => ({
-        text: step.title,
-        icon: (
-            <div className="shrink-0 w-8 h-8 sm:w-8 sm:h-8 rounded-lg  flex items-center justify-center font-montserrat font-bold text-sm sm:text-base bg-primary text-background">
-                {step.number}
+          <div className="border-t border-zinc-200 py-6 md:py-8">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
+              <TopicCard
+                eyebrow="Purpose"
+                title="What This Call is For"
+                intro={
+                  <>
+                    <p>
+                      This is <span className="font-semibold text-blue-600">not a sales call.</span>
+                    </p>
+                    <p className="mt-3 font-semibold text-zinc-900">
+                      During the conversation, we will help you:
+                    </p>
+                  </>
+                }
+                items={steps}
+                footer="Our goal is to ensure mutual fit, not just enrollment."
+                animationNum={4}
+                timelineRef={timelineRef}
+              />
+
+              <TopicCard
+                eyebrow="Audience"
+                title="Who Should Request a Call Back"
+                iconItems={whoShouldCallListItems}
+                footer="If you are serious about building real cybersecurity capability, this call is for you."
+                featured
+                animationNum={5}
+                timelineRef={timelineRef}
+              />
             </div>
-        )
-    }));
-
-    const whoShouldCallListItems: AnimatedListItem[] = whoShouldCall.map((item) => ({
-        text: item.title,
-        icon: (
-            <div className="shrink-0 w-8 h-8 sm:w-8 sm:h-8 rounded-lg  flex items-center justify-center bg-primary text-background [&_svg]:text-background">
-                {item.icon}
-            </div>
-        ),
-    }));
-
-    const containerVariants: Variants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.15,
-                delayChildren: 0.1,
-            },
-        },
-    };
-
-    const itemVariants: Variants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 0.6,
-                ease: "easeOut",
-            },
-        },
-    };
-
-    const VerticalStripesBg = ({
-        lineColor,
-        opacity = 0.1,
-    }: {
-        lineColor: string;
-        opacity?: number;
-    }) => (
-        <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden>
-            <div
-                className="absolute inset-0"
-                style={{
-                    WebkitMaskImage: "linear-gradient(to top, #000 0%, transparent 80%)",
-                    maskImage: "linear-gradient(to top, #000 0%, transparent 80%)",
-                    backgroundImage: `linear-gradient(90deg, ${lineColor} 1px, transparent 1px)`,
-                    backgroundSize: "4px 100%",
-                    opacity,
-                }}
-            />
-        </div>
-    );
-
-    return (
-        <section className="w-full py-4 md:py-8" ref={containerRef}>
-            <div className="mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="space-y-3 md:space-y-4"
-                >
-                    {/* Closing statement — image left, content right */}
-                    <motion.div
-                        ref={headingRef}
-                        initial={{ opacity: 0, y: 24 }}
-                        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
-                        className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden mb-8 md:mb-10"
-                    >
-                        <div className="absolute inset-0 z-0 pointer-events-none" style={crosshatchBgStyle} />
-                        <div className="relative z-10 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 sm:gap-8 md:gap-10 items-center p-6 sm:p-8 md:p-10 lg:p-12">
-                            <div className="order-1 md:order-1 flex justify-center md:justify-start shrink-0">
-                                <img src={assetSrc(closingSvg)} alt="" className="w-full max-w-[200px] sm:max-w-[240px] md:w-[200px] md:max-w-none lg:w-[260px] h-auto" />
-                            </div>
-                            <div className="order-2 md:order-2 space-y-5 sm:space-y-6 text-center md:text-left">
-                                <motion.p
-                                    className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-inter-display font-semibold text-text-primary leading-snug"
-                                    initial={{ opacity: 0, y: 16 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: false, amount: 0.2 }}
-                                    transition={{ duration: 0.5, ease: "easeOut" }}
-                                >
-                                    <span className="block sm:inline">Speak With a CYBERLABS Admissions Advisor</span>
-                                    <span className="block mt-2 sm:mt-3 text-primary font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl">Choosing the right cybersecurity program is a serious decision.</span>
-                                </motion.p>
-                                <div className="w-16 sm:w-20 h-0.5 bg-primary/30 mx-auto md:mx-0" aria-hidden />
-                                <div className="space-y-4 sm:space-y-5">
-                                    <p className="text-base sm:text-lg md:text-xl font-inter-display font-medium text-text-primary leading-relaxed">
-                                        Our programs are <span className="font-bold text-primary">rigorous, time-intensive, and designed to prepare you for real-world cybersecurity roles.</span> Before you enroll, we want to ensure the program you choose aligns with your background, goals,
-                                        and career direction.
-                                    </p>
-                                    <p className="text-sm sm:text-base md:text-lg font-montserrat font-medium text-text-primary/90 leading-relaxed">
-                                        Request a call back to speak with a CYBERLABS admissions advisor and receive a guided, one-to-one consultation.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </motion.div>
-
-                    {/* Grid Structure */}
-                    <motion.div
-                        variants={containerVariants}
-                        initial="hidden"
-                        animate={isInView ? "visible" : "hidden"}
-                        className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8"
-                    >
-                        {/* Card 1: What This Call Is For — light */}
-                        <motion.div variants={itemVariants}>
-                            <Card className="relative h-full border border-neutral-200 bg-white shadow-sm overflow-hidden">
-                                <VerticalStripesBg lineColor="#d4d4d8" opacity={0.22} />
-                                <CardHeader className="relative z-10 p-6 md:p-8">
-                                    <div ref={card1TitleRef} className="mb-4">
-                                        <AnimatedHeading
-                                            inView={card1TitleInView}
-                                            lines={[
-                                                { text: "What This Call is For", className: "text-xl sm:text-3xl md:text-4xl font-inter-display font-semibold text-text-primary leading-tight tracking-tight", as: "h3" },
-                                            ]}
-                                        />
-                                    </div>
-
-                                    <p className="text-sm sm:text-base md:text-lg font-inter-display font-semibold text-text-primary leading-relaxed mb-6">
-                                        This is <span className="font-bold text-primary">not a sales call.</span>
-                                    </p>
-                                    <p className="text-sm sm:text-base md:text-lg font-inter-display font-semibold text-text-primary leading-relaxed mb-6">During the conversation, we will help you:</p>
-                                    <AnimatedList
-                                        items={stepsListItems}
-                                        viewportOnce={false}
-                                        viewportAmount={0.5}
-                                        duration={0.6}
-                                        staggerDelay={0.1}
-                                        xOffset={50}
-                                        containerClassName="space-y-3 sm:space-y-4"
-                                        contentClassName="flex-1 text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-relaxed"
-                                        itemClassName="flex items-center gap-3 sm:gap-4 pb-3 sm:pb-4 border-b border-neutral-200 last:border-b-0 last:pb-0"
-                                        iconClassName="shrink-0 flex items-center justify-center pt-0.5 text-blue-600"
-                                        boldText={false}
-                                    />
-                                </CardHeader>
-                                <CardContent className="relative z-10 p-6 md:p-8 pt-0 -mt-2 sm:-mt-3">
-                                    <p className="text-base sm:text-lg md:text-xl font-inter-display font-semibold text-text-primary leading-relaxed">
-                                        Our goal is to ensure mutual fit, not just enrollment.
-                                    </p>
-                                </CardContent>
-                            </Card>
-                        </motion.div>
-
-                        {/* Card 2: Who Should Request a Call Back — dark */}
-                        <motion.div variants={itemVariants}>
-                            <Card className="relative h-full border border-neutral-600 bg-text-primary shadow-sm overflow-hidden">
-                                <VerticalStripesBg lineColor="rgba(255, 255, 255, 0.25)" opacity={0.28} />
-                                <CardHeader className="relative z-10 p-6 md:p-8">
-                                    <div ref={card2TitleRef} className="mb-8 md:mb-10">
-                                        <AnimatedHeading
-                                            inView={card2TitleInView}
-                                            lines={[
-                                                { text: "Who Should Request a Call Back", className: "text-xl sm:text-3xl md:text-4xl font-inter-display font-semibold text-white leading-tight tracking-tight", as: "h3" },
-                                            ]}
-                                        />
-                                    </div>
-                                    <AnimatedList
-                                        items={whoShouldCallListItems}
-                                        viewportOnce={false}
-                                        viewportAmount={0.5}
-                                        duration={0.6}
-                                        staggerDelay={0.1}
-                                        xOffset={50}
-                                        containerClassName="space-y-3 sm:space-y-4"
-                                        contentClassName="flex-1 text-sm sm:text-base md:text-lg font-inter-display font-medium text-neutral-100 leading-relaxed"
-                                        itemClassName="flex items-center gap-3 sm:gap-4 pb-3 sm:pb-4 border-b border-neutral-600 last:border-b-0 last:pb-0"
-                                        iconClassName="shrink-0 flex items-center justify-center pt-0.5 text-white [&_svg]:text-white"
-                                        boldText={false}
-                                    />
-                                </CardHeader>
-                                <CardContent className="relative z-10 p-6 md:p-8 pt-0 -mt-2 sm:-mt-3">
-                                    <p className="text-base sm:text-lg md:text-xl font-inter-display font-semibold text-white leading-relaxed">
-                                        If you are serious about building real cybersecurity capability, this call is for you.
-                                    </p>
-                                </CardContent>
-                            </Card>
-                        </motion.div>
-                    </motion.div>
-                </motion.div>
-            </div>
-        </section>
-    );
+          </div>
+        </LandingBento>
+      </div>
+    </LandingSectionShell>
+  );
 };
 
 export default WhatThisCall;

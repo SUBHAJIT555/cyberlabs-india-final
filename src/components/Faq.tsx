@@ -1,6 +1,14 @@
-import { motion, useInView, useAnimation } from "framer-motion";
-import { useState, useRef, useEffect, type ReactNode } from "react";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+"use client";
+
+import { useRef, type ReactNode } from "react";
+import { TimelineContent } from "@/components/ui/timeline-animation";
+import ShinyText from "@/components/ui/ShinyText";
+import { FaqAccordion } from "@/components/ui/faq-accordion";
+import {
+  LandingSectionShell,
+  landingRevealVariants,
+  landingSectionHeadingClass,
+} from "@/components/ui/landing-section";
 
 const faqItems: { question: string; answer: ReactNode }[] = [
   {
@@ -214,143 +222,81 @@ const faqItems: { question: string; answer: ReactNode }[] = [
   },
 ];
 
+const faqAnswerClassName =
+  "space-y-3 leading-relaxed [&>p]:mb-2 [&>ul]:my-3 [&>ul]:list-disc [&>ul]:space-y-1 [&>ul]:pl-6 [&_strong]:font-bold [&_strong]:text-zinc-900";
+
 const Faq = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
-  const accordionRef = useRef(null);
-  const accordionInView = useInView(accordionRef, {
-    once: true,
-    margin: "-100px",
-  });
-  const accordionControls = useAnimation();
-
-  useEffect(() => {
-    if (accordionInView) {
-      accordionControls.start("visible");
-    }
-  }, [accordionInView, accordionControls]);
-
-  const toggleAccordion = (index: number) => {
-    setOpenIndex((prev) => (prev === index ? null : index));
-  };
-
-  const accordionVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, x: -30 },
-    visible: {
-      opacity: 1,
-      x: 0,
-    },
-  };
+  const timelineRef = useRef<HTMLDivElement>(null);
 
   return (
-    <motion.div
-      className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-20 mx-auto" id="frequently-asked-questions"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      viewport={{ once: true, margin: "-100px" }}
-    >
-      <h2 className=" text-3xl xs:text-4xl sm:text-5xl font-semibold  mb-6 sm:mb-8 font-inter-display tracking-tight text-text-primary leading-tight">
-        Frequently Asked Questions.
-      </h2>
-      <p className="text-text-primary text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl font-inter-display font-medium  mb-8 sm:mb-12 lg:mb-16  max-w-5xl">
-        We offer comprehensive cybersecurity education to help you{" "}
-        <span className="font-inter-display font-semibold text-primary tracking-tighter ">
-          achieve your career goals
-        </span>{" "}
-        in the digital security industry.
-      </p>
+    <div id="frequently-asked-questions" ref={timelineRef}>
+      <section className="relative overflow-hidden bg-white px-4 pb-10 pt-20 sm:px-5 sm:pb-12 sm:pt-24 md:pb-16 md:pt-32">
+        <div className="absolute inset-0 z-0" aria-hidden>
+          <div
+            className="pointer-events-none absolute inset-0 opacity-35"
+            style={{
+              WebkitMaskImage:
+                "linear-gradient(to bottom, #000 0%, transparent 80%)",
+              maskImage: "linear-gradient(to bottom, #000 0%, transparent 80%)",
+              backgroundImage:
+                "linear-gradient(90deg, var(--hero-scale-line) 1px, transparent 1px)",
+              backgroundSize: "8px 100%",
+            }}
+          />
+        </div>
 
-      {/* Accordion */}
-      <motion.div
-        ref={accordionRef}
-        variants={accordionVariants}
-        initial="hidden"
-        animate={accordionControls}
-        transition={{
-          duration: 0.6,
-          staggerChildren: 0.1,
-          delayChildren: 0.2,
-        }}
-        className="flex flex-col divide-y divide-neutral-300"
-      >
-        {faqItems.map((item, index) => (
-          <motion.div
-            key={index}
-            variants={itemVariants}
-            transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="py-4 sm:py-6"
+        <div className="relative z-10 mx-auto text-center w-full max-w-5xl">
+          <TimelineContent
+            as="h2"
+            animationNum={0}
+            timelineRef={timelineRef}
+            customVariants={landingRevealVariants}
           >
-            {/* Header */}
-            <motion.button
-              onClick={() => toggleAccordion(index)}
-              className="w-full flex justify-between items-center text-left focus:outline-none group cursor-pointer"
-              whileHover={{ x: 5 }}
-              transition={{ duration: 0.2 }}
-            >
-              <h3 className="font-inter-display text-text-primary text-xl sm:text-xl md:text-xl lg:text-2xl xl:text-3xl font-bold pr-4">
-                <span className="text-primary mr-2 sm:mr-3 ">{index + 1}.</span>
-                {item.question}
-              </h3>
-              <div className="text-neutral-500 flex items-center gap-1 sm:gap-2 font-inter-display font-medium">
-                <span className="text-xs sm:text-sm md:text-base lg:text-lg hidden sm:inline">
-                  {openIndex === index ? "Collapse" : "Expand"}
-                </span>
-                <motion.div
-                  animate={{ rotate: openIndex === index ? 180 : 0 }}
-                  transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-                >
-                  {openIndex === index ? (
-                    <FiChevronUp className="text-lg sm:text-xl" />
-                  ) : (
-                    <FiChevronDown className="text-lg sm:text-xl" />
-                  )}
-                </motion.div>
-              </div>
-            </motion.button>
+            <ShinyText
+              text="Frequently Asked Questions."
+              className={landingSectionHeadingClass}
+              color="#3f3f46"
+              shineColor="#18181b"
+              speed={3}
+              spread={120}
+            />
+          </TimelineContent>
 
-            {/* Content */}
-            <motion.div
-              initial={false}
-              animate={{
-                height: openIndex === index ? "auto" : 0,
-                opacity: openIndex === index ? 1 : 0,
-              }}
-              transition={{
-                duration: 0.5,
-                ease: [0.25, 0.46, 0.45, 0.94],
-                opacity: { duration: 0.3 },
-              }}
-              className="overflow-hidden"
-            >
-              <motion.div
-                className="pl-0 pr-2 text-text-primary font-inter-display font-medium mt-3 sm:mt-4 faq-answer"
-                initial={{ opacity: 0, y: -20 }}
-                animate={{
-                  opacity: openIndex === index ? 1 : 0,
-                  y: openIndex === index ? 0 : -20,
-                }}
-                transition={{
-                  duration: 0.4,
-                  delay: openIndex === index ? 0.2 : 0,
-                  ease: [0.25, 0.46, 0.45, 0.94],
-                }}
-              >
-                <div className="text-lg sm:text-lg md:text-lg lg:text-xl xl:text-2xl leading-relaxed space-y-3 [&>p]:mb-2 [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-1 [&>ul]:my-3 [&>li]:mb-1 [&_strong]:font-bold [&_strong]:text-text-primary">
-                  {item.answer}
-                </div>
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        ))}
-      </motion.div>
-    </motion.div>
+          <TimelineContent
+            as="p"
+            animationNum={1}
+            timelineRef={timelineRef}
+            customVariants={landingRevealVariants}
+            className="mt-6  text-lg font-medium leading-snug text-zinc-700 sm:mt-8 sm:text-xl md:text-2xl lg:text-3xl max-w-4xl mx-auto"
+          >
+            We offer comprehensive cybersecurity education to help you{" "}
+            <span className="font-semibold text-blue-600 tracking-tighter">
+              achieve your career goals
+            </span>{" "}
+            in the digital security industry.
+          </TimelineContent>
+        </div>
+      </section>
+
+      <div
+        className="relative left-1/2 w-screen max-w-[100vw] -translate-x-1/2 border-t border-dashed border-zinc-200"
+        aria-hidden
+      />
+
+      <LandingSectionShell className="pt-12 md:pt-16">
+        <TimelineContent
+          as="div"
+          animationNum={2}
+          timelineRef={timelineRef}
+          customVariants={landingRevealVariants}
+        >
+          <FaqAccordion
+            items={faqItems}
+            answerClassName={faqAnswerClassName}
+          />
+        </TimelineContent>
+      </LandingSectionShell>
+    </div>
   );
 };
 

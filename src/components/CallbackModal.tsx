@@ -76,6 +76,7 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
 
   const {
     register,
+    control,
     handleSubmit: rhfHandleSubmit,
     formState: { errors },
     reset,
@@ -351,9 +352,10 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
                   <DateTimePickerField
                     label="When should we call you?"
                     name="callbackTime"
-                    register={register}
+                    control={control}
                     rules={{ required: "Preferred callback time is required" }}
                     error={errors.callbackTime}
+                    popperClassName="z-[120]"
                   />
 
                   {!hasContext && (

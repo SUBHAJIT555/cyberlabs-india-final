@@ -98,7 +98,7 @@ const WhatDefences = () => {
         </svg>
     );
 
-    // Animated SVG: user-check (Readiness Over Résumés)
+    // Animated SVG: user-check (Readiness Over Resumes)
     const AnimatedUserCheckIcon = ({ isInView }: { isInView: boolean }) => (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -176,7 +176,7 @@ const WhatDefences = () => {
             Icon: AnimatedBriefcaseIcon,
         },
         {
-            title: "Readiness Over Résumés",
+            title: "Readiness Over Resumes",
             body: "Fit is determined through discussion and guidance, not automated rejection.",
             Icon: AnimatedUserCheckIcon,
         },

@@ -1,53 +1,41 @@
-import { assetSrc } from "@/lib/utils";
-import { motion, useInView } from "framer-motion";
-import type { Variants } from "framer-motion";
+import { assetSrc, cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 import { useRef, type ReactNode } from "react";
 import { AnimatedList } from "./ui/animated-list";
 import type { AnimatedListItem } from "./ui/animated-list";
 import employeemeanSvg from "@/assets/img/Official certification/employeemean.svg";
 import learnermeanSvg from "@/assets/img/Official certification/learnermean.svg";
 import intrigitySvg from "@/assets/img/Official certification/intrigity.svg";
+import { TimelineContent } from "@/components/ui/timeline-animation";
+import ShinyText from "@/components/ui/ShinyText";
+import {
+  LandingSectionShell,
+  LandingBento,
+  LandingBentoRow,
+  LandingBentoCell,
+  LandingGoalBanner,
+  landingRevealVariants,
+  landingSectionHeadingClass,
+  landingListRowHoverClass,
+  landingListTextHoverClass,
+} from "@/components/ui/landing-section";
+
+function MergedBentoBlock({ children }: { children: ReactNode }) {
+  return <div className="max-md:divide-y max-md:divide-zinc-200">{children}</div>;
+}
+
+function SectionImage({ src, alt = "" }: { src: string; alt?: string }) {
+  return (
+    <img
+      src={assetSrc(src)}
+      alt={alt}
+      className="mx-auto h-auto w-full max-w-[180px] sm:max-w-[200px] md:max-w-[220px] lg:max-w-[240px]"
+    />
+  );
+}
 
 const WhatThisMean = () => {
-    const containerRef = useRef(null);
-    const isInView = useInView(containerRef, { once: false, margin: "-100px" });
-
-    const horizontalLinesFadeStyle = {
-        WebkitMaskImage: "linear-gradient(to bottom, #000 0%, transparent 75%)",
-        backgroundImage:
-            "repeating-linear-gradient(0deg, transparent 0px, transparent 3px, #d4d4d8 3px, #d4d4d8 4px)",
-        height: "100%",
-        left: 0,
-        maskImage: "linear-gradient(to bottom, #000 0%, transparent 75%)",
-        opacity: 0.5,
-        pointerEvents: "none" as const,
-        position: "absolute" as const,
-        top: 0,
-        width: "100%",
-    };
-
-    const HorizontalLinesBg = () => (
-        <div className="absolute inset-0 z-0 pointer-events-none">
-            <div style={horizontalLinesFadeStyle} />
-        </div>
-    );
-
-    const SectionBlock = ({
-        children,
-        className = "",
-    }: {
-        children: ReactNode;
-        className?: string;
-    }) => (
-        <div className={`w-full mb-8 md:mb-10 ${className}`}>
-            <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden">
-                <HorizontalLinesBg />
-                <div className="relative z-10 p-6 sm:p-8 md:p-10 lg:p-12">
-                    {children}
-                </div>
-            </div>
-        </div>
-    );
+    const timelineRef = useRef<HTMLDivElement>(null);
 
     // Animated SVG Icon Components (always visible)
     const AnimatedNetworkIcon = () => (
@@ -61,7 +49,7 @@ const WhatThisMean = () => {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-5 h-5 sm:w-6 sm:h-6 text-primary"
+            className="h-5 w-5 shrink-0 text-blue-600"
         >
             <motion.path
                 stroke="none"
@@ -134,7 +122,7 @@ const WhatThisMean = () => {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-5 h-5 sm:w-6 sm:h-6 text-primary"
+            className="h-5 w-5 shrink-0 text-blue-600"
         >
             <motion.path
                 stroke="none"
@@ -189,7 +177,7 @@ const WhatThisMean = () => {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-5 h-5 sm:w-6 sm:h-6 text-primary"
+            className="h-5 w-5 shrink-0 text-blue-600"
         >
             <motion.path
                 stroke="none"
@@ -238,7 +226,7 @@ const WhatThisMean = () => {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-5 h-5 sm:w-6 sm:h-6 text-primary"
+            className="h-5 w-5 shrink-0 text-blue-600"
         >
             <motion.path
                 stroke="none"
@@ -299,7 +287,7 @@ const WhatThisMean = () => {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-5 h-5 sm:w-6 sm:h-6 text-primary"
+            className="h-5 w-5 shrink-0 text-blue-600"
         >
             <motion.path
                 stroke="none"
@@ -348,7 +336,7 @@ const WhatThisMean = () => {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-5 h-5 sm:w-6 sm:h-6 text-primary"
+            className="h-5 w-5 shrink-0 text-blue-600"
         >
             <motion.path
                 stroke="none"
@@ -385,7 +373,7 @@ const WhatThisMean = () => {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-5 h-5 sm:w-6 sm:h-6 text-primary"
+            className="h-5 w-5 shrink-0 text-blue-600"
         >
             <motion.path
                 stroke="none"
@@ -428,7 +416,7 @@ const WhatThisMean = () => {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-5 h-5 sm:w-6 sm:h-6 text-primary"
+            className="h-5 w-5 shrink-0 text-blue-600"
         >
             <motion.path
                 stroke="none"
@@ -471,7 +459,7 @@ const WhatThisMean = () => {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-5 h-5 sm:w-6 sm:h-6 text-primary"
+            className="h-5 w-5 shrink-0 text-blue-600"
         >
             <motion.path
                 stroke="none"
@@ -523,137 +511,133 @@ const WhatThisMean = () => {
         { text: "Credentials backed by real evaluation, not attendance", icon: <AnimatedFileCertificateIcon /> },
     ];
 
-    const containerVariants: Variants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.15,
-                delayChildren: 0.1,
-            },
-        },
+    const listProps = {
+        viewportOnce: false as const,
+        viewportAmount: 0.5,
+        duration: 0.6,
+        staggerDelay: 0.1,
+        xOffset: 50,
+        iconClassName: "mt-0.5 shrink-0 flex items-center pt-0.5 text-blue-600",
+        boldText: false,
     };
 
+    const employersBody = (
+        <>
+            <TimelineContent as="p" animationNum={1} timelineRef={timelineRef} customVariants={landingRevealVariants} className="mt-4 text-sm font-semibold text-zinc-900 md:text-base lg:text-lg">
+                CYBERLABS-certified professionals are comprehensively evaluated on their ability to:
+            </TimelineContent>
+            <TimelineContent as="div" animationNum={2} timelineRef={timelineRef} customVariants={landingRevealVariants} className="mt-4">
+                <AnimatedList
+                    items={employersListItems}
+                    {...listProps}
+                    containerClassName="border-y border-zinc-200"
+                    contentClassName={cn("text-sm text-zinc-700 md:text-base leading-relaxed", landingListTextHoverClass)}
+                    itemClassName={cn("flex items-start gap-3 border-b border-zinc-200 py-4 last:border-b-0", landingListRowHoverClass)}
+                />
+            </TimelineContent>
+            <TimelineContent as="p" animationNum={3} timelineRef={timelineRef} customVariants={landingRevealVariants} className="mt-6 border-t border-zinc-200 pt-5 text-sm text-zinc-700 md:text-base">
+                For employers, this provides transparent, skills-based validation, not just certificate issuance.
+            </TimelineContent>
+        </>
+    );
+
+    const learnersBody = (
+        <>
+            <TimelineContent as="p" animationNum={5} timelineRef={timelineRef} customVariants={landingRevealVariants} className="mt-4 text-sm text-zinc-700 md:text-base">
+                For learners, certification represents:
+            </TimelineContent>
+            <TimelineContent as="div" animationNum={6} timelineRef={timelineRef} customVariants={landingRevealVariants} className="mt-4">
+                <AnimatedList
+                    items={learnersListItems}
+                    {...listProps}
+                    containerClassName="border-y border-zinc-200"
+                    contentClassName={cn("text-sm text-zinc-700 md:text-base leading-relaxed", landingListTextHoverClass)}
+                    itemClassName={cn("flex items-start gap-3 border-b border-zinc-200 py-4 last:border-b-0", landingListRowHoverClass)}
+                />
+            </TimelineContent>
+            <TimelineContent as="p" animationNum={7} timelineRef={timelineRef} customVariants={landingRevealVariants} className="mt-6 border-t border-zinc-200 pt-5 text-sm text-zinc-700 md:text-base">
+                This framework supports <span className="font-semibold text-blue-600">long-term career credibility</span>, not short-term certification goals.
+            </TimelineContent>
+        </>
+    );
+
+    const integrityBody = (
+        <>
+            <TimelineContent as="p" animationNum={9} timelineRef={timelineRef} customVariants={landingRevealVariants} className="mt-4 text-sm text-zinc-700 md:text-base">
+                CYBERLABS does not issue certificates for mere participation.
+            </TimelineContent>
+            <TimelineContent as="p" animationNum={10} timelineRef={timelineRef} customVariants={landingRevealVariants} className="mt-4 text-sm text-zinc-700 md:text-base">
+                Certification is awarded <span className="font-semibold text-zinc-900">only upon successful completion of assessments and practical</span> requirements, ensuring fairness, credibility, and trust for learners, employers, and institutions alike.
+            </TimelineContent>
+        </>
+    );
+
     return (
-        <section className="w-full px-5 md:px-10 lg:px-16 py-4 sm:py-6 lg:py-6" ref={containerRef}>
-            <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                animate={isInView ? "visible" : "hidden"}
-                className="w-full"
-            >
-                {/* 1. What This Means for Employers — content left, image right (zigzag start) */}
-                <SectionBlock>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
-                        <div className="space-y-6 order-2 md:order-1">
-                            <motion.h2
-                                className="text-2xl sm:text-3xl md:text-4xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight mb-6"
-                                initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
-                                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                                viewport={{ once: false, amount: 0.2 }}
-                                transition={{ duration: 0.6, ease: "easeOut" }}
-                            >
-                                What This Means for Employers
-                            </motion.h2>
-                            <p className="text-base sm:text-lg md:text-xl font-inter-display font-semibold text-text-primary leading-relaxed mb-5">
-                                CYBERLABS-certified professionals are comprehensively evaluated on their ability to:
-                            </p>
-                            <AnimatedList
-                                items={employersListItems}
-                                viewportOnce={false}
-                                viewportAmount={0.5}
-                                duration={0.6}
-                                staggerDelay={0.1}
-                                xOffset={50}
-                                containerClassName="space-y-1 sm:space-y-1.5"
-                                contentClassName="font-inter-display font-medium text-text-primary text-sm sm:text-base md:text-lg leading-relaxed flex-1"
-                                itemClassName="flex items-start gap-2 sm:gap-3"
-                                iconClassName="mt-0.5 shrink-0 flex items-center pt-0.5 text-blue-600"
-                                boldText={false}
-                            />
-                            <p className="text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-relaxed pt-4 border-t border-neutral-200/80">
-                                For employers, this provides transparent, skills-based validation, not just certificate issuance.
-                            </p>
-                        </div>
-                        <div className="order-1 md:order-2 flex justify-center md:justify-end">
-                            <img src={assetSrc(employeemeanSvg)} alt="" className="w-full max-w-md h-auto" />
-                        </div>
-                    </div>
-                </SectionBlock>
+        <LandingSectionShell>
+            <div ref={timelineRef}>
+                <LandingBento>
+                    <MergedBentoBlock>
+                        <LandingBentoRow>
+                            <LandingBentoCell className="order-2 md:order-1 md:px-0 md:pr-8">
+                                <TimelineContent as="h2" animationNum={0} timelineRef={timelineRef} customVariants={landingRevealVariants}>
+                                    <ShinyText text="What This Means for Employers" className={landingSectionHeadingClass} color="#3f3f46" shineColor="#18181b" speed={3} spread={120} />
+                                </TimelineContent>
+                                <div className="hidden md:block">{employersBody}</div>
+                            </LandingBentoCell>
+                            <LandingBentoCell className="order-1 flex items-center justify-center md:order-2 md:px-0 md:pl-8">
+                                <SectionImage src={employeemeanSvg} />
+                            </LandingBentoCell>
+                        </LandingBentoRow>
+                        <div className="px-0 py-6 md:hidden">{employersBody}</div>
+                    </MergedBentoBlock>
 
-                {/* 2. What This Means for Learners — zigzag: image left, content right */}
-                <SectionBlock>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
-                        <div className="order-1 md:order-1 flex justify-center md:justify-start">
-                            <img src={assetSrc(learnermeanSvg)} alt="" className="w-full max-w-md h-auto" />
-                        </div>
-                        <div className="space-y-6 order-2 md:order-2">
-                            <motion.h2
-                                className="text-2xl sm:text-3xl md:text-4xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight mb-6"
-                                initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
-                                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                                viewport={{ once: false, amount: 0.2 }}
-                                transition={{ duration: 0.6, ease: "easeOut" }}
-                            >
-                                What This Means for Learners
-                            </motion.h2>
-                            <p className="text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-relaxed mb-4">
-                                For learners, certification represents:
-                            </p>
-                            <AnimatedList
-                                items={learnersListItems}
-                                viewportOnce={false}
-                                viewportAmount={0.5}
-                                duration={0.6}
-                                staggerDelay={0.1}
-                                xOffset={50}
-                                containerClassName="space-y-1 sm:space-y-6"
-                                contentClassName="font-inter-display font-medium text-text-primary text-sm sm:text-base md:text-lg leading-relaxed flex-1"
-                                itemClassName="flex items-start gap-2 sm:gap-3"
-                                iconClassName="mt-0.5 shrink-0 flex items-center pt-0.5 text-blue-600"
-                                boldText={false}
-                            />
-                            <p className="text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-relaxed pt-4 border-t border-neutral-200/80">
-                                This framework supports <span className="font-bold">long-term career credibility</span>, not short-term certification goals.
-                            </p>
-                        </div>
-                    </div>
-                </SectionBlock>
+                    <MergedBentoBlock>
+                        <LandingBentoRow>
+                            <LandingBentoCell className="order-1 flex items-center justify-center md:px-0 md:pr-8">
+                                <SectionImage src={learnermeanSvg} />
+                            </LandingBentoCell>
+                            <LandingBentoCell className="order-2 md:px-0 md:pl-8">
+                                <TimelineContent as="h2" animationNum={4} timelineRef={timelineRef} customVariants={landingRevealVariants}>
+                                    <ShinyText text="What This Means for Learners" className={landingSectionHeadingClass} color="#3f3f46" shineColor="#18181b" speed={3} spread={120} />
+                                </TimelineContent>
+                                <div className="hidden md:block">{learnersBody}</div>
+                            </LandingBentoCell>
+                        </LandingBentoRow>
+                        <div className="px-0 py-6 md:hidden">{learnersBody}</div>
+                    </MergedBentoBlock>
 
-                {/* 3. Integrity, Transparency & Standards — content left, image right (zigzag) */}
-                <SectionBlock>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
-                        <div className="space-y-6 order-2 md:order-1">
-                            <motion.h2
-                                className="text-2xl sm:text-3xl md:text-4xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight mb-6"
-                                initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
-                                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                                viewport={{ once: false, amount: 0.2 }}
-                                transition={{ duration: 0.6, ease: "easeOut" }}
-                            >
-                                Integrity, Transparency & Standards
-                            </motion.h2>
-                            <p className="text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-relaxed">
-                                CYBERLABS does not issue certificates for mere participation.
-                            </p>
-                            <p className="text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-relaxed">
-                                Certification is awarded <span className="font-bold">only upon successful completion of assessments and practical</span> requirements, ensuring fairness, credibility, and trust for learners, employers, and institutions alike.
-                            </p>
-                            <p className="text-base sm:text-lg md:text-xl font-inter-display font-semibold text-text-primary leading-relaxed italic border-l-4 border-primary/40 pl-4">
-                                &ldquo;In cybersecurity, trust is earned through evidence.&rdquo;
-                            </p>
-                            <p className="text-base sm:text-lg md:text-xl font-inter-display font-semibold text-text-primary leading-relaxed">
-                                CYBERLABS certification and evaluation framework ensures that every credential stands for{" "}
-                                <span className="text-primary font-bold">Real Skill, Real Effort, and Real Readiness.</span>
-                            </p>
-                        </div>
-                        <div className="order-1 md:order-2 flex justify-center md:justify-end">
-                            <img src={assetSrc(intrigitySvg)} alt="" className="w-full max-w-md h-auto" />
-                        </div>
-                    </div>
-                </SectionBlock>
-            </motion.div>
-        </section>
+                    <MergedBentoBlock>
+                        <LandingBentoRow>
+                            <LandingBentoCell className="order-2 md:order-1 md:px-0 md:pr-8">
+                                <TimelineContent as="h2" animationNum={8} timelineRef={timelineRef} customVariants={landingRevealVariants}>
+                                    <ShinyText text="Integrity, Transparency & Standards" className={landingSectionHeadingClass} color="#3f3f46" shineColor="#18181b" speed={3} spread={120} />
+                                </TimelineContent>
+                                <div className="hidden md:block">{integrityBody}</div>
+                            </LandingBentoCell>
+                            <LandingBentoCell className="order-1 flex items-center justify-center md:order-2 md:px-0 md:pl-8">
+                                <SectionImage src={intrigitySvg} />
+                            </LandingBentoCell>
+                        </LandingBentoRow>
+                        <div className="px-0 py-6 md:hidden">{integrityBody}</div>
+                    </MergedBentoBlock>
+
+                    <LandingGoalBanner
+                        title={
+                            <div className="mx-auto max-w-3xl space-y-5">
+                                <p className="text-lg font-bold leading-relaxed text-zinc-700 md:text-2xl lg:text-3xl">
+                                    &ldquo;In cybersecurity, trust is earned through evidence.&rdquo;
+                                </p>
+                           
+                                <p className="text-sm leading-relaxed text-zinc-700 md:text-base lg:text-lg">
+                                    CYBERLABS certification and evaluation framework ensures that every credential stands for{" "}
+                                    <span className="font-semibold text-blue-600">Real Skill, Real Effort, and Real Readiness.</span>
+                                </p>
+                            </div>
+                        }
+                    />
+                </LandingBento>
+            </div>
+        </LandingSectionShell>
     );
 };
 

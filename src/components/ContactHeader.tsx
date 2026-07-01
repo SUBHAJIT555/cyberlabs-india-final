@@ -1,17 +1,13 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-    FaLinkedinIn,
-    FaFacebookF,
-    FaInstagram,
-} from "react-icons/fa";
+import { cn } from "@/lib/utils";
 import { useCourses } from "@/hooks/useCourses";
 import { useBootcamps } from "@/hooks/useBootcamps";
 import { Course } from "@/interface/program";
-import { CONTACT } from "@/constants/contactInfo";
-import { LetterSwapPingPong } from "@/components/ui/LetterSwap";
+import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 import { ShinyButton } from "@/components/ui/shiny-button";
+import { LandingSectionShell } from "@/components/ui/landing-section";
 import {
     DateTimePickerField,
     defaultDateTimeLocal,
@@ -25,50 +21,11 @@ import { FORM_FEEDBACK_COPY } from "@/constants/formFeedbackCopy";
 import { formatIndianMobileE164 } from "@/lib/formValidation";
 
 const inputBase =
-    "w-full px-4 py-3 rounded-lg border bg-white/95 text-text-primary placeholder:text-neutral-400 font-inter-display text-base focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors";
+    "w-full px-4 py-3 rounded-lg border bg-white text-zinc-900 placeholder:text-zinc-400 text-base focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:border-blue-600 transition-colors";
 const inputError = "border-red-300 focus:border-red-500 focus:ring-red-500/20";
-const inputNormal = "border-neutral-200";
-
-const horizontalLinesFadeStyle = {
-    WebkitMaskImage: "linear-gradient(to bottom, #000 0%, transparent 75%)",
-    backgroundImage:
-        "repeating-linear-gradient(0deg, transparent 0px, transparent 3px, #d4d4d8 3px, #d4d4d8 4px)",
-    height: "100%",
-    left: 0,
-    maskImage: "linear-gradient(to bottom, #000 0%, transparent 75%)",
-    opacity: 0.5,
-    pointerEvents: "none" as const,
-    position: "absolute" as const,
-    top: 0,
-    width: "100%",
-};
-
-const HorizontalLinesBg = () => (
-    <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden>
-        <div style={horizontalLinesFadeStyle} />
-    </div>
-);
-
-const VerticalStripesBg = ({
-    lineColor,
-    opacity = 0.22,
-}: {
-    lineColor: string;
-    opacity?: number;
-}) => (
-    <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden>
-        <div
-            className="absolute inset-0"
-            style={{
-                WebkitMaskImage: "linear-gradient(to top, #000 0%, transparent 80%)",
-                maskImage: "linear-gradient(to top, #000 0%, transparent 80%)",
-                backgroundImage: `linear-gradient(90deg, ${lineColor} 1px, transparent 1px)`,
-                backgroundSize: "4px 100%",
-                opacity,
-            }}
-        />
-    </div>
-);
+const inputNormal = "border-zinc-200";
+const labelClass = "block text-sm font-medium text-zinc-900 mb-2";
+const errorClass = "mt-1 text-sm text-red-500";
 
 interface FormData {
     fullName: string;
@@ -110,6 +67,7 @@ const ContactHeader = () => {
 
     const {
         register,
+        control,
         handleSubmit,
         formState: { errors },
         reset,
@@ -155,143 +113,33 @@ const ContactHeader = () => {
     };
 
     return (
-        <section className="w-full py-8 sm:py-12 md:py-16 lg:py-20" ref={containerRef}>
-            <div className="mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-                {/* Two-column layout: Company Info (left) | Form (right) */}
-                <div className="flex flex-col lg:flex-row lg:gap-8 xl:gap-10 lg:items-start">
-                    {/* LEFT COLUMN - Company Information */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -30 }}
-                        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="w-full lg:w-[400px] xl:w-[600px] shrink-0 mb-8 lg:mb-0 xl:sticky xl:top-24 xl:self-start"
-                    >
-                        <div className="relative border border-neutral-200 bg-white overflow-hidden h-full shadow-sm rounded-xl">
-                            <HorizontalLinesBg />
-                            <div className="relative z-10 p-6 md:p-8 pb-0">
-                                <h3 className="text-2xl sm:text-3xl md:text-4xl font-inter-display text-text-primary font-semibold tracking-tight leading-tight mb-3">
-                                    CYBERLABS INDIA
-                                </h3>
-                                <p className="text-base sm:text-lg font-inter-display text-text-primary/80 leading-relaxed">
-                                    (A division of {CONTACT.registeredEntity})
-                                </p>
-                            </div>
-
-                            <div className="relative z-10 p-6 md:p-8 pt-0 space-y-6">
-                                {/* Registered Entity */}
-                                <div>
-                                    <h4 className="text-sm sm:text-base font-inter-display font-semibold text-text-primary mb-2 uppercase tracking-wide">
-                                        Registered Entity:
-                                    </h4>
-                                    <p className="text-base sm:text-lg font-inter-display text-text-primary leading-relaxed">
-                                        {CONTACT.registeredEntity}
-                                    </p>
-                                </div>
-
-                                {/* Office Address */}
-                                <div>
-                                    <h4 className="text-sm sm:text-base font-inter-display font-semibold text-text-primary mb-2 uppercase tracking-wide">
-                                        Office Address:
-                                    </h4>
-                                    <p className="text-base sm:text-lg font-inter-display text-text-primary leading-relaxed">
-                                        {CONTACT.officeAddressIndia.map((line, i) => (
-                                            <span key={i}>{line}{i < CONTACT.officeAddressIndia.length - 1 && <br />}</span>
-                                        ))}
-                                    </p>
-                                </div>
-
-                                {/* Email */}
-                                <div>
-                                    <h4 className="text-sm sm:text-base font-inter-display font-semibold text-text-primary mb-2 uppercase tracking-wide">
-                                        Email:
-                                    </h4>
-                                    <a
-                                        href={`mailto:${CONTACT.educationEmail}`}
-                                        className="text-base sm:text-lg font-inter-display text-primary hover:underline leading-relaxed break-all transition-colors inline-block"
-                                    >
-                                        <LetterSwapPingPong
-                                            label={CONTACT.educationEmail}
-                                            reverse={true}
-                                            className="inline-block"
-                                        />
-                                    </a>
-                                </div>
-
-                                {/* Social Media */}
-                                <div>
-                                    <h4 className="text-sm sm:text-base font-inter-display font-semibold text-text-primary mb-3 uppercase tracking-wide">
-                                        Social Media:
-                                    </h4>
-                                    <div className="flex flex-col gap-6">
-                                        <a
-                                            href="https://www.linkedin.com/company/cyberlabs-india/posts/?feedView=all"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="flex items-center gap-3 text-base sm:text-lg font-inter-display text-text-primary hover:text-primary transition-colors group"
-                                        >
-                                            <FaLinkedinIn className="w-7 h-7 bg-white/95 p-1 border border-neutral-200 rounded-lg transition-colors" />
-                                            <LetterSwapPingPong
-                                                label="LinkedIn"
-                                                reverse={true}
-                                                className="inline-block"
-                                            />
-                                        </a>
-                                        <a
-                                            href="https://www.facebook.com"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="flex items-center gap-3 text-base sm:text-lg font-inter-display text-text-primary hover:text-primary transition-colors group"
-                                        >
-                                            <FaFacebookF className="w-7 h-7 bg-white/95 p-1 border border-neutral-200 rounded-lg transition-colors" />
-                                            <LetterSwapPingPong
-                                                label="Facebook"
-                                                reverse={true}
-                                                className="inline-block"
-                                            />
-                                        </a>
-                                        <a
-                                            href="https://www.instagram.com/cyberlabsindia"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="flex items-center gap-3 text-base sm:text-lg font-inter-display text-text-primary hover:text-primary transition-colors group"
-                                        >
-                                            <FaInstagram className="w-7 h-7 bg-white/95 p-1 border border-neutral-200 rounded-lg transition-colors" />
-                                            <LetterSwapPingPong
-                                                label="Instagram"
-                                                reverse={true}
-                                                className="inline-block"
-                                            />
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+        <LandingSectionShell className="py-12 md:py-16">
+            <div ref={containerRef} className="mx-auto w-full max-w-5xl">
+                <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                >
+                    <div className="relative overflow-hidden  border border-neutral-200 bg-white shadow-xl">
+                        <div
+                            className="pointer-events-none absolute inset-0 z-0"
+                            style={crosshatchBgStyle}
+                            aria-hidden
+                        />
+                        <div className="relative z-10 border-b border-zinc-200 px-6 py-6 sm:px-8 sm:py-8">
+                            <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">
+                                Connect with CYBERLABS
+                            </h2>
+                            <p className="mt-2 text-sm leading-relaxed text-zinc-600 sm:text-base">
+                                Fill out the form below and we&apos;ll get back to you as soon as possible.
+                            </p>
                         </div>
-                    </motion.div>
 
-                    {/* RIGHT COLUMN - Contact Form */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 30 }}
-                        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="flex-1 min-w-0"
-                    >
-                        <div className="relative border border-neutral-200 bg-white overflow-hidden shadow-sm rounded-xl">
-                            <VerticalStripesBg lineColor="#d4d4d8" opacity={0.22} />
-                            <div className="relative z-10 p-6 md:p-8">
-                                <div className="mb-6 sm:mb-8 pb-6 border-b border-neutral-200 border-dashed">
-                                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-inter-display text-text-primary font-semibold tracking-tight leading-tight mb-2">
-                                        Connect with CYBERLABS
-                                    </h2>
-                                    <p className="text-sm sm:text-base md:text-lg font-inter-display text-text-primary/70 leading-relaxed">
-                                        Fill out the form below and we&apos;ll get back to you as soon as possible.
-                                    </p>
-                                </div>
-                                <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 sm:space-y-6">
-                                    {/* Two-column layout for name and email */}
-                                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 sm:gap-6">
-                                        {/* Full Name */}
-                                        <div>
-                                            <label className="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2">
+                        <div className="relative z-10 px-6 py-6 sm:px-8 sm:py-8 md:px-10 md:py-10">
+                            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 sm:space-y-6">
+                                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
+                                        <div className="space-y-2">
+                                            <label className={labelClass}>
                                                 Full Name <span className="text-red-500">*</span>
                                             </label>
                                             <input
@@ -303,18 +151,16 @@ const ContactHeader = () => {
                                                 placeholder="Enter your full name"
                                             />
                                             {errors.fullName && (
-                                                <p className="mt-1 text-sm text-red-500 font-inter-display">
-                                                    {errors.fullName.message}
-                                                </p>
+                                                <p className={errorClass}>{errors.fullName.message}</p>
                                             )}
                                         </div>
 
-                                        {/* Email Address */}
                                         <EmailField
                                             label="Email Address"
                                             name="email"
                                             register={register}
                                             error={errors.email}
+                                            labelClassName={labelClass}
                                             inputClassName={`${inputBase} ${errors.email ? inputError : inputNormal}`}
                                         />
                                     </div>
@@ -324,15 +170,14 @@ const ContactHeader = () => {
                                         name="mobileNumber"
                                         register={register}
                                         error={errors.mobileNumber}
+                                        labelClassName={labelClass}
                                         inputClassName={`flex-1 ${inputBase} ${errors.mobileNumber ? inputError : inputNormal}`}
-                                        prefixClassName={`shrink-0 px-4 py-3 rounded-lg border bg-white/95 text-text-primary font-inter-display font-medium text-base ${errors.mobileNumber ? inputError : inputNormal}`}
+                                        prefixClassName={`shrink-0 px-4 py-3 rounded-lg border bg-white text-zinc-900 font-medium text-base ${errors.mobileNumber ? inputError : inputNormal}`}
                                     />
 
-                                    {/* Two-column layout for background and experience */}
-                                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 sm:gap-6 pt-2 border-t border-neutral-200 border-dashed">
-                                        {/* Current Background */}
-                                        <div className="sm:pt-4">
-                                            <label className="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2">
+                                    <div className="grid grid-cols-1 gap-5 border-t border-zinc-200 pt-5 sm:grid-cols-2 sm:gap-6 sm:pt-6">
+                                        <div className="space-y-2">
+                                            <label className={labelClass}>
                                                 Current Background <span className="text-red-500">*</span>
                                             </label>
                                             <select
@@ -348,15 +193,12 @@ const ContactHeader = () => {
                                                 <option value="Other">Other</option>
                                             </select>
                                             {errors.currentBackground && (
-                                                <p className="mt-1 text-sm text-red-500 font-inter-display">
-                                                    {errors.currentBackground.message}
-                                                </p>
+                                                <p className={errorClass}>{errors.currentBackground.message}</p>
                                             )}
                                         </div>
 
-                                        {/* Years of Experience */}
-                                        <div className="sm:pt-4">
-                                            <label className="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2">
+                                        <div className="space-y-2">
+                                            <label className={labelClass}>
                                                 Years of Experience <span className="text-red-500">*</span>
                                             </label>
                                             <select
@@ -372,22 +214,18 @@ const ContactHeader = () => {
                                                 <option value="7+">7+</option>
                                             </select>
                                             {errors.yearsOfExperience && (
-                                                <p className="mt-1 text-sm text-red-500 font-inter-display">
-                                                    {errors.yearsOfExperience.message}
-                                                </p>
+                                                <p className={errorClass}>{errors.yearsOfExperience.message}</p>
                                             )}
                                         </div>
                                     </div>
 
-                                    <div className="space-y-4 pt-2 border-t border-neutral-200 border-dashed">
-                                        <p className="pt-4 text-sm font-inter-display text-text-primary/70">
+                                    <div className="space-y-4 border-t border-zinc-200 pt-5 sm:pt-6">
+                                        <p className="text-sm text-zinc-600">
                                             Select at least one program or boot camp <span className="text-red-500">*</span>
                                         </p>
 
-                                        <div>
-                                            <label className="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2">
-                                                Program of Interest
-                                            </label>
+                                        <div className="space-y-2">
+                                            <label className={labelClass}>Program of Interest</label>
                                             <select
                                                 {...register("programOfInterest", {
                                                     validate: (value, formValues) =>
@@ -403,16 +241,12 @@ const ContactHeader = () => {
                                                 ))}
                                             </select>
                                             {errors.programOfInterest && (
-                                                <p className="mt-1 text-sm text-red-500 font-inter-display">
-                                                    {errors.programOfInterest.message}
-                                                </p>
+                                                <p className={errorClass}>{errors.programOfInterest.message}</p>
                                             )}
                                         </div>
 
-                                        <div>
-                                            <label className="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2">
-                                                Boot Camp of Interest
-                                            </label>
+                                        <div className="space-y-2">
+                                            <label className={labelClass}>Boot Camp of Interest</label>
                                             <select
                                                 {...register("bootCampOfInterest", {
                                                     validate: (value, formValues) =>
@@ -428,28 +262,32 @@ const ContactHeader = () => {
                                                 ))}
                                             </select>
                                             {errors.bootCampOfInterest && (
-                                                <p className="mt-1 text-sm text-red-500 font-inter-display">
-                                                    {errors.bootCampOfInterest.message}
-                                                </p>
+                                                <p className={errorClass}>{errors.bootCampOfInterest.message}</p>
                                             )}
                                         </div>
                                     </div>
 
-                                    <DateTimePickerField
-                                        label="When should we call you?"
-                                        name="preferredTime"
-                                        register={register}
-                                        rules={{ required: "Preferred callback time is required" }}
-                                        error={errors.preferredTime}
-                                        labelClassName="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2"
-                                        inputClassName="bg-white/95 focus:ring-primary/20 focus:border-primary"
-                                    />
+                                    <div className="border-t border-zinc-200 pt-5 sm:pt-6">
+                                        <DateTimePickerField
+                                            label="When should we call you?"
+                                            name="preferredTime"
+                                            control={control}
+                                            rules={{ required: "Preferred callback time is required" }}
+                                            error={errors.preferredTime}
+                                            labelClassName={labelClass}
+                                            inputClassName={cn(
+                                                inputBase,
+                                                errors.preferredTime ? inputError : inputNormal,
+                                                "cyberlabs-datepicker",
+                                            )}
+                                            errorClassName={errorClass}
+                                        />
+                                    </div>
 
-                                    {/* Questions or Goals (Optional) */}
-                                    <div className="space-y-2 pt-2 border-t border-neutral-200 border-dashed">
-                                        <label className="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2 pt-4">
+                                    <div className="space-y-2 border-t border-zinc-200 pt-5 sm:pt-6">
+                                        <label className={labelClass}>
                                             Any specific questions or goals{" "}
-                                            <span className="text-text-primary/50 text-xs font-normal">(Optional)</span>
+                                            <span className="text-xs font-normal text-zinc-400">(Optional)</span>
                                         </label>
                                         <textarea
                                             {...register("questionsOrGoals")}
@@ -463,16 +301,15 @@ const ContactHeader = () => {
                                         <ShinyButton
                                             type="submit"
                                             disabled={isSubmitting}
-                                            className="w-full rounded-lg! font-inter-display! text-base font-medium shadow-lg! active:scale-95! disabled:cursor-not-allowed disabled:opacity-50"
+                                            className="w-full rounded-lg! text-base font-medium shadow-sm! active:scale-95! disabled:cursor-not-allowed disabled:opacity-50"
                                         >
                                             {isSubmitting ? "Submitting..." : "Submit"}
                                         </ShinyButton>
                                     </div>
                                 </form>
-                            </div>
                         </div>
-                    </motion.div>
-                </div>
+                    </div>
+                </motion.div>
             </div>
 
             <FormSuccessPopup
@@ -487,7 +324,7 @@ const ContactHeader = () => {
                 title={FORM_FEEDBACK_COPY.contact.errorTitle}
                 message={errorMessage}
             />
-        </section>
+        </LandingSectionShell>
     );
 };
 
