@@ -82,12 +82,13 @@ const ProgramPageOpening = () => {
                 animationNum={4}
                 timelineRef={timelineRef}
                 customVariants={landingRevealVariants}
-                className="mx-auto flex h-[280px] w-full max-w-[min(100%,420px)] items-center justify-center overflow-hidden sm:h-[300px] lg:h-[320px] lg:max-w-[450px]"
+                className="mx-auto flex h-[230px] w-full max-w-[min(100%,420px)] items-center justify-center overflow-visible sm:h-[300px] sm:overflow-hidden lg:h-[320px] lg:max-w-[450px]"
               >
                 <TypingKeyboard
                   autoTypeText="Threat hunting. Incident response. Malware analysis. Detection engineering. Cyber defense operations.       "
                   typingSpeed={[45, 125]}
                   scale={0.54}
+                  mobileScale={0.46}
                   className="h-full w-full"
                 />
               </TimelineContent>

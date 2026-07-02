@@ -98,7 +98,10 @@ const Programs = () => {
               transition={{ duration: 0.3 }}
               className="fixed bottom-4 left-1/2 z-9999 -translate-x-1/2 sm:bottom-6"
             >
-              <FloatingRequestCallbackButton onClick={() => setIsCallbackModalOpen(true)} />
+              <FloatingRequestCallbackButton
+                onClick={() => setIsCallbackModalOpen(true)}
+                className="max-w-[calc(100vw-2rem)]"
+              />
             </motion.div>
           )}
         </AnimatePresence>
