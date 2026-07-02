@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { FlowStepCard } from "./ui/FlowStepCard";
+import { FlowStepCard } from "@/components/ui/FlowStepCard";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import ShinyText from "@/components/ui/ShinyText";
 import {

@@ -1,19 +1,12 @@
-import AboutHero from "../components/ui/AboutHero";
+import AboutHero from "@/components/ui/AboutHero";
 import {
   AboutMerged,
   AboutIndiaSection,
   AboutGlobalFramework,
   AboutHowDifferent,
   AboutTrainsWhoClosing,
-} from "../components/about";
-// import CallToAction from "../components/CallToAction";
-// import WhoAreCyberlabs from "../components/WhoAreCyberlabs";
-// import AboutWhy from "../components/AboutWhy";
-// import AboutWhatMakes from "../components/AboutWhatMakes";
-// import AboutWho from "../components/AboutWho";
-// import Team from "../components/Team";
-// import LevelUp from "../components/LevelUp";
-// import Faq from "../components/Faq";
+} from "@/components/features/about";
+
 
 const About = () => {
   return (

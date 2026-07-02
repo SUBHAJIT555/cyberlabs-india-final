@@ -1,8 +1,7 @@
-import AdmissionHero from "@/components/AdmissionHero"
-import GeneralAdmission from "@/components/GeneralAdmission"
-import ProgramAlignmentTable from "@/components/ProgramAlignmentTable"
-// import CallToAction from "@/components/CallToAction"
-// import WhatDefences from "@/components/WhatDefences"
+import AdmissionHero from "@/components/features/admissions/AdmissionHero"
+import GeneralAdmission from "@/components/features/admissions/GeneralAdmission"
+import ProgramAlignmentTable from "@/components/features/certification/ProgramAlignmentTable"
+
 
 
 const Admissions = () => {

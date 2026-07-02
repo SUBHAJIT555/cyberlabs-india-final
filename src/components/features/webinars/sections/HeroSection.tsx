@@ -2,7 +2,7 @@
 
 import { useLenis } from "@/hooks/useLenis";
 import { useRef } from "react";
-import { useWebinarRegistration } from "@/context/webinar-registration";
+import { useWebinarRegistration } from "@/providers/webinar-registration";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import { ShinyButton } from "@/components/ui/shiny-button";
 import { FeatureCard } from "@/components/ui/feature-card";

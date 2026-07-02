@@ -1,6 +1,6 @@
 "use client";
 
-import LearningEnvironment from "@/views/LearningEnvironment";
+import LearningEnvironment from "@/components/pages/LearningEnvironment";
 
 export default function Page() {
   return <LearningEnvironment />;

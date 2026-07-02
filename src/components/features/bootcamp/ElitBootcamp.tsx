@@ -3,7 +3,7 @@
 import { assetSrc } from "@/lib/utils";
 import { useRef, useState } from "react";
 import ElitBootcampCard from "./ElitBootcampCard";
-import BootcampEnrollmentModal from "./BootcampEnrollmentModal";
+import BootcampEnrollmentModal from "@/components/modals/BootcampEnrollmentModal";
 import { useBootcamps } from "@/hooks/useBootcamps";
 import bootcampImage from "@/assets/img/ProgramPageImage/elitbootcamp.svg";
 import { TimelineContent } from "@/components/ui/timeline-animation";

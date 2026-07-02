@@ -7,7 +7,7 @@ import GradientText from "@/components/ui/GradientText";
 import {
   webinarScheduleContent,
   type WebinarSession,
-} from "@/data/webinar-schedule";
+} from "@/config/data/webinar-schedule";
 import {
   buildWebinarWhatsappUrl,
   extractFocusText,
@@ -18,7 +18,7 @@ import {
   isWebinarRegistrationAvailable,
   splitWebinarTopic,
 } from "@/lib/webinar-schedule-utils";
-import { useWebinarRegistration } from "@/context/webinar-registration";
+import { useWebinarRegistration } from "@/providers/webinar-registration";
 import { CandyButton } from "@/components/ui/candy-button";
 
 type WebinarDetailsModalProps = {

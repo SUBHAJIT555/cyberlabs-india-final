@@ -1,6 +1,6 @@
 import { assetSrc } from "@/lib/utils";
 import { useRef } from "react";
-import { MagicText } from "./ui/magic-text";
+import { MagicText } from "@/components/ui/magic-text";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import ShinyText from "@/components/ui/ShinyText";
 import {

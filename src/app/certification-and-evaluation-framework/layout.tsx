@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { certificationMetadata } from "@/constants/pageMetadata";
+import { certificationMetadata } from "@/config/constants/pageMetadata";
 
 export const metadata: Metadata = certificationMetadata;
 

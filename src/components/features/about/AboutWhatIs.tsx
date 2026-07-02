@@ -1,7 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef } from "react";
-import { AnimatedHeading } from "../ui/animated-heading";
+import { AnimatedHeading } from "@/components/ui/animated-heading";
 import { parseBoldText } from "@/lib/utils";
 
 const AboutWhatIs = () => {

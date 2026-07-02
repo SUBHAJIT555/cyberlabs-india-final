@@ -1,12 +1,9 @@
-import PlatformHero from "../components/ui/SimulatorHero";
-import IntroLearning from "../components/IntroLearning";
-import WhoThisEnvironment from "../components/WhoThisEnvironment";
-// import Faq from "../components/Faq";
-// import CallToAction from "../components/CallToAction";
-// import ProgramsCard from "../components/ProgramsCard";
-import VirtualSimulator from "../components/VirtualSimulator";
-import EnterpriseLab from "../components/EnterpriseLab";
-import WhyThisMatters from "../components/WhyThisMatters";
+import PlatformHero from "@/components/ui/SimulatorHero";
+import IntroLearning from "@/components/features/learning-environment/IntroLearning";
+import WhoThisEnvironment from "@/components/features/learning-environment/WhoThisEnvironment";
+import VirtualSimulator from "@/components/features/learning-environment/VirtualSimulator";
+import EnterpriseLab from "@/components/features/learning-environment/EnterpriseLab";
+import WhyThisMatters from "@/components/features/home/WhyThisMatters";
 
 const Platform = () => {
   return (

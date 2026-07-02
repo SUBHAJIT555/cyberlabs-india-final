@@ -1,12 +1,12 @@
-import HomeHero from "../components/ui/HomeHero";
-import AboutIndia from "../components/AboutIndia";
-import AboutUsa from "../components/AboutUsa";
-import GlobalThreat from "../components/GlobalThreat";
-import WhyIsrael from "../components/WhyIsrael";
-import HomeOverview from "../components/HomeOverview";
-import Why from "../components/WhyHome";
-import PracticalHome from "../components/PracticalHome";
-import CallToAction from "../components/CallToAction";
+import HomeHero from "@/components/ui/HomeHero";
+import AboutIndia from "@/components/features/home/AboutIndia";
+import AboutUsa from "@/components/features/home/AboutUsa";
+import GlobalThreat from "@/components/features/home/GlobalThreat";
+import WhyIsrael from "@/components/features/home/WhyIsrael";
+import HomeOverview from "@/components/features/home/HomeOverview";
+import Why from "@/components/features/home/WhyHome";
+import PracticalHome from "@/components/features/home/PracticalHome";
+import CallToAction from "@/components/common/CallToAction";
 // import Testimonial from "../components/Testimonial";
 
 

@@ -1,4 +1,4 @@
-import { useFloatingBottomBar } from "@/contexts/FloatingBottomBarContext";
+import { useFloatingBottomBar } from "@/providers/FloatingBottomBarContext";
 import { cn } from "@/lib/utils";
 import { CandyButton } from "@/components/ui/candy-button";
 

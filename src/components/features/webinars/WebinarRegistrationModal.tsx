@@ -10,7 +10,7 @@ import { CandyButton } from "@/components/ui/candy-button";
 import {
   backgroundOptions,
   type WebinarSession,
-} from "@/data/webinar-schedule";
+} from "@/config/data/webinar-schedule";
 import {
   formatPreferredCallDeadline,
   formatWebinarDate,

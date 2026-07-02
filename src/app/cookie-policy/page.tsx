@@ -1,6 +1,6 @@
 "use client";
 
-import CookiePolicy from "@/views/CookiePolicy";
+import CookiePolicy from "@/components/pages/CookiePolicy";
 
 export default function Page() {
   return <CookiePolicy />;

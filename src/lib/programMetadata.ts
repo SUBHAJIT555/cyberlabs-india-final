@@ -1,6 +1,6 @@
-import { bootcamps } from "@/constants/bootcampData";
-import { courses } from "@/constants/programData";
-import { programsMetadata } from "@/constants/pageMetadata";
+import { bootcamps } from "@/config/constants/bootcampData";
+import { courses } from "@/config/constants/programData";
+import { programsMetadata } from "@/config/constants/pageMetadata";
 import { createPageMetadata, truncateDescription } from "@/lib/siteMetadata";
 
 export function getCoursePageMetadata(slug: string) {

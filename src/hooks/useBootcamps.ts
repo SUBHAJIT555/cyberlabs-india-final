@@ -1,8 +1,8 @@
 import { useMemo } from "react";
-import { bootcamps } from "@/constants/bootcampData";
-import { bootcampDetails } from "@/constants/bootcampDetailData";
-import type { Bootcamp } from "@/interface/bootcamp";
-import type { BootcampDetail } from "@/interface/bootcampDetail";
+import { bootcamps } from "@/config/constants/bootcampData";
+import { bootcampDetails } from "@/config/constants/bootcampDetailData";
+import type { Bootcamp } from "@/types/bootcamp";
+import type { BootcampDetail } from "@/types/bootcampDetail";
 
 type UseBootcampsReturn = {
     getBootcamps: () => Bootcamp[];

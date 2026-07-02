@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import { TypingKeyboard } from "@/components/ui/typing-keyboard";
 import ShinyText from "@/components/ui/ShinyText";
-import type { AnimatedListItem } from "./ui/animated-list";
+import type { AnimatedListItem } from "@/components/ui/animated-list";
 import {
   LandingSectionShell,
   LandingBento,

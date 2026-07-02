@@ -1,4 +1,4 @@
-import Faq from "@/components/Faq";
+import Faq from "@/components/features/admissions/Faq";
 
 const FrequentlyAskedQuestion = () => {
   return (

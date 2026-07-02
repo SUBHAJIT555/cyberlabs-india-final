@@ -1,6 +1,6 @@
 import { assetSrc } from "@/lib/utils";
 import { useRef } from "react";
-import aboutIndiaImage from "../assets/img/Home/ABOUTCYBERLABSINDIA.webp";
+import aboutIndiaImage from "@/assets/img/Home/ABOUTCYBERLABSINDIA.webp";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import ShinyText from "@/components/ui/ShinyText";
 import {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { whoShouldApplyMetadata } from "@/constants/pageMetadata";
+import { whoShouldApplyMetadata } from "@/config/constants/pageMetadata";
 
 export const metadata: Metadata = whoShouldApplyMetadata;
 

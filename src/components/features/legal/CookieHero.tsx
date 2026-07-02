@@ -1,4 +1,4 @@
-import LegalPageHero from "@/components/legal/LegalPageHero";
+import LegalPageHero from "@/components/features/legal/LegalPageHero";
 
 const CookieHero = () => {
   return (

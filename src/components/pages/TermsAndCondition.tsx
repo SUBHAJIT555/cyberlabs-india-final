@@ -1,9 +1,9 @@
 "use client";
 
 import { type ReactNode } from "react";
-import TermsHero from "@/components/TermsHero";
+import TermsHero from "@/components/features/legal/TermsHero";
 import { Link } from "@/lib/react-router";
-import { CONTACT } from "@/constants/contactInfo";
+import { CONTACT } from "@/config/constants/contactInfo";
 import {
   LandingSectionShell,
   landingSectionSubheadingClass,

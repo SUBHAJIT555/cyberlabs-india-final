@@ -1,5 +1,5 @@
-import type { BootcampDetail, BootcampDeepDiveSection } from "@/interface/bootcampDetail";
-import type { Bus, Course } from "@/interface/program";
+import type { BootcampDetail, BootcampDeepDiveSection } from "@/types/bootcampDetail";
+import type { Bus, Course } from "@/types/program";
 
 const stripBold = (text: string) => text.replace(/\*\*/g, "");
 

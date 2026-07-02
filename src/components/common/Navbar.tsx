@@ -8,8 +8,8 @@ import {
     FaWhatsapp,
 } from "react-icons/fa";
 import { YouTubeIcon } from "@/components/ui/YouTubeIcon";
-import { Logo } from "./index";
-import { useLenis } from "../hooks/useLenis";
+import { Logo } from "@/components";
+import { useLenis } from "@/hooks/useLenis";
 import { cn } from "@/lib/utils";
 import { ShinyButton } from "@/components/ui/shiny-button";
 import {
@@ -19,13 +19,13 @@ import {
     Header as DrawerHeader,
     Body as DrawerBody,
     Footer as DrawerFooter,
-} from "./ui/drawer";
+} from "@/components/ui/drawer";
 import { Kbd } from "@/components/ui/kbd";
 import { useCourses } from "@/hooks/useCourses";
 import { useBootcamps } from "@/hooks/useBootcamps";
-import { crosshatchBgStyle } from "@/constants/bootcampStyles";
-import CallbackModal from "./CallbackModal";
-import { CONTACT } from "@/constants/contactInfo";
+import { crosshatchBgStyle } from "@/config/constants/bootcampStyles";
+import CallbackModal from "@/components/modals/CallbackModal";
+import { CONTACT } from "@/config/constants/contactInfo";
 import { CandyButton } from "@/components/ui/candy-button";
 
 const socialCandyClass = "h-10 w-10 px-0! py-0!";

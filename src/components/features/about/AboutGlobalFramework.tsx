@@ -1,6 +1,6 @@
 import { assetSrc } from "@/lib/utils";
 import { useRef } from "react";
-import oneGlobal from "../../assets/img/AboutPageImages/oneGlobal.svg";
+import oneGlobal from "@/assets/img/AboutPageImages/oneGlobal.svg";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import ShinyText from "@/components/ui/ShinyText";
 import {

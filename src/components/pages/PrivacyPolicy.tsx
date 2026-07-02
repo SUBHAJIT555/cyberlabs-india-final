@@ -1,7 +1,7 @@
 "use client";
 
-import PrivacyHero from "@/components/PrivacyHero";
-import { CONTACT } from "@/constants/contactInfo";
+import PrivacyHero from "@/components/features/legal/PrivacyHero";
+import { CONTACT } from "@/config/constants/contactInfo";
 import { LandingSectionShell } from "@/components/ui/landing-section";
 import {
   ListItem,
@@ -13,7 +13,7 @@ import {
   sectionClass,
   sectionDivider,
   subheadingClass,
-} from "@/components/legal/legalPageShared";
+} from "@/components/features/legal/legalPageShared";
 
 const PrivacyPolicy = () => {
   return (

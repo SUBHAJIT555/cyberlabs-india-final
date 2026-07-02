@@ -2,9 +2,9 @@
 
 import { assetSrc } from "@/lib/utils";
 import { useState, useRef } from "react";
-import EnrollmentModal from "./EnrollmentModal";
+import EnrollmentModal from "@/components/modals/EnrollmentModal";
 import FlagshipProgramCard from "./FlagshipProgramCard";
-import { flagshipProgramCards } from "@/constants/flagshipProgramData";
+import { flagshipProgramCards } from "@/config/constants/flagshipProgramData";
 import { useCourses } from "@/hooks/useCourses";
 import flagshipImage from "@/assets/img/ProgramPageImage/flagshipProgram.svg";
 import { TimelineContent } from "@/components/ui/timeline-animation";

@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useNavigate } from "@/lib/react-router";
-import CallbackModal from "./CallbackModal";
+import CallbackModal from "@/components/modals/CallbackModal";
 import { ShinyButton } from "@/components/ui/shiny-button";
 import ShinyText from "@/components/ui/ShinyText";
 

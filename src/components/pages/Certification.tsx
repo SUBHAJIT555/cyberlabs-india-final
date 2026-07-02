@@ -1,8 +1,8 @@
-import CertificationHero from "../components/CertificationHero"
-import OfficialCertificate from "../components/OfficialCertificate"
-import GradePerformance from "../components/GradePerformance"
-import WhatThisMean from "../components/WhatThisMean"
-import AssesmentPhilosophy from "@/components/AssesmentPhilosophy"
+import CertificationHero from "@/components/features/certification/CertificationHero"
+import OfficialCertificate from "@/components/features/certification/OfficialCertificate"
+import GradePerformance from "@/components/features/certification/GradePerformance"
+import WhatThisMean from "@/components/features/certification/WhatThisMean"
+import AssesmentPhilosophy from "@/components/features/certification/AssesmentPhilosophy"
 
 const Certification = () => {
     return (

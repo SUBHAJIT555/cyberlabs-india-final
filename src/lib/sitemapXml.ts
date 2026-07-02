@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { getInternalSitemapPaths } from "@/data/sitemap";
+import { getInternalSitemapPaths } from "@/config/data/sitemap";
 import { getSiteUrl } from "@/lib/siteMetadata";
 
 export function pathToSitemapUrl(path: string, siteUrl = getSiteUrl()): string {

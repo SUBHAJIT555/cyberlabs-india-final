@@ -11,8 +11,8 @@ import {
   landingRevealVariants,
   homeSectionSpacingClass,
 } from "@/components/ui/landing-section";
-import cyberDefenseTraining from "../assets/img/HomePageImages/cybredefensetraining.svg";
-import whoourtraining from "../assets/img/HomePageImages/whoourtraining.svg";
+import cyberDefenseTraining from "@/assets/img/HomePageImages/cybredefensetraining.svg";
+import whoourtraining from "@/assets/img/HomePageImages/whoourtraining.svg";
 
 const programs = [
   "Realistic attack and defense simulations",

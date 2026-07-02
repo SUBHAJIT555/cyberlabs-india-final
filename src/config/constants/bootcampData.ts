@@ -1,4 +1,4 @@
-import type { Bootcamp } from "@/interface/bootcamp";
+import type { Bootcamp } from "@/types/bootcamp";
 import { assetSrc } from "@/lib/utils";
 
 import darkWebImage from "@/assets/img/Bootcamp/DarkWebIntelligence&CovertCyberInvestigations.webp";

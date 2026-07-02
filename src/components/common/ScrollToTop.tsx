@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useFloatingBottomBar } from "@/contexts/FloatingBottomBarContext";
-import { useLenis } from "../hooks/useLenis";
+import { useFloatingBottomBar } from "@/providers/FloatingBottomBarContext";
+import { useLenis } from "@/hooks/useLenis";
 import { cn } from "@/lib/utils";
 
 const PROGRESS_RADIUS = 46;

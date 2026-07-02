@@ -13,7 +13,7 @@ import {
   landingSectionHeadingClass,
   landingSectionSubheadingClass,
 } from "@/components/ui/landing-section";
-import { crosshatchBgStyle } from "@/constants/bootcampStyles";
+import { crosshatchBgStyle } from "@/config/constants/bootcampStyles";
 import { stripLeadingNumber } from "@/lib/utils";
 
 const BootcampDeepDive = () => {

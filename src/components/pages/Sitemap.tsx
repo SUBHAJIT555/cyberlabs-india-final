@@ -1,7 +1,7 @@
 "use client";
 
 import { Link } from "@/lib/react-router";
-import { sitemapBlocks } from "@/data/sitemap";
+import { sitemapBlocks } from "@/config/data/sitemap";
 
 function SitemapLinkItem({
     label,

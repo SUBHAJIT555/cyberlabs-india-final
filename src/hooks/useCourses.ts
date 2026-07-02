@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useMemo } from "react";
-import { courses } from "../constants/programData";
+import { courses } from "@/config/constants/programData";
 import { getCourseDetailBySlug as resolveCourseDetailBySlug } from "@/lib/courseToBootcampDetail";
-import type { BootcampDetail } from "@/interface/bootcampDetail";
+import type { BootcampDetail } from "@/types/bootcampDetail";
 import type {
   Bus,
   Course,
@@ -12,7 +12,7 @@ import type {
   CareerChartItem,
   ProgramTeaches,
   ProgramDeepDive,
-} from "@/interface/program";
+} from "@/types/program";
 
 type CleanedCourse = Omit<
   Course,

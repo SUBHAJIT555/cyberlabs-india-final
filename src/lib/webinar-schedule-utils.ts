@@ -2,7 +2,7 @@ import {
   upcomingWebinars,
   webinarWhatsappNumber,
   type WebinarSession,
-} from "@/data/webinar-schedule";
+} from "@/config/data/webinar-schedule";
 
 const IST_TIMEZONE = "Asia/Kolkata";
 

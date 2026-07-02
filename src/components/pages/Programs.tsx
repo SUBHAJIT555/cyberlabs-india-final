@@ -2,19 +2,19 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import CourseCard from "@/components/CourseCardCatagories1";
-import Certification from "@/components/LevelUp";
-import PerformanceTranscript from "@/components/PerformanceTranscript";
-import ProgramPageOpening from "@/components/ProgramPageOpening";
-import IndustryRecognition from "@/components/IndustryRecognition";
-import ProgramHero from "@/components/ProgramHero";
-import ElitBootcamp from "@/components/ElitBootcamp";
-import CallbackModal from "@/components/CallbackModal";
+import CourseCard from "@/components/features/programs/CourseCardCatagories1";
+import Certification from "@/components/features/home/LevelUp";
+import PerformanceTranscript from "@/components/features/certification/PerformanceTranscript";
+import ProgramPageOpening from "@/components/features/programs/ProgramPageOpening";
+import IndustryRecognition from "@/components/features/certification/IndustryRecognition";
+import ProgramHero from "@/components/features/programs/ProgramHero";
+import ElitBootcamp from "@/components/features/bootcamp/ElitBootcamp";
+import CallbackModal from "@/components/modals/CallbackModal";
 import Portal from "@/components/ui/Portal";
 import { FloatingRequestCallbackButton } from "@/components/ui/FloatingRequestCallbackButton";
 import { useLenis } from "@/hooks/useLenis";
 import { useFooterVisibility } from "@/hooks/useFooterVisibility";
-import { useFloatingBottomBar } from "@/contexts/FloatingBottomBarContext";
+import { useFloatingBottomBar } from "@/providers/FloatingBottomBarContext";
 
 
 const Programs = () => {

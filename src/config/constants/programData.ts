@@ -1,6 +1,6 @@
 import { assetSrc } from "@/lib/utils";
-import type { Card, Course } from "@/interface/program";
-import { getFlagshipProgramPricing } from "@/constants/flagshipProgramData";
+import type { Card, Course } from "@/types/program";
+import { getFlagshipProgramPricing } from "@/config/constants/flagshipProgramData";
 
 type RawCourseCard = Omit<Card, "price">;
 type RawCourse = Omit<

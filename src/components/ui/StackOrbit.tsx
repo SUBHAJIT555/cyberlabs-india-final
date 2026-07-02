@@ -14,7 +14,7 @@ import {
   TbCloudComputing,
 } from "react-icons/tb";
 import type { IconType } from "react-icons";
-import CyberIcon from "../../assets/img/logo/Icon-01.svg";
+import CyberIcon from "@/assets/img/logo/Icon-01.svg";
 
 /* Distinct colors that read well on neutral-100 background */
 const iconConfigs: Array<{ Icon: IconType; color: string }> = [

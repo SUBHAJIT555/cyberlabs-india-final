@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import Portal from "@/components/ui/Portal";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCourses } from "@/hooks/useCourses";
-import CheckoutForm from "./CheckoutForm";
+import CheckoutForm from "@/components/forms/CheckoutForm";
 import { CandyButton } from "@/components/ui/candy-button";
 import { SectionEyebrow } from "@/components/ui/landing-section";
-import { CONTACT } from "@/constants/contactInfo";
-import { crosshatchBgStyle } from "@/constants/bootcampStyles";
+import { CONTACT } from "@/config/constants/contactInfo";
+import { crosshatchBgStyle } from "@/config/constants/bootcampStyles";
 import BootcampPriceBlock from "@/components/ui/BootcampPriceBlock";
 
 interface EnrollmentModalProps {

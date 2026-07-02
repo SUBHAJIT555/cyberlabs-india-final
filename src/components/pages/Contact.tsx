@@ -1,8 +1,8 @@
 import ContactHero from "@/components/ui/ContactHero";
-import ContactCompanyInfo from "@/components/ContactCompanyInfo";
-import ContactAddress from "@/components/ContactAddress";
-import ContactHeader from "@/components/ContactHeader";
-import HowReachUs from "@/components/HowReachUs";
+import ContactCompanyInfo from "@/components/features/contact/ContactCompanyInfo";
+import ContactAddress from "@/components/features/contact/ContactAddress";
+import ContactHeader from "@/components/features/contact/ContactHeader";
+import HowReachUs from "@/components/features/contact/HowReachUs";
 
 const sectionDivider = (
   <div

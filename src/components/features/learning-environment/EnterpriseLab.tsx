@@ -2,12 +2,12 @@ import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef, type ReactNode } from "react";
-import { AnimatedList } from "./ui/animated-list";
-import type { AnimatedListItem } from "./ui/animated-list";
-import enterpriseSvg from "../assets/img/Learning-Enviorment/enterprise.svg";
-import howpracticalSvg from "../assets/img/Learning-Enviorment/howpractical.svg";
-import assesmentevaluationSvg from "../assets/img/Learning-Enviorment/assesmentevaluation.svg";
-import roadmapSvg from "../assets/img/Learning-Enviorment/roadmap.svg";
+import { AnimatedList } from "@/components/ui/animated-list";
+import type { AnimatedListItem } from "@/components/ui/animated-list";
+import enterpriseSvg from "@/assets/img/Learning-Enviorment/enterprise.svg";
+import howpracticalSvg from "@/assets/img/Learning-Enviorment/howpractical.svg";
+import assesmentevaluationSvg from "@/assets/img/Learning-Enviorment/assesmentevaluation.svg";
+import roadmapSvg from "@/assets/img/Learning-Enviorment/roadmap.svg";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import ShinyText from "@/components/ui/ShinyText";
 import {

@@ -1,6 +1,6 @@
-import { bootcamps } from "@/constants/bootcampData";
-import { courses } from "@/constants/programData";
-import { CONTACT } from "@/constants/contactInfo";
+import { bootcamps } from "@/config/constants/bootcampData";
+import { courses } from "@/config/constants/programData";
+import { CONTACT } from "@/config/constants/contactInfo";
 
 export type SitemapLink = {
     label: string;

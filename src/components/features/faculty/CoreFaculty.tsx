@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, type ReactElement } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Portal from "@/components/ui/Portal";
 import { IoClose } from "react-icons/io5";
-import { useLenis } from "../hooks/useLenis";
+import { useLenis } from "@/hooks/useLenis";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import { CandyButton } from "@/components/ui/candy-button";
 import ShinyText from "@/components/ui/ShinyText";
@@ -12,8 +12,8 @@ import {
   landingRevealVariants,
   landingSectionHeadingClass,
 } from "@/components/ui/landing-section";
-import cyberlabsIcon from "../assets/img/logo/Icon-01.svg";
-import { crosshatchBgStyle } from "@/constants/bootcampStyles";
+import cyberlabsIcon from "@/assets/img/logo/Icon-01.svg";
+import { crosshatchBgStyle } from "@/config/constants/bootcampStyles";
 
 const RosetteDiscountCheckIcon = (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-rosette-discount-check h-5 w-5 shrink-0 text-blue-600" aria-hidden>
@@ -31,13 +31,13 @@ const CircleArrowUpRightIcon = (
 );
 
 // Team member images
-import guyKlisman from "../assets/img/TeamMemberImages/GuyKlisman.webp";
-import ramiSimanTov from "../assets/img/TeamMemberImages/Rami.webp";
-import adamGarfinkel from "../assets/img/TeamMemberImages/Adam.webp";
-import lucienFransman from "../assets/img/TeamMemberImages/Lucien.webp";
-import shmulikYehezkel from "../assets/img/TeamMemberImages/Shmulik.webp";
-import najeebIbrahim from "../assets/img/TeamMemberImages/NajeebIbrahim.webp";
-// import groupImage from "../assets/img/TeamMemberImages/teamImage.webp"
+import guyKlisman from "@/assets/img/TeamMemberImages/GuyKlisman.webp";
+import ramiSimanTov from "@/assets/img/TeamMemberImages/Rami.webp";
+import adamGarfinkel from "@/assets/img/TeamMemberImages/Adam.webp";
+import lucienFransman from "@/assets/img/TeamMemberImages/Lucien.webp";
+import shmulikYehezkel from "@/assets/img/TeamMemberImages/Shmulik.webp";
+import najeebIbrahim from "@/assets/img/TeamMemberImages/NajeebIbrahim.webp";
+// import groupImage from "@/assets/img/TeamMemberImages/teamImage.webp"
 
 interface TeamMember {
     src: string;

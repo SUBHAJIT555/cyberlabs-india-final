@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { learningEnvironmentMetadata } from "@/constants/pageMetadata";
+import { learningEnvironmentMetadata } from "@/config/constants/pageMetadata";
 
 export const metadata: Metadata = learningEnvironmentMetadata;
 

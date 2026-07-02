@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import ShinyText from "@/components/ui/ShinyText";
-import { StackOrbit } from "./ui/StackOrbit";
+import { StackOrbit } from "@/components/ui/StackOrbit";
 import {
   LandingSectionShell,
   LandingBento,

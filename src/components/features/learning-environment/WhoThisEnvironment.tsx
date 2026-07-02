@@ -11,11 +11,11 @@ import {
   landingSectionHeadingClass,
 } from "@/components/ui/landing-section";
 
-import aspiringImage from "../assets/img/Learning-Enviorment/aspiring.webp";
-import workingImage from "../assets/img/Learning-Enviorment/working-professionals.webp";
-import advancedImage from "../assets/img/Learning-Enviorment/advanced-learners.webp";
-import enterpriseImage from "../assets/img/Learning-Enviorment/enterprises-developing-internal.webp";
-import academicImage from "../assets/img/Learning-Enviorment/academic-institutions-seekings.webp";
+import aspiringImage from "@/assets/img/Learning-Enviorment/aspiring.webp";
+import workingImage from "@/assets/img/Learning-Enviorment/working-professionals.webp";
+import advancedImage from "@/assets/img/Learning-Enviorment/advanced-learners.webp";
+import enterpriseImage from "@/assets/img/Learning-Enviorment/enterprises-developing-internal.webp";
+import academicImage from "@/assets/img/Learning-Enviorment/academic-institutions-seekings.webp";
 
 interface TargetAudience {
   image: string;

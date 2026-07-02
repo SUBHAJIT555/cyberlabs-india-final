@@ -1,5 +1,5 @@
-import CourseDetails from "@/views/CourseDetails";
-import { courses } from "@/constants/programData";
+import CourseDetails from "@/components/pages/CourseDetails";
+import { courses } from "@/config/constants/programData";
 
 export function generateStaticParams() {
   return courses.map((course) => ({

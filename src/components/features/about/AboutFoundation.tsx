@@ -1,8 +1,8 @@
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef } from "react";
-import { AnimatedList } from "../ui/animated-list";
-import type { AnimatedListItem } from "../ui/animated-list";
+import { AnimatedList } from "@/components/ui/animated-list";
+import type { AnimatedListItem } from "@/components/ui/animated-list";
 import { parseBoldText } from "@/lib/utils";
 
 const bulletIcon = (

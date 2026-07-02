@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import Portal from "@/components/ui/Portal";
 import { useCourses } from "@/hooks/useCourses";
 import { useBootcamps } from "@/hooks/useBootcamps";
-import type { Course } from "@/interface/program";
-import { crosshatchBgStyle } from "@/constants/bootcampStyles";
+import type { Course } from "@/types/program";
+import { crosshatchBgStyle } from "@/config/constants/bootcampStyles";
 import { CandyButton } from "@/components/ui/candy-button";
 import BootcampPriceBlock from "@/components/ui/BootcampPriceBlock";
 import {
@@ -18,7 +18,7 @@ import { IndianPhoneField } from "@/components/ui/IndianPhoneField";
 import { FormSuccessPopup } from "@/components/ui/FormSuccessPopup";
 import { FormErrorPopup } from "@/components/ui/FormErrorPopup";
 import { useFormSubmitFeedback } from "@/hooks/useFormSubmitFeedback";
-import { FORM_FEEDBACK_COPY } from "@/constants/formFeedbackCopy";
+import { FORM_FEEDBACK_COPY } from "@/config/constants/formFeedbackCopy";
 import { formatIndianMobileE164 } from "@/lib/formValidation";
 import { useLenis } from "@/hooks/useLenis";
 

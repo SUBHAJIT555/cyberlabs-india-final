@@ -2,9 +2,9 @@ import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef } from "react";
-import enterpriseImage from "../../assets/img/whoThis/enterprise.webp";
-import { AnimatedList } from "../ui/animated-list";
-import type { AnimatedListItem } from "../ui/animated-list";
+import enterpriseImage from "@/assets/img/whoThis/enterprise.webp";
+import { AnimatedList } from "@/components/ui/animated-list";
+import type { AnimatedListItem } from "@/components/ui/animated-list";
 
 const bulletIcon = (
   <span className="text-primary text-sm sm:text-base mt-0.5 shrink-0">•</span>

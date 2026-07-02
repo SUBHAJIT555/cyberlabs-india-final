@@ -8,8 +8,8 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import type { WebinarSession } from "@/data/webinar-schedule";
-import { WebinarRegistrationModal } from "@/components/webinars/WebinarRegistrationModal";
+import type { WebinarSession } from "@/config/data/webinar-schedule";
+import { WebinarRegistrationModal } from "@/components/features/webinars/WebinarRegistrationModal";
 
 type WebinarRegistrationContextValue = {
   openRegistration: (webinar?: WebinarSession) => void;

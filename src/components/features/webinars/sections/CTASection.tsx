@@ -6,7 +6,7 @@ import { TimelineContent } from "@/components/ui/timeline-animation";
 import { ShinyButton } from "@/components/ui/shiny-button";
 import GradientText from "@/components/ui/GradientText";
 import ShinyText from "@/components/ui/ShinyText";
-import { useWebinarRegistration } from "@/context/webinar-registration";
+import { useWebinarRegistration } from "@/providers/webinar-registration";
 
 const revealVariants = {
   visible: (i: number) => ({

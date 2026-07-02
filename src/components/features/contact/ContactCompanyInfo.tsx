@@ -7,7 +7,7 @@ import {
   FaInstagram,
   FaWhatsapp,
 } from "react-icons/fa";
-import { CONTACT } from "@/constants/contactInfo";
+import { CONTACT } from "@/config/constants/contactInfo";
 import Shuffle from "@/components/ui/Shuffle";
 import { YouTubeIcon } from "@/components/ui/YouTubeIcon";
 import { TimelineContent } from "@/components/ui/timeline-animation";

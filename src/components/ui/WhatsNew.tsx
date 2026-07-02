@@ -1,5 +1,5 @@
 import { useCourses } from "@/hooks/useCourses";
-import type { Card, Feature } from "@/interface/program";
+import type { Card, Feature } from "@/types/program";
 import { useParams } from "@/lib/react-router";
 import { parseBoldText, assetSrc, stripLeadingNumber } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";

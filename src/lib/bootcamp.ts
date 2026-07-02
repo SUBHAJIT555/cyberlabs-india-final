@@ -1,5 +1,5 @@
-import type { Bootcamp } from "@/interface/bootcamp";
-import type { Hero } from "@/interface/program";
+import type { Bootcamp } from "@/types/bootcamp";
+import type { Hero } from "@/types/program";
 
 export const bootcampToHero = (bootcamp: Bootcamp): Hero => ({
     title: bootcamp.title,

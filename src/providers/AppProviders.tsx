@@ -2,7 +2,7 @@
 
 import { Suspense, type ReactNode } from "react";
 import { ParallaxProvider } from "react-scroll-parallax";
-import { LenisProvider } from "@/context/LenisContext";
+import { LenisProvider } from "@/providers/LenisContext";
 import { LoaderOne } from "@/components/ui/loader";
 
 type AppProvidersProps = {

@@ -6,13 +6,13 @@ import { TimelineContent } from "@/components/ui/timeline-animation";
 import ShinyText from "@/components/ui/ShinyText";
 import GradientText from "@/components/ui/GradientText";
 import { CandyButton, candyWhiteSurfaceClass } from "@/components/ui/candy-button";
-import { WebinarDetailsModal } from "@/components/webinars/WebinarDetailsModal";
-import { useWebinarRegistration } from "@/context/webinar-registration";
+import { WebinarDetailsModal } from "@/components/features/webinars/WebinarDetailsModal";
+import { useWebinarRegistration } from "@/providers/webinar-registration";
 import {
   upcomingWebinars,
   webinarScheduleContent,
   type WebinarSession,
-} from "@/data/webinar-schedule";
+} from "@/config/data/webinar-schedule";
 import {
   buildWebinarWhatsappUrl,
   extractFocusText,

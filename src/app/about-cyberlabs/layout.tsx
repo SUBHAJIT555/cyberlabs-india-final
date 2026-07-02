@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { aboutCyberlabsMetadata } from "@/constants/pageMetadata";
+import { aboutCyberlabsMetadata } from "@/config/constants/pageMetadata";
 
 export const metadata: Metadata = aboutCyberlabsMetadata;
 

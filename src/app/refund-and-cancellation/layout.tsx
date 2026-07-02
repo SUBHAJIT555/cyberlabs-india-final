@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { refundPolicyMetadata } from "@/constants/pageMetadata";
+import { refundPolicyMetadata } from "@/config/constants/pageMetadata";
 
 export const metadata: Metadata = refundPolicyMetadata;
 

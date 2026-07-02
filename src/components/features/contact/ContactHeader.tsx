@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import { cn } from "@/lib/utils";
 import { useCourses } from "@/hooks/useCourses";
 import { useBootcamps } from "@/hooks/useBootcamps";
-import { Course } from "@/interface/program";
-import { crosshatchBgStyle } from "@/constants/bootcampStyles";
+import { Course } from "@/types/program";
+import { crosshatchBgStyle } from "@/config/constants/bootcampStyles";
 import { CandyButton } from "@/components/ui/candy-button";
 import { LandingSectionShell } from "@/components/ui/landing-section";
 import {
@@ -17,7 +17,7 @@ import { IndianPhoneField } from "@/components/ui/IndianPhoneField";
 import { FormSuccessPopup } from "@/components/ui/FormSuccessPopup";
 import { FormErrorPopup } from "@/components/ui/FormErrorPopup";
 import { useFormSubmitFeedback } from "@/hooks/useFormSubmitFeedback";
-import { FORM_FEEDBACK_COPY } from "@/constants/formFeedbackCopy";
+import { FORM_FEEDBACK_COPY } from "@/config/constants/formFeedbackCopy";
 import { formatIndianMobileE164 } from "@/lib/formValidation";
 
 const inputBase =

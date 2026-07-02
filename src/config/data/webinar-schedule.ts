@@ -20,7 +20,7 @@ export type WebinarSession = {
 };
 
 /** Webinar WhatsApp — international format without + or spaces */
-export { WHATSAPP_NUMBER as webinarWhatsappNumber } from "@/data/site-contact";
+export { WHATSAPP_NUMBER as webinarWhatsappNumber } from "@/config/data/site-contact";
 
 export const defaultWebinarSpeakers: WebinarSpeaker[] = [
   {

@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import DatabaseWithRestApi from "./ui/database-with-rest-api";
+import DatabaseWithRestApi from "@/components/ui/database-with-rest-api";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import { FeatureCard } from "@/components/ui/FeatureCard";
 import ShinyText from "@/components/ui/ShinyText";

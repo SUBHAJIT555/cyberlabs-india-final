@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 import { assetSrc, cn } from "@/lib/utils";
 import { useRef } from "react";
-import officialCertSvg from "../assets/img/Official certification/officialcertification.svg";
-import performanceTranscriptSvg from "../assets/img/Official certification/performancetranscript.svg";
+import officialCertSvg from "@/assets/img/Official certification/officialcertification.svg";
+import performanceTranscriptSvg from "@/assets/img/Official certification/performancetranscript.svg";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import ShinyText from "@/components/ui/ShinyText";
 import { FeatureCard } from "@/components/ui/FeatureCard";

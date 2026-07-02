@@ -1,12 +1,12 @@
 "use client";
 
-import ScrollToTopButton from "../components/ScrollToTop";
-import { FloatingBottomBarProvider } from "@/contexts/FloatingBottomBarContext";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import ScrollToTopButton from "@/components/common/ScrollToTop";
+import { FloatingBottomBarProvider } from "@/providers/FloatingBottomBarContext";
+import Navbar from "@/components/common/Navbar";
+import Footer from "@/components/common/Footer";
 import { useScrollRestoreDebug } from "@/hooks/useScrollRestoreDebug";
-import { useLenisHashScroll } from "../hooks/useLenisHashScroll";
-import { useLenisScrollRestoration } from "../hooks/useLenisScrollRestoration";
+import { useLenisHashScroll } from "@/hooks/useLenisHashScroll";
+import { useLenisScrollRestoration } from "@/hooks/useLenisScrollRestoration";
 import type { ReactNode } from "react";
 import "swiper/css";
 import "swiper/css/effect-coverflow";

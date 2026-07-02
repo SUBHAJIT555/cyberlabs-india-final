@@ -1,4 +1,4 @@
-import type { BootcampDetail } from "@/interface/bootcampDetail";
+import type { BootcampDetail } from "@/types/bootcampDetail";
 
 const darkWebIntelligenceDetail: BootcampDetail = {
     slug: "dark-web-intelligence-covert-cyber-investigations",

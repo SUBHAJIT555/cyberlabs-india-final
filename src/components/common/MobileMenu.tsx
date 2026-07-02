@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "@/lib/react-router";
-import { useMobileMenuStore } from "../store/mobileMenuStore";
+import { useMobileMenuStore } from "@/store/mobileMenuStore";
 import { IoClose, IoMailOutline } from "react-icons/io5";
 import {
   FaLinkedin,
   FaFacebook,
   FaInstagram,
 } from "react-icons/fa";
-import CallbackModal from "./CallbackModal";
-import { Logo } from "./index";
-import { useLenis } from "../hooks/useLenis";
-import { CONTACT } from "@/constants/contactInfo";
+import CallbackModal from "@/components/modals/CallbackModal";
+import { Logo } from "@/components";
+import { useLenis } from "@/hooks/useLenis";
+import { CONTACT } from "@/config/constants/contactInfo";
 
 const MobileMenu: React.FC = () => {
   const { isOpen, closeMenu } = useMobileMenuStore();

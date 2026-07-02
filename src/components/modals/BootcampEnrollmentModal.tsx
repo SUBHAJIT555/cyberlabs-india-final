@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import Portal from "@/components/ui/Portal";
 import { motion, AnimatePresence } from "framer-motion";
-import CheckoutForm from "./CheckoutForm";
+import CheckoutForm from "@/components/forms/CheckoutForm";
 import { CandyButton } from "@/components/ui/candy-button";
 import { SectionEyebrow } from "@/components/ui/landing-section";
 import { useBootcamps } from "@/hooks/useBootcamps";
 import { bootcampToHero } from "@/lib/bootcamp";
-import { CONTACT } from "@/constants/contactInfo";
+import { CONTACT } from "@/config/constants/contactInfo";
 import BootcampPriceBlock from "@/components/ui/BootcampPriceBlock";
-import { crosshatchBgStyle } from "@/constants/bootcampStyles";
+import { crosshatchBgStyle } from "@/config/constants/bootcampStyles";
 
 interface BootcampEnrollmentModalProps {
     isOpen: boolean;

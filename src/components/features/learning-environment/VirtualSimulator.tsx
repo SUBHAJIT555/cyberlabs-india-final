@@ -30,8 +30,8 @@ import { MdLockOutline } from "react-icons/md";
 import { GrLineChart } from "react-icons/gr";
 import { BsShieldLock } from "react-icons/bs";
 
-import { AnimatedList } from "./ui/animated-list";
-import type { AnimatedListItem } from "./ui/animated-list";
+import { AnimatedList } from "@/components/ui/animated-list";
+import type { AnimatedListItem } from "@/components/ui/animated-list";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import ShinyText from "@/components/ui/ShinyText";
 import {

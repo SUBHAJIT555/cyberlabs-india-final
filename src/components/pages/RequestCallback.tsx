@@ -1,6 +1,6 @@
-import RequestCallbackHero from "../components/RequestCallbackHero";
-import WhatThisCall from "../components/WhatThisCall";
-import RequestCallbackForm from "../components/RequestCallbackForm";
+import RequestCallbackHero from "@/components/features/contact/RequestCallbackHero";
+import WhatThisCall from "@/components/features/admissions/WhatThisCall";
+import RequestCallbackForm from "@/components/forms/RequestCallbackForm";
 
 const RequestCallback = () => {
     return (

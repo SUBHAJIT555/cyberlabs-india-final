@@ -1,6 +1,6 @@
 "use client";
 
-import Admissions from "@/views/Admissions";
+import Admissions from "@/components/pages/Admissions";
 
 export default function Page() {
   return <Admissions />;

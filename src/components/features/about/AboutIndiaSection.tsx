@@ -1,6 +1,6 @@
 import { assetSrc } from "@/lib/utils";
 import { useRef } from "react";
-import cyberlabsIndiaImage from "../../assets/img/AboutPageImages/cyberlabsIndia.svg";
+import cyberlabsIndiaImage from "@/assets/img/AboutPageImages/cyberlabsIndia.svg";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import ShinyText from "@/components/ui/ShinyText";
 import {

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { faqMetadata } from "@/constants/pageMetadata";
+import { faqMetadata } from "@/config/constants/pageMetadata";
 
 export const metadata: Metadata = faqMetadata;
 

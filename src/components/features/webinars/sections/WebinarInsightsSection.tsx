@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import { useWebinarRegistration } from "@/context/webinar-registration";
+import { useWebinarRegistration } from "@/providers/webinar-registration";
 import ReactCountryFlag from "react-country-flag";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import { ShinyButton } from "@/components/ui/shiny-button";

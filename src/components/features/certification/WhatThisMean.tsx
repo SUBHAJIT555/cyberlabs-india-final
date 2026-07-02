@@ -1,8 +1,8 @@
 import { assetSrc, cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { useRef, type ReactNode } from "react";
-import { AnimatedList } from "./ui/animated-list";
-import type { AnimatedListItem } from "./ui/animated-list";
+import { AnimatedList } from "@/components/ui/animated-list";
+import type { AnimatedListItem } from "@/components/ui/animated-list";
 import employeemeanSvg from "@/assets/img/Official certification/employeemean.svg";
 import learnermeanSvg from "@/assets/img/Official certification/learnermean.svg";
 import intrigitySvg from "@/assets/img/Official certification/intrigity.svg";

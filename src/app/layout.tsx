@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import AppProviders from "@/providers/AppProviders";
-import MainLayout from "@/layout/MainLayout";
+import MainLayout from "@/components/layout/MainLayout";
 import { rootMetadata } from "@/lib/siteMetadata";
 import "./globals.css";
 

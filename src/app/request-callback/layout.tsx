@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { requestCallbackMetadata } from "@/constants/pageMetadata";
+import { requestCallbackMetadata } from "@/config/constants/pageMetadata";
 
 export const metadata: Metadata = requestCallbackMetadata;
 

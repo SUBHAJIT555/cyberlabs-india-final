@@ -3,8 +3,8 @@ import { assetSrc, cn } from "@/lib/utils";
 import { useRef } from "react";
 import generaladmission1Svg from "@/assets/img/Learning-Enviorment/generaladmission1.svg";
 import generaladmission2Svg from "@/assets/img/Learning-Enviorment/generaladmission2.svg";
-import { AnimatedList } from "./ui/animated-list";
-import type { AnimatedListItem } from "./ui/animated-list";
+import { AnimatedList } from "@/components/ui/animated-list";
+import type { AnimatedListItem } from "@/components/ui/animated-list";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import ShinyText from "@/components/ui/ShinyText";
 import {

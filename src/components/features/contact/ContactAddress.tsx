@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { CONTACT } from "@/constants/contactInfo";
+import { CONTACT } from "@/config/constants/contactInfo";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import ShinyText from "@/components/ui/ShinyText";
 import {

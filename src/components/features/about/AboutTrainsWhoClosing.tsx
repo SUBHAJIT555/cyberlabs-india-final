@@ -1,10 +1,10 @@
 import { useRef, type ReactNode } from "react";
 import { parseBoldText, assetSrc } from "@/lib/utils";
-import howSvg from "../../assets/img/AboutPageImages/how.svg";
-import whoSvg from "../../assets/img/AboutPageImages/who.svg";
-import whatnotdoSvg from "../../assets/img/AboutPageImages/whatnotdo.svg";
-import whoCyberlabs from "../../assets/img/AboutPageImages/whoCyberlabs.svg";
-import closingImage from "../../assets/img/AboutPageImages/closingImage.svg";
+import howSvg from "@/assets/img/AboutPageImages/how.svg";
+import whoSvg from "@/assets/img/AboutPageImages/who.svg";
+import whatnotdoSvg from "@/assets/img/AboutPageImages/whatnotdo.svg";
+import whoCyberlabs from "@/assets/img/AboutPageImages/whoCyberlabs.svg";
+import closingImage from "@/assets/img/AboutPageImages/closingImage.svg";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import ShinyText from "@/components/ui/ShinyText";
 import {

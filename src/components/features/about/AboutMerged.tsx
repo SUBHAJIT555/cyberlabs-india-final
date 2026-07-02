@@ -1,8 +1,8 @@
 import { useRef, type ReactNode } from "react";
 import { parseBoldText, assetSrc } from "@/lib/utils";
-import whatcyberlabsSvg from "../../assets/img/AboutPageImages/whatcyberlabs.svg";
-import foundationSvg from "../../assets/img/AboutPageImages/foundation.svg";
-import whySvg from "../../assets/img/AboutPageImages/why.svg";
+import whatcyberlabsSvg from "@/assets/img/AboutPageImages/whatcyberlabs.svg";
+import foundationSvg from "@/assets/img/AboutPageImages/foundation.svg";
+import whySvg from "@/assets/img/AboutPageImages/why.svg";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import ShinyText from "@/components/ui/ShinyText";
 import {

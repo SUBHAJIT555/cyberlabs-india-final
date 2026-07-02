@@ -1,10 +1,10 @@
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef } from "react";
-import aspiringImage from "../../assets/img/whoThis/aspiring.webp";
-import { AnimatedHeading } from "../ui/animated-heading";
-import { AnimatedList } from "../ui/animated-list";
-import type { AnimatedListItem } from "../ui/animated-list";
+import aspiringImage from "@/assets/img/whoThis/aspiring.webp";
+import { AnimatedHeading } from "@/components/ui/animated-heading";
+import { AnimatedList } from "@/components/ui/animated-list";
+import type { AnimatedListItem } from "@/components/ui/animated-list";
 import { parseBoldText, assetSrc } from "@/lib/utils";
 
 const bulletIcon = (

@@ -8,15 +8,15 @@ import {
     FaLinkedinIn,
     FaWhatsapp,
 } from "react-icons/fa";
-import footerlogo from "../assets/img/logo/Cyberlabs-logo-03.svg";
+import footerlogo from "@/assets/img/logo/Cyberlabs-logo-03.svg";
 import { cn, assetSrc } from "@/lib/utils";
 import ShinyText from "@/components/ui/ShinyText";
 import { CandyButton } from "@/components/ui/candy-button";
 import { FormSuccessPopup } from "@/components/ui/FormSuccessPopup";
 import { FormErrorPopup } from "@/components/ui/FormErrorPopup";
 import { useFormSubmitFeedback } from "@/hooks/useFormSubmitFeedback";
-import { CONTACT } from "@/constants/contactInfo";
-import { FORM_FEEDBACK_COPY } from "@/constants/formFeedbackCopy";
+import { CONTACT } from "@/config/constants/contactInfo";
+import { FORM_FEEDBACK_COPY } from "@/config/constants/formFeedbackCopy";
 import { emailValidationRules } from "@/lib/formValidation";
 import { YouTubeIcon } from "@/components/ui/YouTubeIcon";
 

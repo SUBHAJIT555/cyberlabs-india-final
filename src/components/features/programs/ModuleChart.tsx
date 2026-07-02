@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useParams } from "@/lib/react-router";
 import { motion, useInView } from "framer-motion";
 import { useCourses } from "@/hooks/useCourses";
-import { AnimatedHeading } from "./ui/animated-heading";
+import { AnimatedHeading } from "@/components/ui/animated-heading";
 
 const ModuleChart = () => {
     const { slug } = useParams();

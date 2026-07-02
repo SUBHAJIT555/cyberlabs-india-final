@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { sitemapMetadata } from "@/constants/pageMetadata";
+import { sitemapMetadata } from "@/config/constants/pageMetadata";
 
 export const metadata: Metadata = sitemapMetadata;
 

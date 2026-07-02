@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { TypingKeyboard } from "./ui/typing-keyboard";
+import { TypingKeyboard } from "@/components/ui/typing-keyboard";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import ShinyText from "@/components/ui/ShinyText";
 import {

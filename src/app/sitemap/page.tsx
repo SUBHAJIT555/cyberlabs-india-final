@@ -1,6 +1,6 @@
 "use client";
 
-import Sitemap from "@/views/Sitemap";
+import Sitemap from "@/components/pages/Sitemap";
 
 export default function Page() {
     return <Sitemap />;

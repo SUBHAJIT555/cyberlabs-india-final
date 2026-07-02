@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useSearchParams } from "@/lib/react-router";
-import type { Hero } from "@/interface/program";
+import type { Hero } from "@/types/program";
 import { CandyButton } from "@/components/ui/candy-button";
 import BootcampPriceBlock from "@/components/ui/BootcampPriceBlock";
 import {
@@ -14,7 +14,7 @@ import {
 import { FormSuccessPopup } from "@/components/ui/FormSuccessPopup";
 import { FormErrorPopup } from "@/components/ui/FormErrorPopup";
 import { useFormSubmitFeedback } from "@/hooks/useFormSubmitFeedback";
-import { getCheckoutFeedbackCopy } from "@/constants/formFeedbackCopy";
+import { getCheckoutFeedbackCopy } from "@/config/constants/formFeedbackCopy";
 import {
   formatIndianMobileE164,
   zodEmail,

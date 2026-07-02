@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { cookiePolicyMetadata } from "@/constants/pageMetadata";
+import { cookiePolicyMetadata } from "@/config/constants/pageMetadata";
 
 export const metadata: Metadata = cookiePolicyMetadata;
 

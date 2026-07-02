@@ -1,6 +1,6 @@
 "use client";
 
-import FrequentlyAskedQuestion from "@/views/FrequentlyAskedQuestion";
+import FrequentlyAskedQuestion from "@/components/pages/FrequentlyAskedQuestion";
 
 export default function Page() {
   return <FrequentlyAskedQuestion />;

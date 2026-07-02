@@ -4,7 +4,7 @@ import { motion, useInView, useAnimation } from "framer-motion";
 
 import { useCourses } from "@/hooks/useCourses";
 import { useParams } from "@/lib/react-router";
-import ProgramDeepDive from "../ProgramDeepDive";
+import ProgramDeepDive from "@/components/features/programs/ProgramDeepDive";
 import { parseBoldText, stripLeadingNumber } from "@/lib/utils";
 import { AnimatedHeading } from "./animated-heading";
 import { AnimatedList } from "./animated-list";

@@ -1,7 +1,7 @@
 "use client";
 
-import RefundHero from "@/components/RefundHero";
-import { CONTACT } from "@/constants/contactInfo";
+import RefundHero from "@/components/features/legal/RefundHero";
+import { CONTACT } from "@/config/constants/contactInfo";
 import { LandingSectionShell, landingSectionHeadingClass } from "@/components/ui/landing-section";
 import {
   ListItem,
@@ -11,7 +11,7 @@ import {
   paragraphClass,
   sectionClass,
   sectionDivider,
-} from "@/components/legal/legalPageShared";
+} from "@/components/features/legal/legalPageShared";
 
 const RefundPolicy = () => {
   return (
