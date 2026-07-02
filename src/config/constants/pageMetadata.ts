@@ -1,97 +1,97 @@
 import { createPageMetadata } from "@/lib/siteMetadata";
 
 export const homeMetadata = createPageMetadata(
-  "CYBERLABS INDIA | Israeli-Led Cyber Defense Training",
-  "Israeli-led cyber defense training in India. Simulation-driven programs, operator-led faculty, and career-ready certification for aspiring security professionals.",
+  "Israeli-Led Cyber Security Training in India",
+  "Join CYBERLABS INDIA for Israeli-led cyber security training with simulation-based programs, expert faculty, and industry-ready certification pathways.",
   { absoluteTitle: true, path: "/" },
 );
 
 export const aboutCyberlabsMetadata = createPageMetadata(
-  "About CYBERLABS",
-  "Discover CYBERLABS INDIA — an Israeli cyber defense training ecosystem built on investigation-driven learning, architecture-first thinking, and operational accountability.",
+  "About CYBERLABS INDIA",
+  "Learn about CYBERLABS INDIA, our Israeli-led cyber defense training model, mission, and approach to building real-world security capability.",
   { path: "/about-cyberlabs" },
 );
 
 export const programsMetadata = createPageMetadata(
-  "Cyber Defense Programs",
-  "Explore flagship cyber defense programs and elite bootcamps designed for investigation-driven, simulation-based learning with real-world outcomes.",
+  "Cyber Security Programs",
+  "Explore CYBERLABS INDIA cyber security programs and bootcamps built for hands-on learning, threat analysis, and practical job-ready skills.",
   { path: "/cyber-defense-programs" },
 );
 
 export const cyberlabsWebinarsMetadata = createPageMetadata(
-  "Cyberlabs Free Webinars",
-  "Join free live cybersecurity webinars from CYBERLABS INDIA — industry insight, career guidance, and hands-on awareness sessions led by experienced operators.",
+  "Free Cyber Security Webinars",
+  "Attend free CYBERLABS INDIA webinars for cyber security insights, career guidance, and practical learning from experienced industry professionals.",
   { path: "/cyberlabs-webinars" },
 );
 
 export const leadershipAndFacultyMetadata = createPageMetadata(
   "Leadership and Faculty",
-  "Meet the operators, architects, and practitioners who lead CYBERLABS INDIA programs — builders of real cyber capability, not academic instructors.",
+  "Meet CYBERLABS INDIA leadership and faculty, including practitioners and operators with real cyber defense, investigation, and response experience.",
   { path: "/leadership-and-faculty" },
 );
 
 export const learningEnvironmentMetadata = createPageMetadata(
-  "Learning Environment",
-  "Experience CYBERLABS INDIA's remote-first, simulation-driven learning environment designed for deep investigation, hands-on labs, and operational readiness.",
+  "Cyber Security Learning Environment",
+  "Discover CYBERLABS INDIA's simulation-first learning environment with hands-on labs, guided practice, and structured pathways for cyber readiness.",
   { path: "/learning-environment" },
 );
 
 export const certificationMetadata = createPageMetadata(
-  "Certification & Evaluation Framework",
-  "Understand CYBERLABS INDIA's capability-based certification, assessment-driven evaluation, and industry-aligned credentials for cyber defense careers.",
+  "Certification and Evaluation Framework",
+  "Understand CYBERLABS INDIA certification standards, evaluation methods, and outcomes designed to validate practical cyber security capability.",
   { path: "/certification-and-evaluation-framework" },
 );
 
 export const whoShouldApplyMetadata = createPageMetadata(
   "Who Should Apply",
-  "Find out if CYBERLABS INDIA is right for you — guidance for aspiring professionals, career switchers, working IT staff, and sponsors evaluating program rigor.",
+  "See who should apply to CYBERLABS INDIA programs, including students, IT professionals, career switchers, and security-focused teams.",
   { path: "/who-should-apply" },
 );
 
 export const requestCallbackMetadata = createPageMetadata(
-  "Request a Call Back",
-  "Request a call back from CYBERLABS INDIA admissions. Get guidance on program fit, readiness, time commitment, certification pathways, and next steps.",
+  "Request a Callback",
+  "Request a callback from CYBERLABS INDIA to discuss course selection, eligibility, fees, schedules, and your next steps in cyber security.",
   { path: "/request-callback" },
 );
 
 export const contactCyberlabsMetadata = createPageMetadata(
-  "Contact CYBERLABS",
-  "Contact CYBERLABS INDIA for admissions, partnerships, and general enquiries. Reach our team by form, email, phone, or visit our learning centre.",
+  "Contact CYBERLABS INDIA",
+  "Contact CYBERLABS INDIA for admissions, partnerships, and support via phone, email, or inquiry form. Our team will help you quickly.",
   { path: "/contact-cyberlabs" },
 );
 
 export const faqMetadata = createPageMetadata(
   "Frequently Asked Questions",
-  "Find answers to common questions about CYBERLABS INDIA programs, admissions, learning format, certification, payments, and career outcomes.",
+  "Get answers about CYBERLABS INDIA courses, eligibility, admissions, certification, learning format, payments, and career outcomes.",
   { path: "/frequently-asked-questions" },
 );
 
 export const termsAndConditionsMetadata = createPageMetadata(
   "Terms & Conditions",
-  "Read the terms and conditions governing use of the CYBERLABS INDIA website, programs, services, and enrolment policies.",
+  "Read CYBERLABS INDIA terms and conditions for website usage, admissions, enrollments, program policies, and user responsibilities.",
   { path: "/terms-and-conditions" },
 );
 
 export const privacyPolicyMetadata = createPageMetadata(
   "Privacy Policy",
-  "Learn how CYBERLABS INDIA collects, uses, stores, and protects your personal information when you browse, enquire, or enrol with us.",
+  "Learn how CYBERLABS INDIA collects, processes, stores, and protects personal information when you use our website or enroll in programs.",
   { path: "/privacy-policy" },
 );
 
 export const cookiePolicyMetadata = createPageMetadata(
   "Cookie Policy",
-  "Understand how CYBERLABS INDIA uses cookies and similar technologies to improve site performance, analytics, and your browsing experience.",
+  "Understand how CYBERLABS INDIA uses cookies and related technologies for analytics, performance, personalization, and better browsing experience.",
   { path: "/cookie-policy" },
 );
 
 export const refundPolicyMetadata = createPageMetadata(
   "Refund & Cancellation Policy",
-  "Review CYBERLABS INDIA's refund and cancellation policy for courses, bootcamps, subscriptions, and secure payment transactions.",
+  "Review CYBERLABS INDIA refund and cancellation terms for courses, bootcamps, enrollment changes, and payment-related requests.",
   { path: "/refund-and-cancellation" },
 );
 
 export const sitemapMetadata = createPageMetadata(
   "Sitemap",
-  "Browse the complete CYBERLABS INDIA sitemap — all pages, flagship programs, elite bootcamps, admissions, legal policies, and contact links.",
+  "Browse the CYBERLABS INDIA sitemap to access all key pages, programs, bootcamps, admissions information, legal policies, and contact links.",
   { path: "/sitemap" },
 );

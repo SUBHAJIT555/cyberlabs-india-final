@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 export const SITE_NAME = "CYBERLABS INDIA";
 export const DEFAULT_DESCRIPTION =
   "Israeli-led cyber defense training in India. Simulation-driven programs taught by real operators.";
+export const SITE_AUTHOR = "Subhajit Dhali";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
@@ -34,6 +35,8 @@ export function createPageMetadata(
   return {
     title: options?.absoluteTitle ? { absolute: pageTitle } : title,
     description,
+    authors: [{ name: SITE_AUTHOR }],
+    creator: SITE_AUTHOR,
     alternates: {
       canonical: pageUrl,
     },
@@ -59,6 +62,8 @@ export const rootMetadata: Metadata = {
     template: `%s | ${SITE_NAME}`,
   },
   description: DEFAULT_DESCRIPTION,
+  authors: [{ name: SITE_AUTHOR }],
+  creator: SITE_AUTHOR,
   icons: {
     icon: "/favicon.svg",
   },
