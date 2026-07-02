@@ -16,12 +16,6 @@ import { useLenis } from "@/hooks/useLenis";
 import { useFooterVisibility } from "@/hooks/useFooterVisibility";
 import { useFloatingBottomBar } from "@/contexts/FloatingBottomBarContext";
 
-const sectionDivider = (
-  <div
-    className="relative left-1/2 w-screen max-w-[100vw] -translate-x-1/2 border-t border-dashed border-zinc-200"
-    aria-hidden
-  />
-);
 
 const Programs = () => {
   const lenis = useLenis();
@@ -88,15 +82,10 @@ const Programs = () => {
     <div className="relative z-10">
       <ProgramHero />
       <ProgramPageOpening />
-      {sectionDivider}
       <ElitBootcamp />
-      {sectionDivider}
       <CourseCard />
-      {sectionDivider}
       <Certification />
-      {sectionDivider}
       <PerformanceTranscript />
-      {sectionDivider}
       <IndustryRecognition />
 
       <Portal>

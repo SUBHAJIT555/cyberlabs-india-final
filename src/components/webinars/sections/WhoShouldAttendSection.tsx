@@ -201,7 +201,7 @@ export function WhoShouldAttendSection() {
   const timelineRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section id="audience" ref={timelineRef} className="bg-white px-4 py-16 md:py-24">
+    <section id="audience" ref={timelineRef} className="bg-white px-4 py-10 md:py-14">
       <div className="mx-auto max-w-6xl">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
           <TopicCard

@@ -25,7 +25,7 @@ const IndustryRecognition = () => {
   const timelineRef = useRef<HTMLDivElement>(null);
 
   return (
-    <LandingSectionShell className="pb-20 md:pb-28">
+    <LandingSectionShell>
       <div ref={timelineRef}>
         <TimelineContent
           as="h2"

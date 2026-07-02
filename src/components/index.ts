@@ -1,5 +1,3 @@
-export { default as Loading } from "./Loading";
-export { default as LoadingWrapper } from "./LoadingWrapper";
 export { default as Logo } from "./Logo";
 export { default as MobileMenu } from "./MobileMenu";
 export { default as Navbar } from "./Navbar";

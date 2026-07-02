@@ -88,7 +88,7 @@ const Syllabus = () => {
 
   return (
     <div
-      className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-26 py-8 sm:py-12 md:py-16"
+      className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-26 py-8 sm:py-10 md:py-14"
       id="explained-module"
     >
       {/* Header */}

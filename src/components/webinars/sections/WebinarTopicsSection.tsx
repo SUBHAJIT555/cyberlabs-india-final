@@ -64,7 +64,7 @@ export function WebinarTopicsSection() {
   const columns = [webinarTopics.slice(0, half), webinarTopics.slice(half)];
 
   return (
-    <section id="topics" ref={timelineRef} className="px-4 py-16 md:py-24">
+    <section id="topics" ref={timelineRef} className="px-4 py-10 md:py-14">
       <div className="mx-auto max-w-7xl">
         <TimelineContent
           as="div"

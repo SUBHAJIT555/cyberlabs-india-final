@@ -75,8 +75,8 @@ export function SectionEyebrow({ children }: { children: ReactNode }) {
   );
 }
 
-export const landingSectionClass = "relative overflow-hidden bg-white px-4 py-16 md:py-24";
-/** Tighter vertical rhythm for the home page stack */
+export const landingSectionClass = "relative overflow-hidden bg-white px-4 py-10 md:py-14";
+/** Tighter vertical rhythm — matches home page section stack */
 export const homeSectionSpacingClass = "py-10 md:py-14";
 export const landingInnerClass = "relative z-10 mx-auto w-full max-w-7xl";
 
@@ -204,6 +204,54 @@ export function LandingNumberedList({
   );
 }
 
+/** 2×2 numbered grid — items flow top-to-bottom in each column (01/02 left, 03/04 right) */
+export function LandingSplitNumberedList({
+  items,
+  startIndex = 0,
+}: {
+  items: string[];
+  startIndex?: number;
+}) {
+  const half = Math.ceil(items.length / 2);
+  const columns = [items.slice(0, half), items.slice(half)];
+
+  return (
+    <div className="border-y border-zinc-200">
+      <div className="grid grid-cols-1 sm:grid-cols-2 sm:divide-x sm:divide-zinc-200">
+        {columns.map((column, colIndex) => (
+          <ul key={colIndex} className={cn(colIndex === 0 ? "sm:pr-8" : "sm:pl-8")}>
+            {column.map((item, rowIndex) => {
+              const globalIndex =
+                (colIndex === 0 ? startIndex : startIndex + half) + rowIndex;
+              const isLastInColumn = rowIndex === column.length - 1;
+              const isLastOverall =
+                colIndex === columns.length - 1 && isLastInColumn;
+
+              return (
+                <li
+                  key={item}
+                  className={cn(
+                    "flex gap-3 py-3 text-sm text-zinc-700 md:py-4 md:text-base",
+                    !isLastOverall && "border-b border-zinc-200",
+                    isLastInColumn && colIndex === 0 && "sm:border-b-0",
+                    rowIndex !== column.length - 1 &&
+                      "sm:border-b sm:border-zinc-200",
+                  )}
+                >
+                  <span className="shrink-0 font-semibold text-zinc-400">
+                    {String(globalIndex + 1).padStart(2, "0")}
+                  </span>
+                  <span>{item}</span>
+                </li>
+              );
+            })}
+          </ul>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function ArrowNarrowRightDashedIcon() {
   return (
     <svg
@@ -303,7 +351,7 @@ export function LandingGoalBanner({
   return (
     <div
       className={cn(
-        "relative overflow-hidden border border-dashed border-zinc-200 bg-white px-6 py-16 text-center md:py-24 mt-4",
+        "relative overflow-hidden border border-dashed border-zinc-200 bg-white px-6 py-10 text-center md:py-14 mt-4",
         className,
       )}
     >

@@ -64,14 +64,14 @@ export function WhyChooseCTASection() {
   const navigate = useNavigate();
 
   return (
-    <section id="contact" ref={timelineRef} className=" px-4 py-16 md:py-24">
+    <section id="contact" ref={timelineRef} className=" px-4 py-10 md:py-14">
       <div className="mx-auto max-w-7xl">
         <TimelineContent
           as="div"
           animationNum={1}
           timelineRef={timelineRef}
           customVariants={revealVariants}
-          className="relative overflow-hidden border border-zinc-200 border-dashed bg-white px-6 py-14 text-center md:px-10 md:py-20"
+          className="relative overflow-hidden border border-zinc-200 border-dashed bg-white px-6 py-10 text-center md:px-10 md:py-14"
         >
           <BannerBackground />
 

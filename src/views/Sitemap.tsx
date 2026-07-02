@@ -57,7 +57,7 @@ function SitemapColumn({ title, links }: { title: string; links: { label: string
 const Sitemap = () => {
     return (
         <div className="relative z-10 bg-white">
-            <div className="mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 md:py-20 lg:px-8 mt-8">
+            <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 md:py-14 lg:px-8 mt-8">
                 <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 md:text-3xl">
                     CYBERLABS Site Map
                 </h1>

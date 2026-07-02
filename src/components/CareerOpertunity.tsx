@@ -14,7 +14,7 @@ const CareerOpertunity = () => {
     if (!careerChart || careerChart.length === 0) return null;
 
     return (
-        <section className="w-full  text-text-primary py-12 md:py-16">
+        <section className="w-full  text-text-primary py-10 md:py-14">
             <div className="mx-auto px-4 md:px-12 xl:px-25">
                 <div ref={headingRef} className="mb-8 md:mb-10">
                     <AnimatedHeading

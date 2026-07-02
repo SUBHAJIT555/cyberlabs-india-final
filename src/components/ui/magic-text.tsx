@@ -43,7 +43,7 @@ export const MagicText: React.FC<MagicTextProps> = ({ text, className = "", rend
   const words = text.split(" ");
 
   return (
-    <p ref={container} className={`flex flex-wrap leading-relaxed m-0 ${className}`}>
+    <p ref={container} className={`relative flex flex-wrap leading-relaxed m-0 ${className}`}>
       {words.map((word, i) => {
         const start = i / words.length;
         const end = start + 1 / words.length;

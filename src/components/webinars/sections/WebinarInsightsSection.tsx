@@ -87,7 +87,7 @@ export function WebinarInsightsSection() {
   const { openRegistration } = useWebinarRegistration();
 
   return (
-    <section id="services" ref={timelineRef} className="bg-white px-4 py-14 md:py-20">
+    <section id="services" ref={timelineRef} className="bg-white px-4 py-10 md:py-14">
       <div className="mx-auto max-w-7xl divide-y divide-zinc-200">
         {/* Row 1 — text | image */}
         <div className="grid grid-cols-1 md:grid-cols-2 md:divide-x md:divide-zinc-200">
@@ -231,9 +231,9 @@ export function WebinarInsightsSection() {
           className="px-0 py-6 md:px-8 md:py-8 text-center items-center justify-center max-w-6xl mx-auto"
         >
           <p className="text-base leading-relaxed text-zinc-700 md:text-lg font-medium">
-            To help answer these questions, CYBERLABS INDIA conducts regular FREE
-            Cybersecurity Career Guidance & Industry Insight Webinars, led by
-            cybersecurity professionals actively working within the industry.
+            To help answer these questions, <span className="text-blue-600"> CYBERLABS INDIA conducts regular FREE
+            Cybersecurity Career Guidance & Industry Insight Webinars</span>, led by&nbsp;
+            <span className="underline decoration-dotted decoration-blue-600 underline-offset-4">cybersecurity professionals actively working within the industry</span>.
           </p>
      
           <p className="mt-4 text-sm leading-relaxed text-zinc-700 md:text-base max-w-2xl mx-auto">

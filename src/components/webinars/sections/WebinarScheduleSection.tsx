@@ -341,7 +341,7 @@ export function WebinarScheduleSection() {
     <section
       id="webinars"
       ref={timelineRef}
-      className=" px-4 py-16 md:py-24"
+      className=" px-4 py-10 md:py-14"
     >
       <div className="mx-auto max-w-7xl">
         <TimelineContent

@@ -183,7 +183,7 @@ const WhoThisEnvironment = () => {
 
           <LandingGoalBanner
             title={<TypewriterText />}
-            className="py-12 md:py-16"
+            className="py-10 md:py-14"
           />
         </LandingBento>
       </div>

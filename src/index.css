@@ -34,6 +34,7 @@ html {
   overflow-x: clip;
   width: 100%;
   font-family: var(--font-geist);
+  position: relative;
 }
 
 body {

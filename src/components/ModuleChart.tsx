@@ -30,7 +30,7 @@ const ModuleChart = () => {
         : "A module-by-module breakdown of where you focus and what you learn.";
 
     return (
-        <section className="w-full  text-text-primary py-12 md:py-16">
+        <section className="w-full  text-text-primary py-10 md:py-14">
             <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-26">
                 <div ref={headingRef} className="mb-8 md:mb-10">
                     <AnimatedHeading

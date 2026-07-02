@@ -145,7 +145,7 @@ const WhatsNew = () => {
   return (
     <motion.section
       ref={containerRef}
-      className="w-full mx-auto px-6 sm:px-8 md:px-12 lg:px-20 xl:px-24 py-6 sm:py-8 md:py-12 lg:py-16"
+      className="w-full mx-auto px-6 sm:px-8 md:px-12 lg:px-20 xl:px-24 py-6 sm:py-8 md:py-10 lg:py-14"
       variants={containerVariants}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}

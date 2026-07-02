@@ -11,6 +11,7 @@ import {
   LandingBento,
   LandingBentoRow,
   LandingBentoCell,
+  LandingSplitNumberedList,
   LandingNumberedList,
   landingRevealVariants,
   landingSectionHeadingClass,
@@ -108,44 +109,6 @@ function BorderedNumberedList({ items, startIndex = 0 }: { items: string[]; star
   );
 }
 
-function SplitNumberedList({ items, startIndex = 0 }: { items: string[]; startIndex?: number }) {
-  const half = Math.ceil(items.length / 2);
-  const columns = [items.slice(0, half), items.slice(half)];
-
-  return (
-    <div className="border-y border-zinc-200">
-      <div className="grid grid-cols-1 md:grid-cols-2 md:divide-x md:divide-zinc-200">
-        {columns.map((column, colIndex) => (
-          <ul key={colIndex} className={cn(colIndex === 0 ? "md:pr-8" : "md:pl-8")}>
-            {column.map((item, rowIndex) => {
-              const globalIndex = (colIndex === 0 ? startIndex : startIndex + half) + rowIndex;
-              const isLastInColumn = rowIndex === column.length - 1;
-              const isLastOverall = colIndex === columns.length - 1 && isLastInColumn;
-
-              return (
-                <li
-                  key={item}
-                  className={cn(
-                    "flex gap-3 py-3 text-sm text-zinc-700 md:py-4 md:text-base",
-                    !isLastOverall && "border-b border-zinc-200",
-                    isLastInColumn && colIndex === 0 && "md:border-b-0",
-                    rowIndex !== column.length - 1 && "md:border-b md:border-zinc-200",
-                  )}
-                >
-                  <span className="shrink-0 font-semibold text-zinc-400">
-                    {String(globalIndex + 1).padStart(2, "0")}
-                  </span>
-                  <span>{item}</span>
-                </li>
-              );
-            })}
-          </ul>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 const OfficialCertificate = () => {
   const timelineRef = useRef<HTMLDivElement>(null);
 
@@ -161,7 +124,7 @@ const OfficialCertificate = () => {
         and represent a rigorous standard of cybersecurity competence, with strong emphasis on:
       </TimelineContent>
       <TimelineContent as="div" animationNum={3} timelineRef={timelineRef} customVariants={landingRevealVariants} className="mt-4">
-        <SplitNumberedList items={emphasisItems} />
+        <LandingSplitNumberedList items={emphasisItems} />
       </TimelineContent>
       <TimelineContent as="p" animationNum={4} timelineRef={timelineRef} customVariants={landingRevealVariants} className="mt-4 text-sm font-semibold text-zinc-900 md:text-base">
         The certification confirms that the learner has successfully completed:

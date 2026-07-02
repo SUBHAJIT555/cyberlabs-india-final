@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import ShinyText from "@/components/ui/ShinyText";
 import GradientText from "@/components/ui/GradientText";
-import { LandingSectionShell, landingListRowHoverClass, landingListTextHoverClass, homeSectionSpacingClass } from "@/components/ui/landing-section";
+import { LandingSectionShell, homeSectionSpacingClass } from "@/components/ui/landing-section";
 
 type ListItem = { text: string; icon: ReactNode };
 
@@ -171,10 +171,10 @@ function TopicCard({
       timelineRef={timelineRef}
       customVariants={revealVariants}
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden border border-dashed p-7 transition-shadow duration-300 md:p-8",
+        "relative flex h-full flex-col overflow-hidden border border-dashed p-7 md:p-8",
         featured
           ? "border-zinc-700 bg-zinc-900 text-white shadow-xl shadow-zinc-900/15"
-          : "border-neutral-200 bg-neutral-50 shadow-sm hover:shadow-md",
+          : "border-neutral-200 bg-neutral-50 shadow-sm",
       )}
     >
       <CardGridBackground variant={featured ? "dark" : "light"} />
@@ -240,7 +240,7 @@ function TopicCard({
 
       <ul className="relative z-10 flex-1 space-y-3">
         {items.map((item) => (
-          <li key={item.text} className={cn("flex items-start gap-3", landingListRowHoverClass)}>
+          <li key={item.text} className="flex items-start gap-3">
             <span
               className={cn(
                 "mt-0.5 flex shrink-0 items-center justify-center [&_svg]:h-5 [&_svg]:w-5 sm:[&_svg]:h-6 sm:[&_svg]:w-6",
@@ -251,10 +251,8 @@ function TopicCard({
             </span>
             <span
               className={cn(
-                "pt-1 text-sm leading-relaxed md:text-base",
+                "pt-1 text-sm font-medium leading-relaxed md:text-base",
                 featured ? "text-zinc-300" : "text-zinc-700",
-                landingListTextHoverClass,
-                featured && "group-hover:text-zinc-100",
               )}
             >
               {item.text}

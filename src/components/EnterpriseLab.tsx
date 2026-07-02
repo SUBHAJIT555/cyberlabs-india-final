@@ -15,7 +15,7 @@ import {
   LandingBento,
   LandingBentoRow,
   LandingBentoCell,
-  LandingNumberedList,
+  LandingSplitNumberedList,
   landingRevealVariants,
   landingSectionHeadingClass,
 } from "@/components/ui/landing-section";
@@ -931,7 +931,7 @@ const EnterpriseLab = () => {
           <p className="mb-6 mt-4 text-sm font-semibold text-zinc-900 md:text-base lg:text-lg">
             All programs are delivered through live, instructor-led online sessions. These sessions focus on:
           </p>
-          <LandingNumberedList items={instructorFocusItems} />
+          <LandingSplitNumberedList items={instructorFocusItems} />
           <p className="mt-6 text-sm leading-relaxed text-zinc-700 md:text-base">
             Instructors act as operational mentors, ensuring learners understand why actions are taken—not just how.{" "}
             <span className="font-semibold text-blue-600">This ensures learners develop real operational capability, not just academic understanding.</span>

@@ -263,7 +263,12 @@ function SplitChecklist({
             key={colIndex}
             className={cn(colIndex === 0 ? "md:pr-10" : "md:pl-10")}
           >
-            {column.map((item, rowIndex) => (
+            {column.map((item, rowIndex) => {
+              const isLastInColumn = rowIndex === column.length - 1;
+              const isLastOverall =
+                colIndex === columns.length - 1 && isLastInColumn;
+
+              return (
               <TimelineContent
                 key={item}
                 as="li"
@@ -272,7 +277,12 @@ function SplitChecklist({
                 customVariants={revealVariants}
                 className={cn(
                   "group flex items-start gap-3 py-4",
-                  rowIndex !== column.length - 1 && "border-b border-zinc-200",
+                  // Mobile: continuous dividers through the full stacked list
+                  !isLastOverall && "border-b border-zinc-200",
+                  // Desktop: per-column dividers (no line under last item in left column)
+                  isLastInColumn && colIndex === 0 && "md:border-b-0",
+                  rowIndex !== column.length - 1 &&
+                    "md:border-b md:border-zinc-200",
                 )}
               >
                 <span
@@ -285,7 +295,8 @@ function SplitChecklist({
                   {item}
                 </span>
               </TimelineContent>
-            ))}
+              );
+            })}
           </ul>
         ))}
       </div>
@@ -297,7 +308,7 @@ export function CareerBenefitsSection() {
   const timelineRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section id="career" ref={timelineRef} className="bg-white px-4 py-16 md:py-24">
+    <section id="career" ref={timelineRef} className="bg-white px-4 py-10 md:py-14">
       <div className="mx-auto max-w-7xl">
         {/* Block 1 — Career benefits */}
         <TimelineContent

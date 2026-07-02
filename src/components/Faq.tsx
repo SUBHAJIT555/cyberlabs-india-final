@@ -283,7 +283,7 @@ const Faq = () => {
         aria-hidden
       />
 
-      <LandingSectionShell className="pt-12 md:pt-16">
+      <LandingSectionShell className="pt-8 md:pt-10">
         <TimelineContent
           as="div"
           animationNum={2}

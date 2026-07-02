@@ -34,7 +34,7 @@ const TermsAndCondition = () => {
       <TermsHero />
       {sectionDivider}
 
-      <LandingSectionShell className="pt-12 md:pt-16">
+      <LandingSectionShell className="pt-8 md:pt-10">
         <div className="mx-auto w-full max-w-5xl">
           <p className="mb-8 text-sm italic text-zinc-500 font-inter-display sm:mb-10 sm:text-base">
             Last Updated: {new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}

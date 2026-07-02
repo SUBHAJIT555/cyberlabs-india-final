@@ -113,7 +113,7 @@ const ContactHeader = () => {
     };
 
     return (
-        <LandingSectionShell className="py-12 md:py-16">
+        <LandingSectionShell>
             <div ref={containerRef} className="mx-auto w-full max-w-5xl">
                 <motion.div
                     initial={{ opacity: 0, y: 16 }}

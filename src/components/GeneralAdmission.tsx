@@ -225,7 +225,7 @@ const GeneralAdmission = () => {
 
           {/* 3. Closing statement */}
           <LandingGoalBanner
-            className="py-12 text-left md:py-16 md:text-center"
+            className="py-10 text-left md:py-14 md:text-center"
             title={
               <div className="mx-auto max-w-3xl space-y-5 sm:space-y-6">
                 <p className="text-sm italic leading-relaxed text-zinc-700 md:text-base lg:text-lg">

@@ -189,7 +189,7 @@ export function WhyAttendSection() {
   const timelineRef = useRef<HTMLDivElement>(null);
 
   return (
-    <section id="why" ref={timelineRef} className="bg-white px-4 py-16 md:py-24">
+    <section id="why" ref={timelineRef} className="bg-white px-4 py-10 md:py-14">
       <div className="mx-auto max-w-7xl">
         {/* Intro: narrative + image */}
         <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-14">
@@ -310,7 +310,7 @@ export function WhyAttendSection() {
           animationNum={12}
           timelineRef={timelineRef}
           customVariants={revealVariants}
-          className="relative mt-12 overflow-hidden border border-zinc-200 border-dashed bg-white px-6 py-16 text-center md:py-24"
+          className="relative mt-12 overflow-hidden border border-zinc-200 border-dashed bg-white px-6 py-10 text-center md:py-14"
         >
           <div
             aria-hidden
