@@ -94,6 +94,34 @@ function required(array $arr): ?string
     }
     return null;
 }
+function buildFullName(string $first, string $middle, string $last): string
+{
+    $parts = array_filter([trim($first), trim($middle), trim($last)], static function ($part) {
+        return $part !== '';
+    });
+    return implode(' ', $parts);
+}
+function genderLabel(string $gender): string
+{
+    if ($gender === 'he') {
+        return 'He';
+    }
+    if ($gender === 'she') {
+        return 'She';
+    }
+    return $gender;
+}
+function formatSubmittedDateTime(string $iso): string
+{
+    if ($iso === '') {
+        return '—';
+    }
+    $ts = strtotime($iso);
+    if ($ts === false) {
+        return $iso;
+    }
+    return date('F j, Y g:i A', $ts) . ' IST';
+}
 
 // --- Request validation ---
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -108,7 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $formTypeRaw = v('formType');
 $formType = strtolower($formTypeRaw);
-if (!in_array($formType, ['contact', 'request-callback', 'newsletter', 'callback-modal', 'enrollment-modal', 'bootcamp-enrollment'], true)) {
+if (!in_array($formType, ['contact', 'request-callback', 'newsletter', 'callback-modal', 'enrollment-modal', 'bootcamp-enrollment', 'webinar-registration'], true)) {
     if (ob_get_level() > 0) {
         ob_end_clean();
     }
@@ -226,10 +254,39 @@ if ($formType === 'newsletter') {
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         sendJsonError('Invalid email address.', 422);
     }
+} elseif ($formType === 'webinar-registration') {
+    if (
+        $msg = required([
+            'firstName' => 'First name',
+            'lastName' => 'Last name',
+            'gender' => 'Gender',
+            'email' => 'Email address',
+            'mobile' => 'Mobile number',
+            'background' => 'Current background',
+            'yearsOfExperience' => 'Years of experience',
+            'preferredCallDateTime' => 'Preferred date and time for call',
+            'webinarId' => 'Webinar',
+            'webinarTopic' => 'Webinar topic',
+            'webinarScheduledAt' => 'Webinar schedule',
+        ])
+    ) {
+        sendJsonError($msg, 422);
+    }
+    $mobileDigits = preg_replace('/[^0-9]/', '', v('mobile'));
+    if (strlen($mobileDigits) < 10) {
+        sendJsonError('Please enter a valid mobile number.', 422);
+    }
+    $years = (int) v('yearsOfExperience');
+    if ($years < 0 || $years > 60) {
+        sendJsonError('Years of experience must be between 0 and 60.', 422);
+    }
+    if (!in_array(v('gender'), ['he', 'she'], true)) {
+        sendJsonError('Please select a valid gender option.', 422);
+    }
 }
 
 // --- Email validation (only when form has email) ---
-if (in_array($formType, ['newsletter', 'contact', 'request-callback', 'callback-modal', 'enrollment-modal', 'bootcamp-enrollment'], true)) {
+if (in_array($formType, ['newsletter', 'contact', 'request-callback', 'callback-modal', 'enrollment-modal', 'bootcamp-enrollment', 'webinar-registration'], true)) {
     $email = v('email');
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         sendJsonError('Invalid email address.', 422);
@@ -237,8 +294,16 @@ if (in_array($formType, ['newsletter', 'contact', 'request-callback', 'callback-
 }
 
 // --- Capture values (unified name/phone/email per form type) ---
-$name = in_array($formType, ['contact', 'request-callback', 'enrollment-modal', 'bootcamp-enrollment'], true) ? v('fullName') : v('name');
-$phone = in_array($formType, ['contact', 'request-callback'], true) ? v('mobileNumber') : (in_array($formType, ['enrollment-modal', 'bootcamp-enrollment'], true) ? v('phoneNumber') : v('phone'));
+if ($formType === 'webinar-registration') {
+    $name = buildFullName(v('firstName'), v('middleName'), v('lastName'));
+    $phone = v('mobile');
+} elseif (in_array($formType, ['contact', 'request-callback', 'enrollment-modal', 'bootcamp-enrollment'], true)) {
+    $name = v('fullName');
+    $phone = in_array($formType, ['contact', 'request-callback'], true) ? v('mobileNumber') : v('phoneNumber');
+} else {
+    $name = v('name');
+    $phone = v('phone');
+}
 $email = v('email');
 $serverip = $_SERVER['HTTP_X_FORWARDED_FOR']
     ?? $_SERVER['HTTP_CLIENT_IP']
@@ -293,6 +358,9 @@ switch ($formType) {
         break;
     case 'bootcamp-enrollment':
         $subject = "New Boot Camp Enrollment – " . clean($name) . " – CYBERLABS India";
+        break;
+    case 'webinar-registration':
+        $subject = "New Webinar Registration – " . clean(v('webinarTopic')) . " – " . clean($name) . " – CYBERLABS India";
         break;
     default:
         $subject = "Form Submission – CYBERLABS India";
@@ -360,6 +428,34 @@ if ($formType === 'contact' || $formType === 'request-callback') {
           <tr><td style="padding:12px;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#333;">
             <p><strong>Email:</strong> ' . clean($email) . '</p>
           </td></tr>
+        </table>
+      </td>
+    </tr>';
+} elseif ($formType === 'webinar-registration') {
+    $details = '';
+    $details .= '<p><strong>Webinar Topic:</strong> ' . clean(v('webinarTopic')) . '</p>';
+    $details .= '<p><strong>Webinar ID:</strong> ' . clean(v('webinarId')) . '</p>';
+    $details .= '<p><strong>Webinar Date &amp; Time:</strong> ' . clean(formatSubmittedDateTime(v('webinarScheduledAt'))) . '</p>';
+    $details .= '<p><strong>First Name:</strong> ' . clean(v('firstName')) . '</p>';
+    if (v('middleName') !== '') {
+        $details .= '<p><strong>Middle Name:</strong> ' . clean(v('middleName')) . '</p>';
+    }
+    $details .= '<p><strong>Last Name:</strong> ' . clean(v('lastName')) . '</p>';
+    $details .= '<p><strong>Gender:</strong> ' . clean(genderLabel(v('gender'))) . '</p>';
+    $details .= '<p><strong>Email:</strong> ' . clean($email) . '</p>';
+    $details .= '<p><strong>Mobile Number:</strong> ' . clean($phone) . '</p>';
+    $details .= '<p><strong>Current Background:</strong> ' . clean(v('background')) . '</p>';
+    $details .= '<p><strong>Years of Experience:</strong> ' . clean(v('yearsOfExperience')) . '</p>';
+    $details .= '<p><strong>Preferred Call Date &amp; Time:</strong> ' . clean(formatSubmittedDateTime(v('preferredCallDateTime'))) . '</p>';
+    if (v('specificQuestion') !== '') {
+        $details .= '<p><strong>Specific Question:</strong><br>' . nl2br(clean(v('specificQuestion'))) . '</p>';
+    }
+    $mainContent = '
+    <tr>
+      <td style="padding:0 24px 24px;">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid ' . $border . ';border-radius:4px;">
+          <tr><td style="background:#f3f4f6;padding:8px 10px;font-family:Arial,Helvetica,sans-serif;font-weight:600;color:#0a2540;">Webinar Registration</td></tr>
+          <tr><td style="padding:12px;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#333;">' . $details . '</td></tr>
         </table>
       </td>
     </tr>';
@@ -557,6 +653,24 @@ if ($formType === 'contact' || $formType === 'request-callback') {
     }
 } elseif ($formType === 'newsletter') {
     $alt .= "Email: " . $email . "\n";
+} elseif ($formType === 'webinar-registration') {
+    $alt .= "Webinar Topic: " . v('webinarTopic') . "\n";
+    $alt .= "Webinar ID: " . v('webinarId') . "\n";
+    $alt .= "Webinar Date & Time: " . formatSubmittedDateTime(v('webinarScheduledAt')) . "\n";
+    $alt .= "First Name: " . v('firstName') . "\n";
+    if (v('middleName') !== '') {
+        $alt .= "Middle Name: " . v('middleName') . "\n";
+    }
+    $alt .= "Last Name: " . v('lastName') . "\n";
+    $alt .= "Gender: " . genderLabel(v('gender')) . "\n";
+    $alt .= "Email: " . $email . "\n";
+    $alt .= "Mobile: " . $phone . "\n";
+    $alt .= "Current Background: " . v('background') . "\n";
+    $alt .= "Years of Experience: " . v('yearsOfExperience') . "\n";
+    $alt .= "Preferred Call Date & Time: " . formatSubmittedDateTime(v('preferredCallDateTime')) . "\n";
+    if (v('specificQuestion') !== '') {
+        $alt .= "Specific Question: " . strip_tags(v('specificQuestion')) . "\n";
+    }
 } elseif ($formType === 'enrollment-modal' || $formType === 'bootcamp-enrollment') {
     $courseLink = firstNonEmpty(['courseLink', 'courseUrl', 'courseSlug']);
     $alt .= "Enrollment Type: " . ($formType === 'bootcamp-enrollment' ? 'Elite Boot Camp' : 'Flagship Program') . "\n";
@@ -605,7 +719,7 @@ try {
     $mail->send();
 
     // --- Auto-reply to customer (only when form has email) ---
-    if ($email !== '' && in_array($formType, ['newsletter', 'contact', 'request-callback', 'callback-modal', 'enrollment-modal', 'bootcamp-enrollment'], true)) {
+    if ($email !== '' && in_array($formType, ['newsletter', 'contact', 'request-callback', 'callback-modal', 'enrollment-modal', 'bootcamp-enrollment', 'webinar-registration'], true)) {
         try {
             $mail->clearAllRecipients();
             $mail->clearAttachments();
@@ -633,6 +747,31 @@ try {
                     </div>
                 ";
                 $mail->AltBody = "Hi " . $customerName . ",\n\nThanks for subscribing to $brandName. You will receive updates and news from us.\n\nRegards,\n$brandName Team";
+            } elseif ($formType === 'webinar-registration') {
+                $webinarTopic = clean(v('webinarTopic'));
+                $webinarWhen = clean(formatSubmittedDateTime(v('webinarScheduledAt')));
+                $preferredCallWhen = clean(formatSubmittedDateTime(v('preferredCallDateTime')));
+                $mail->Subject = "Webinar registration received – $brandName";
+                $autoReplyHtml = "
+                    <div style='font-family: Arial, Helvetica, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;'>
+                        <p style='font-size: 16px; color: #333; margin-bottom: 16px;'>Hi " . $customerName . ",</p>
+                        <p style='font-size: 15px; color: #555; line-height: 1.6; margin-bottom: 16px;'>
+                            Thanks for registering for our webinar <strong>" . $webinarTopic . "</strong> scheduled on <strong>" . $webinarWhen . "</strong>.
+                        </p>
+                        <p style='font-size: 15px; color: #555; line-height: 1.6; margin-bottom: 16px;'>
+                            Our team has received your details and will call you at your preferred time: <strong>" . $preferredCallWhen . "</strong>.
+                        </p>
+                        <p style='font-size: 15px; color: #555; line-height: 1.6; margin-bottom: 16px;'>
+                            If it's urgent, feel free to reply to this email.
+                        </p>
+                        <br>
+                        <p style='font-size: 15px; color: #333; margin-top: 24px;'>
+                            Regards,<br>
+                            <strong>$brandName Team</strong>
+                        </p>
+                    </div>
+                ";
+                $mail->AltBody = "Hi " . $customerName . ",\n\nThanks for registering for our webinar " . v('webinarTopic') . " scheduled on " . formatSubmittedDateTime(v('webinarScheduledAt')) . ".\n\nOur team has received your details and will call you at your preferred time: " . formatSubmittedDateTime(v('preferredCallDateTime')) . ".\n\nIf it's urgent, feel free to reply to this email.\n\nRegards,\n$brandName Team";
             } else {
                 $mail->Subject = "Thanks for contacting $brandName";
                 $autoReplyHtml = "
