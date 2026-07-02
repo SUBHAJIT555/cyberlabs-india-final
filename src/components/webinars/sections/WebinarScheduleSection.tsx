@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { TimelineContent } from "@/components/ui/timeline-animation";
 import ShinyText from "@/components/ui/ShinyText";
 import GradientText from "@/components/ui/GradientText";
-import { CandyButton } from "@/components/ui/candy-button";
+import { CandyButton, candyWhiteSurfaceClass } from "@/components/ui/candy-button";
 import { WebinarDetailsModal } from "@/components/webinars/WebinarDetailsModal";
 import { useWebinarRegistration } from "@/context/webinar-registration";
 import {
@@ -208,19 +208,19 @@ function SessionRow({
         <div className="flex items-center gap-3 md:self-center md:py-5">
           <div
             className={cn(
-              "flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-2xl border border-dotted border-zinc-200 text-center",
+              "relative flex h-16 w-16 shrink-0 flex-col items-center justify-center overflow-hidden rounded-xl text-center",
               isPast
-                ? "bg-zinc-100 text-zinc-400"
-                : "bg-white text-zinc-900 shadow-sm",
+                ? "border border-zinc-200 bg-zinc-100 text-zinc-400"
+                : cn(candyWhiteSurfaceClass, "text-zinc-900"),
             )}
           >
-            <span className="text-[10px] font-semibold uppercase tracking-[0.14em]">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.14em]">
               {shortDate.month}
             </span>
-            <span className="text-xl font-semibold leading-none">
+            <span className="text-xl font-bold leading-none">
               {shortDate.day}
             </span>
-            <span className="mt-0.5 text-[10px] font-medium text-zinc-500">
+            <span className="mt-0.5 text-[11px] font-semibold text-red-600">
               {shortDate.weekday}
             </span>
           </div>

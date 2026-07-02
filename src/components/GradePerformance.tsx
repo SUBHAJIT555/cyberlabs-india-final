@@ -89,11 +89,12 @@ const GradePerformance = () => {
             customVariants={landingRevealVariants}
             className="border-t border-zinc-200 py-6 md:py-8"
           >
-            <p className="text-sm leading-relaxed text-zinc-700 sm:text-base">
+            <p className="text-base leading-relaxed text-zinc-700 sm:text-lg">
               <span className="font-semibold text-zinc-900">Performance classifications may include:</span>{" "}
-              Distinction <span className="text-blue-600">·</span> Merit <span className="text-blue-600">·</span> First Class
+              <span className="underline decoration-dotted decoration-blue-600 underline-offset-4">Distinction</span> <span className="text-blue-600">|</span> <span className="underline decoration-dotted decoration-blue-600 underline-offset-4">Merit</span> <span className="text-blue-600">|</span> <span className="underline decoration-dotted decoration-blue-600 underline-offset-4">First Class</span>
             </p>
-            <p className="mt-3 text-sm leading-relaxed text-zinc-600 sm:text-base">
+       
+            <p className="mt-3 text-sm text-zinc-600 sm:text-base leading-none">
               Assessment structure and weightage may vary by program, based on curriculum depth and role alignment.
             </p>
           </TimelineContent>

@@ -427,10 +427,11 @@ const AssesmentPhilosophy = () => {
                 <span className="mt-0.5 shrink-0 text-blue-600">
                     <AnimatedRosetteCheckIcon />
                 </span>
-                <p className="text-sm leading-relaxed text-zinc-700 md:text-base">
-                    CYBERLABS certifications emphasize <span className="font-semibold text-blue-600">practical capability and operational readiness</span>, rather than exam-only credentialing.
+                <p className="text-lg font-bold leading-relaxed text-zinc-700 md:text-xl">
+                    CYBERLABS certifications emphasize <span className="font-bold text-blue-600">practical capability and operational readiness</span>, rather than exam-only credentialing.
                 </p>
             </TimelineContent>
+       
         </>
     );
 

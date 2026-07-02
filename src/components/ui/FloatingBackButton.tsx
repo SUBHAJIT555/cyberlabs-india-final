@@ -1,5 +1,6 @@
 import { useFloatingBottomBar } from "@/contexts/FloatingBottomBarContext";
 import { cn } from "@/lib/utils";
+import { CandyButton } from "@/components/ui/candy-button";
 
 type FloatingBackButtonProps = {
     isVisible: boolean;
@@ -19,14 +20,15 @@ const FloatingBackButton = ({ isVisible, onClick }: FloatingBackButtonProps) => 
                     : "pointer-events-none opacity-0",
             )}
         >
-            <button
+            <CandyButton
                 type="button"
+                variant="white"
                 onClick={onClick}
                 aria-label="Go back"
-                className="group flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-dashed border-zinc-400 bg-white text-zinc-700 shadow-xl transition-colors hover:border-zinc-400 hover:text-zinc-900 active:scale-95 md:h-14 md:w-14"
+                className="h-11 w-11 rounded-full! px-0! py-0! text-zinc-700 shadow-lg! shadow-zinc-900/10! active:rotate-0 md:h-14 md:w-14"
             >
                 <ArrowBackIcon className="h-4 w-4 md:h-5 md:w-5" />
-            </button>
+            </CandyButton>
         </div>
     );
 };

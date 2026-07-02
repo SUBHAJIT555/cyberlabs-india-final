@@ -29,6 +29,9 @@ const candyBaseClass =
   "rounded-xl cursor-pointer transition-all duration-200 ease-out " +
   "active:scale-95 inline-flex items-center justify-center";
 
+export const candyWhiteSurfaceClass =
+  "border border-zinc-200 bg-[radial-gradient(95%_60%_at_50%_75%,#d4d4d8_0%,#f4f4f5_48%,#ffffff_100%)] shadow-sm";
+
 const candyVariantClass: Record<CandyButtonVariant, string> = {
   default:
     "border border-[#54A1FD] bg-[radial-gradient(95%_60%_at_50%_75%,#005FD6_0%,#209BFF_100%)] " +
@@ -36,8 +39,7 @@ const candyVariantClass: Record<CandyButtonVariant, string> = {
     "after:pointer-events-none after:absolute after:top-px after:right-[10%] after:h-px after:w-[60%] " +
     "after:bg-linear-to-r after:from-transparent after:via-white/50 after:to-transparent",
   white:
-    "border border-zinc-200 bg-[radial-gradient(95%_60%_at_50%_75%,#d4d4d8_0%,#f4f4f5_48%,#ffffff_100%)] " +
-    "text-zinc-600 shadow-sm active:rotate-0 hover:brightness-[1.03]",
+    `${candyWhiteSurfaceClass} text-zinc-600 active:rotate-0 hover:brightness-[1.03]`,
 };
 
 export const CandyButton = React.forwardRef<

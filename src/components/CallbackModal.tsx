@@ -1,8 +1,7 @@
-import { assetSrc } from "@/lib/utils";
+
 import React, { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
-import { IoClose } from "react-icons/io5";
 import Portal from "@/components/ui/Portal";
 import { useCourses } from "@/hooks/useCourses";
 import { useBootcamps } from "@/hooks/useBootcamps";
@@ -37,6 +36,26 @@ interface FormData {
   callbackTime: string;
   enquiryFor: string;
   bootCampOfInterest: string;
+}
+
+function CloseIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
+    </svg>
+  );
 }
 
 const validateProgramOrBootCamp = (_value: string, formValues: FormData): true | string => {
@@ -234,14 +253,15 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
                     <h2 className="text-text-primary text-lg sm:text-xl md:text-2xl lg:text-3xl font-inter-display font-bold">
                       Request a callback
                     </h2>
-                    <motion.button
-                      className="text-text-primary hover:text-primary cursor-pointer transition-colors"
+                    <CandyButton
+                      type="button"
+                      variant="white"
                       onClick={onClose}
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
+                      aria-label="Close modal"
+                      className="h-9 w-9 shrink-0 rounded-lg! px-0! py-0! shadow-none!"
                     >
-                      <IoClose className="w-6 h-6" />
-                    </motion.button>
+                      <CloseIcon />
+                    </CandyButton>
                   </div>
                   <p className="text-text-primary text-sm font-inter-display">
                     Fill the form below to request a callback from our team.
@@ -260,34 +280,26 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
                       <p className="mb-2 text-xs font-inter-display font-semibold uppercase tracking-wide text-primary">
                         Flagship Program
                       </p>
-                      <div className="flex gap-3">
-                        <div className="h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50">
-                          <img
-                            src={assetSrc(course.image)}
-                            alt={course.title}
-                            className="h-full w-full object-cover"
-                          />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <h3 className="text-sm font-inter-display font-semibold text-text-primary leading-snug line-clamp-2">
-                            {course.title}
-                          </h3>
-                          {course.subheading && (
-                            <p className="mt-1 text-xs font-inter-display font-medium text-primary line-clamp-1">
-                              {course.subheading}
-                            </p>
-                          )}
-                          {course.originalPrice > 0 && course.currentPrice > 0 && (
-                            <div className="mt-2">
-                              <BootcampPriceBlock
-                                originalPrice={course.originalPrice}
-                                launchPrice={course.currentPrice}
-                                currency="INR"
-                                variant="strip"
-                              />
-                            </div>
-                          )}
-                        </div>
+                      <div className="min-w-0">
+                        <h3 className="text-xs font-inter-display font-semibold text-text-primary leading-snug sm:text-base">
+                          {course.title}
+                        </h3>
+                        {course.subheading && (
+                          <p className="mt-1 text-xs font-inter-display text-blue-600 font-medium sm:text-base">
+                            {course.subheading}
+                          </p>
+                     
+                        )}
+                        {course.originalPrice > 0 && course.currentPrice > 0 && (
+                          <div className="mt-2 sm:mt-3">
+                            <BootcampPriceBlock
+                              originalPrice={course.originalPrice}
+                              launchPrice={course.currentPrice}
+                              currency="INR"
+                              variant="strip"
+                            />
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}
@@ -297,29 +309,20 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
                       <p className="mb-2 text-xs font-inter-display font-semibold uppercase tracking-wide text-primary">
                         Elite Boot Camp
                       </p>
-                      <div className="flex gap-3">
-                        <div className="h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50">
-                          <img
-                            src={assetSrc(bootcamp.image)}
-                            alt={bootcamp.title}
-                            className="h-full w-full object-cover"
+                      <div className="min-w-0">
+                        <h3 className="text-sm font-inter-display font-semibold text-text-primary leading-snug sm:text-[1.625rem]">
+                          {bootcamp.title}
+                        </h3>
+                        <p className="mt-1 text-xs font-inter-display font-medium text-primary sm:text-[1.625rem]">
+                          {bootcamp.duration} · {bootcamp.language}
+                        </p>
+                        <div className="mt-2 sm:mt-3">
+                          <BootcampPriceBlock
+                            originalPrice={bootcamp.originalPrice}
+                            launchPrice={bootcamp.launchPrice}
+                            currency={bootcamp.currency}
+                            variant="strip"
                           />
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <h3 className="text-sm font-inter-display font-semibold text-text-primary leading-snug line-clamp-2">
-                            {bootcamp.title}
-                          </h3>
-                          <p className="mt-1 text-xs font-inter-display font-medium text-primary">
-                            {bootcamp.duration} · {bootcamp.language}
-                          </p>
-                          <div className="mt-2">
-                            <BootcampPriceBlock
-                              originalPrice={bootcamp.originalPrice}
-                              launchPrice={bootcamp.launchPrice}
-                              currency={bootcamp.currency}
-                              variant="strip"
-                            />
-                          </div>
                         </div>
                       </div>
                     </div>

@@ -543,7 +543,7 @@ const WhatThisMean = () => {
 
     const learnersBody = (
         <>
-            <TimelineContent as="p" animationNum={5} timelineRef={timelineRef} customVariants={landingRevealVariants} className="mt-4 text-sm text-zinc-700 md:text-base">
+            <TimelineContent as="p" animationNum={5} timelineRef={timelineRef} customVariants={landingRevealVariants} className="mt-4 text-sm text-zinc-700 md:text-base font-semibold">
                 For learners, certification represents:
             </TimelineContent>
             <TimelineContent as="div" animationNum={6} timelineRef={timelineRef} customVariants={landingRevealVariants} className="mt-4">
@@ -563,11 +563,11 @@ const WhatThisMean = () => {
 
     const integrityBody = (
         <>
-            <TimelineContent as="p" animationNum={9} timelineRef={timelineRef} customVariants={landingRevealVariants} className="mt-4 text-sm text-zinc-700 md:text-base">
+            <TimelineContent as="p" animationNum={9} timelineRef={timelineRef} customVariants={landingRevealVariants} className="mt-4 text-sm font-medium text-blue-600 md:text-base">
                 CYBERLABS does not issue certificates for mere participation.
             </TimelineContent>
             <TimelineContent as="p" animationNum={10} timelineRef={timelineRef} customVariants={landingRevealVariants} className="mt-4 text-sm text-zinc-700 md:text-base">
-                Certification is awarded <span className="font-semibold text-zinc-900">only upon successful completion of assessments and practical</span> requirements, ensuring fairness, credibility, and trust for learners, employers, and institutions alike.
+                Certification is awarded <span className="font-semibold text-zinc-900 underline decoration-dotted decoration-blue-600 underline-offset-4">only upon successful completion of assessments and practical</span> requirements, ensuring fairness, credibility, and trust for learners, employers, and institutions alike.
             </TimelineContent>
         </>
     );
