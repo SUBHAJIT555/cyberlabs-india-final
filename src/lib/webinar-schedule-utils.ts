@@ -68,6 +68,40 @@ export function isWebinarRegistrationAvailable(webinar: WebinarSession): boolean
   return !isWebinarPast(webinar);
 }
 
+export const WEBINAR_JOIN_EARLY_MINUTES = 15;
+
+export type WebinarJoinNoticeVariant = "no-link" | "before-start" | "after-start";
+
+export function getWebinarMsUntilStart(scheduledAt: string, now = Date.now()): number {
+  return Math.max(0, new Date(scheduledAt).getTime() - now);
+}
+
+export function getWebinarJoinNoticeVariant(
+  webinar: WebinarSession,
+  now = Date.now(),
+): WebinarJoinNoticeVariant {
+  if (!webinar.joinUrl) return "no-link";
+
+  const startMs = new Date(webinar.scheduledAt).getTime();
+  if (now < startMs) return "before-start";
+  return "after-start";
+}
+
+export function formatWebinarCountdown(ms: number): string {
+  const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+  const days = Math.floor(totalSeconds / 86_400);
+  const hours = Math.floor((totalSeconds % 86_400) / 3_600);
+  const minutes = Math.floor((totalSeconds % 3_600) / 60);
+  const seconds = totalSeconds % 60;
+
+  const parts: string[] = [];
+  if (days > 0) parts.push(`${days}d`);
+  if (days > 0 || hours > 0) parts.push(`${hours}h`);
+  parts.push(`${minutes}m`);
+  parts.push(`${String(seconds).padStart(2, "0")}s`);
+  return parts.join(" ");
+}
+
 export function getUpcomingWebinars(
   sessions: WebinarSession[] = upcomingWebinars,
 ): WebinarSession[] {

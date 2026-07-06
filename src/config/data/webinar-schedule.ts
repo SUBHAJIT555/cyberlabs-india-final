@@ -17,6 +17,8 @@ export type WebinarSession = {
   speakers: WebinarSpeaker[];
   /** Set to false to manually close registration before the session date */
   registrationOpen?: boolean;
+  /** Live session link (e.g. Microsoft Teams) — shown when registration is open */
+  joinUrl?: string;
 };
 
 /** Webinar WhatsApp — international format without + or spaces */
@@ -49,6 +51,18 @@ export const webinarScheduleContent = {
   speakersLabel: "Speakers:",
   registerLabel: "Register Now",
   whatsappLabel: "WhatsApp",
+  joinWebinarLabel: "Join Webinar",
+  joinNoticeNoLinkBody1: "The webinar link is not available now.",
+  joinNoticeNoLinkBody2: "It's too early to join the webinar.",
+  joinNoticeNoLinkBody3:
+    "Please join 15 minutes before the scheduled time.",
+  joinNoticeBeforeStartLead: "Starting in",
+  joinNoticeBeforeStartBody1: "You can still join the webinar.",
+  joinNoticeBeforeStartBody2:
+    "Please join the webinar and wait in the lobby. The webinar will start at its originally scheduled time.",
+  joinNoticeAfterStartTitle: "The webinar has already started.",
+  joinNoticeAfterStartBody: "Please join as soon as possible.",
+  joinNoticeCloseButton: "Close",
   detailsModalEyebrow: "Webinar Session",
   sessionEndedLabel: "Session Ended",
   upcomingLabel: "Upcoming",
@@ -71,6 +85,8 @@ export const upcomingWebinars: WebinarSession[] = [
     topic:
       "The Future of Cybersecurity Careers: Skills MNCs Will Actually Pay For in 2026 (Focus: General Career Guidance & The Practitioner Blueprint)",
     speakers: defaultWebinarSpeakers,
+    joinUrl:
+      "https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZmEwMzU1NTYtN2MzNC00NGE4LThmMjctODJhZmJjMGZhMWFk%40thread.v2/0?context=%7b%22Tid%22%3a%229b493966-90e5-4819-a9d0-930fe394daa6%22%2c%22Oid%22%3a%221a2bee5e-6684-4528-8fb6-c182be062d97%22%7d",
   },
   {
     id: "modern-cyber-attacks",

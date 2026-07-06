@@ -4,6 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "export:landing-catalog": "node scripts/export-landing-catalog.mjs",
+    "predev": "node scripts/export-landing-catalog.mjs",
+    "prebuild": "node scripts/export-landing-catalog.mjs",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",

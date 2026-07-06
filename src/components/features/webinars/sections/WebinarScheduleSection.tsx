@@ -7,6 +7,7 @@ import ShinyText from "@/components/ui/ShinyText";
 import GradientText from "@/components/ui/GradientText";
 import { CandyButton, candyWhiteSurfaceClass } from "@/components/ui/candy-button";
 import { WebinarDetailsModal } from "@/components/features/webinars/WebinarDetailsModal";
+import { WebinarJoinButton } from "@/components/features/webinars/WebinarJoinButton";
 import { useWebinarRegistration } from "@/providers/webinar-registration";
 import {
   upcomingWebinars,
@@ -166,6 +167,8 @@ function SessionActions({
         <WhatsAppIcon />
         {webinarScheduleContent.whatsappLabel}
       </CandyButton>
+
+      <WebinarJoinButton webinar={webinar} />
     </div>
   );
 }

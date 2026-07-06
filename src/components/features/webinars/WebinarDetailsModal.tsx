@@ -20,6 +20,7 @@ import {
 } from "@/lib/webinar-schedule-utils";
 import { useWebinarRegistration } from "@/providers/webinar-registration";
 import { CandyButton } from "@/components/ui/candy-button";
+import { WebinarJoinButton } from "@/components/features/webinars/WebinarJoinButton";
 
 type WebinarDetailsModalProps = {
   isOpen: boolean;
@@ -371,24 +372,30 @@ function WebinarDetailsModalPanel({
                   {webinarScheduleContent.sessionEndedLabel}
                 </button>
               ) : (
-                <div className="flex flex-col gap-2.5 sm:flex-row">
-                  <CandyButton
-                    type="button"
-                    onClick={handleRegister}
-                    className="flex-1 gap-2 rounded-lg! border-zinc-800! bg-[radial-gradient(95%_60%_at_50%_75%,#18181b_0%,#27272a_100%)]! px-4! py-2.5! text-sm! text-white shadow-none! active:rotate-0"
-                  >
-                    <RegisterIcon />
-                    {webinarScheduleContent.registerLabel}
-                  </CandyButton>
-                  <CandyButton
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex-1 gap-2 rounded-lg! border-emerald-700! bg-[radial-gradient(95%_60%_at_50%_75%,#047857_0%,#059669_100%)]! px-4! py-2.5! text-sm! text-white shadow-none! active:rotate-0 after:via-white/40"
-                  >
-                    <WhatsAppIcon />
-                    {webinarScheduleContent.whatsappLabel}
-                  </CandyButton>
+                <div className="flex flex-col gap-2.5">
+                  <div className="flex flex-col gap-2.5 sm:flex-row">
+                    <CandyButton
+                      type="button"
+                      onClick={handleRegister}
+                      className="flex-1 gap-2 rounded-lg! border-zinc-800! bg-[radial-gradient(95%_60%_at_50%_75%,#18181b_0%,#27272a_100%)]! px-4! py-2.5! text-sm! text-white shadow-none! active:rotate-0"
+                    >
+                      <RegisterIcon />
+                      {webinarScheduleContent.registerLabel}
+                    </CandyButton>
+                    <CandyButton
+                      href={whatsappUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex-1 gap-2 rounded-lg! border-emerald-700! bg-[radial-gradient(95%_60%_at_50%_75%,#047857_0%,#059669_100%)]! px-4! py-2.5! text-sm! text-white shadow-none! active:rotate-0 after:via-white/40"
+                    >
+                      <WhatsAppIcon />
+                      {webinarScheduleContent.whatsappLabel}
+                    </CandyButton>
+                  </div>
+                  <WebinarJoinButton
+                    webinar={webinar}
+                    className="px-4! py-2.5!"
+                  />
                 </div>
               )}
             </div>
